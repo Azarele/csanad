@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Csanad Kope - Interactive Resume</title>
+    <style>
+        body {
+            font-family: 'Space Mono', monospace;
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+            background: linear-gradient(270deg, #2c0032, #1a001d, rgb(158, 0, 79));
+            background-size: 600% 600%;
+            animation: gradientMove 10s ease infinite;
+            color: white;
+            perspective: 1000px;
+            position: relative;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 0%;
+            }
+            25% {
+                background-position: 100% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            75% {
+                background-position: 0% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        .circle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: hotpink;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: ripple 0.6s ease-out forwards;
+            box-shadow: 0 0 5px black;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(5);
+                opacity: 0;
+            }
+        }
+
+        header {
+            position: relative;
+            z-index: 10;
+            background-color: transparent;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px hotpink;
+        }
+
+        header h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: rgba(26, 0, 29, 0.8);
+            box-shadow: 0 0 15px rgba(85, 26, 139, 0.5);
+            position: relative;
+            z-index: 10;
+        }
+
+        nav a {
+            color: white;
+            padding: 1rem;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: transform 0.2s ease, color 0.3s ease;
+            text-shadow: 1px 1px 3px hotpink;
+        }
+
+        nav a:hover {
+            transform: scale(1.1);
+        }
+
+        section {
+            padding: 20px;
+            display: none;
+            opacity: 1;
+            text-shadow: 1px 1px 3px hotpink;
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+        }
+
+        section.visible {
+            display: block;
+        }
+
+        section h2 {
+            text-shadow: 2px 2px 5px hotpink;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 1px 1px 3px hotpink;
+            }
+            to {
+                text-shadow: 3px 3px 6px white;
+            }
+        }
+
+        ul li {
+            background: rgba(85, 26, 139, 0.2);
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            text-shadow: 1px 1px 3px hotpink;
+        }
+
+        ul li:hover {
+            transform: scale(1.05);
+            background: rgba(85, 26, 139, 0.3);
+        }
+
+        footer {
+            background-color: rgba(26, 0, 29, 0.8);
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            width: 100%;
+            text-shadow: 1px 1px 3px hotpink;
+            box-shadow: 0 0 15px rgba(85, 26, 139, 0.5);
+            z-index: 10;
+        }
+    </style>
+    <script>
+        function navigateTo(sectionId) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.remove('visible');
+            });
+
+            const targetSection = document.getElementById(sectionId);
+            targetSection.classList.add('visible');
+
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        }
+
+        document.addEventListener("mousemove", (event) => {
+            const circle = document.createElement("div");
+            circle.className = "circle";
+            circle.style.left = `${event.clientX}px`;
+            circle.style.top = `${event.clientY}px`;
+            document.body.appendChild(circle);
+
+            setTimeout(() => {
+                circle.remove();
+            }, 600);
+        });
+
+        document.addEventListener("click", (event) => {
+            const ripple = document.createElement("div");
+            ripple.className = "circle";
+            ripple.style.left = `${event.clientX}px`;
+            ripple.style.top = `${event.clientY}px`;
+            ripple.style.background = "rgba(255, 20, 147, 0.4)";
+            ripple.style.animation = "ripple 0.6s ease-out forwards";
+            document.body.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+
+        window.onload = () => {
+            navigateTo('about');
+        };
+    </script>
+</head>
+<body>
+<header>
+    <h1 class="text-transition">Csanad Kope</h1>
+    <h3 class="text-transition">Computer Science Student</h3>
+    <h3 class="text-transition">E-commerce Enthusiast</h3>
+</header>
+
+<nav>
+    <a href="#" onclick="navigateTo('about')">About Me</a>
+    <a href="#" onclick="navigateTo('skills')">Skills</a>
+    <a href="#" onclick="navigateTo('experience')">Experience</a>
+    <a href="#" onclick="navigateTo('education')">Education</a>
+    <a href="#" onclick="navigateTo('contact')">Contact</a>
+</nav>
+
+<section id="about">
+    <h2>About Me</h2>
+    <ul>
+        <li>The ability to create, innovate, and design a program from an idea excites me. In computer science, I found I can achieve this.</li>
+        <li>My journey began with my first computer, where gaming and the introduction to programming transformed my life.</li>
+        <li>At age 12, I created a Minecraft GUI shop using Skript with over 75,000 characters, teaching me resilience and perseverance.</li>
+        <li>In A-level Computer Science, I built an aim trainer in Python, applying computational and mathematical principles learned in class.</li>
+        <li>Running my e-commerce business honed my time management, web development, and networking skills.</li>
+        <li>A competitive athlete in basketball and athletics, I developed teamwork, independence, and a strong work ethic.</li>
+        <li>Despite initial setbacks, I pursued a foundation year in Computer Science and Mathematics, gaining advanced preparation for university modules.</li>
+    </ul>
+</section>
+
+<section id="skills">
+    <h2>Technical Skills</h2>
+    <ul>
+        <li>Programming Languages: Python, Java, C++</li>
+        <li>Web Development: HTML, CSS, JavaScript, React, Next.js</li>
+        <li>Database Management: SQL, MongoDB, Firebase</li>
+        <li>Version Control: Git, GitHub</li>
+        <li>Cloud Platforms: AWS, Google Cloud</li>
+        <li>Data Analysis: Pandas, NumPy, Matplotlib, Excel</li>
+        <li>Machine Learning: TensorFlow, PyTorch, Scikit-learn</li>
+        <li>Game Development: Unity, C#</li>
+    </ul>
+</section>
+
+<section id="experience">
+    <h2>Experience</h2>
+    <ul>
+        <li><strong>CEO</strong> - Thesneakaz (2019 - Present)
+            <ul>
+                <li>Selling high-end goods, website optimization, inventory management, and customer support.</li>
+            </ul>
+        </li>
+        <li><strong>Cashier/Server</strong> - Twickenham Stadium (2021 - Present)
+            <ul>
+                <li>Provided excellent customer service and efficient event operations.</li>
+            </ul>
+        </li>
+        <li><strong>Events Staff/Server</strong> - Haymarket Hotel (2022 - 2023)
+            <ul>
+                <li>Managed event setups and high-profile interactions.</li>
+            </ul>
+        </li>
+        <li><strong>Labourer</strong> - MRC (2023)
+            <ul>
+                <li>Supported construction logistics and safety compliance.</li>
+            </ul>
+        </li>
+        <li><strong>Salesperson</strong> - Link Marketing (2023 - 2024)
+            <ul>
+                <li>Improved door-to-door sales techniques.</li>
+            </ul>
+        </li>
+        <li><strong>Sales Associate</strong> - Homebase (2024 Summer)
+            <ul>
+                <li>Assisted with product selection and inventory management.</li>
+            </ul>
+        </li>
+    </ul>
+</section>
+
+<section id="education">
+    <h2>Education</h2>
+    <ul>
+        <li>Kingsley Academy: GCSE (2015 - 2020)
+            <ul>
+                <li>Grades Achieved: 6-9</li>
+            </ul>
+        </li>
+        <li>Kingsley Academy: A Levels (2020 - 2022) - Mathematics, Computer Science, Geography
+            <ul>
+                <li>Achieved grades: Pass or above</li>
+            </ul>
+        </li>
+        <li>Kingston University: Computer Science BSc (2022 - 2023)
+            <ul>
+                <li>Foundation Year - Achieved Grade: Distinction</li>
+            </ul>
+        </li>
+        <li>Royal Holloway: Computer Science BSc (2023 - Present)
+            <ul>
+                <li>Achieved 1st class in Year 1</li>
+                <li>On track for 1st class in Year 2</li>
+            </ul>
+        </li>
+    </ul>
+</section>
+
+<section id="contact">
+    <h2>Contact</h2>
+    <ul>
+        <li>Email: <a href="mailto:thesneakaz@gmail.com">thesneakaz@gmail.com</a></li>
+        <li>Phone: 07480799967</li>
+        <li>LinkedIn: <a href="https://linkedin.com/in/csanadkope" target="_blank">linkedin.com/in/csanadkope</a></li>
+    </ul>
+</section>
+
+<footer>
+    <p>&copy; 2024 Csanad Kope</p>
+</footer>
+
+</body>
+</html>
