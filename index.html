@@ -36,25 +36,53 @@
             }
         }
 
-        .circle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: hotpink;
-            border-radius: 50%;
+        .constellation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
-            animation: ripple 0.6s ease-out forwards;
-            box-shadow: 0 0 5px black;
+            z-index: 0;
+            overflow: hidden;
         }
 
-        @keyframes ripple {
+        .node {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: linear-gradient(270deg, rgb(158, 0, 79), #1a001d, #2c0032);
+            background-size: 600% 600%;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255, 20, 147, 0.6);
+            animation: reverseGradientMove 10s ease infinite;
+        }
+
+        .line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(270deg, rgb(158, 0, 79), #1a001d, #2c0032);
+            background-size: 600% 600%;
+            animation: reverseGradientMove 10s ease infinite;
+            transform-origin: top left;
+            box-shadow: 0 0 8px rgba(255, 20, 147, 0.6);
+        }
+
+        @keyframes reverseGradientMove {
             0% {
-                transform: scale(1);
-                opacity: 1;
+                background-position: 0% 0%;
+            }
+            25% {
+                background-position: 0% 100%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            75% {
+                background-position: 100% 0%;
             }
             100% {
-                transform: scale(5);
-                opacity: 0;
+                background-position: 0% 0%;
             }
         }
 
@@ -123,7 +151,7 @@
         }
 
         ul li {
-            background: rgba(85, 26, 139, 0.2);
+            background: rgba(85, 26, 139, 0.3);
             margin: 10px 0;
             padding: 10px;
             border-radius: 5px;
@@ -133,7 +161,7 @@
 
         ul li:hover {
             transform: scale(1.05);
-            background: rgba(85, 26, 139, 0.3);
+            background: rgba(85, 26, 139, 0.4);
         }
 
         footer {
@@ -146,6 +174,28 @@
             text-shadow: 1px 1px 3px hotpink;
             box-shadow: 0 0 15px rgba(85, 26, 139, 0.5);
             z-index: 10;
+        }
+
+        .circle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 20, 147, 0.85);
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 5px rgba(255, 20, 147, 0.5);
+            animation: ripple 0.3s ease-out forwards;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(5);
+                opacity: 0;
+            }
         }
     </style>
     <script>
@@ -161,23 +211,91 @@
             window.scrollTo({ top: 0, behavior: 'instant' });
         }
 
+        function createConstellation(container, count) {
+            const nodes = [];
+
+            // Create nodes
+            for (let i = 0; i < count; i++) {
+                const node = document.createElement('div');
+                node.className = 'node';
+                node.style.left = `${Math.random() * 100}vw`;
+                node.style.top = `${Math.random() * 100}vh`;
+                container.appendChild(node);
+                nodes.push({ element: node, dx: Math.random() * 2 - 1, dy: Math.random() * 2 - 1 });
+            }
+
+            // Connect nodes
+            const lines = [];
+
+            function drawLines() {
+                lines.forEach(line => line.remove());
+                lines.length = 0;
+
+                nodes.forEach((node, idx) => {
+                    nodes.forEach((otherNode) => {
+                        if (node === otherNode) return;
+
+                        const x1 = node.element.offsetLeft;
+                        const y1 = node.element.offsetTop;
+                        const x2 = otherNode.element.offsetLeft;
+                        const y2 = otherNode.element.offsetTop;
+                        const distance = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+
+                        if (distance < 150) {
+                            const line = document.createElement('div');
+                            line.className = 'line';
+                            const length = distance;
+                            const angle = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
+                            line.style.width = `${length}px`;
+                            line.style.transform = `rotate(${angle}deg)`;
+                            line.style.left = `${x1}px`;
+                            line.style.top = `${y1}px`;
+                            container.appendChild(line);
+                            lines.push(line);
+                        }
+                    });
+                });
+            }
+
+            function moveNodes() {
+                nodes.forEach(node => {
+                    const rect = container.getBoundingClientRect();
+                    let x = node.element.offsetLeft + node.dx;
+                    let y = node.element.offsetTop + node.dy;
+
+                    if (x < 0 || x > rect.width) node.dx *= -1;
+                    if (y < 0 || y > rect.height) node.dy *= -1;
+
+                    x = Math.max(0, Math.min(rect.width, x));
+                    y = Math.max(0, Math.min(rect.height, y));
+
+                    node.element.style.left = `${x}px`;
+                    node.element.style.top = `${y}px`;
+                });
+
+                drawLines();
+            }
+
+            setInterval(moveNodes, 50);
+        }
+
         document.addEventListener("mousemove", (event) => {
             const circle = document.createElement("div");
             circle.className = "circle";
-            circle.style.left = `${event.clientX}px`;
-            circle.style.top = `${event.clientY}px`;
+            circle.style.left = `${event.pageX}px`;
+            circle.style.top = `${event.pageY}px`;
             document.body.appendChild(circle);
 
             setTimeout(() => {
                 circle.remove();
-            }, 600);
+            }, 300);
         });
 
         document.addEventListener("click", (event) => {
             const ripple = document.createElement("div");
             ripple.className = "circle";
-            ripple.style.left = `${event.clientX}px`;
-            ripple.style.top = `${event.clientY}px`;
+            ripple.style.left = `${event.pageX}px`;
+            ripple.style.top = `${event.pageY}px`;
             ripple.style.background = "rgba(255, 20, 147, 0.4)";
             ripple.style.animation = "ripple 0.6s ease-out forwards";
             document.body.appendChild(ripple);
@@ -189,6 +307,12 @@
 
         window.onload = () => {
             navigateTo('about');
+
+            const container = document.createElement('div');
+            container.className = 'constellation-container';
+            document.body.appendChild(container);
+
+            createConstellation(container, 50);
         };
     </script>
 </head>
@@ -280,7 +404,7 @@
         </li>
         <li>Kingsley Academy: A Levels (2020 - 2022) - Mathematics, Computer Science, Geography
             <ul>
-                <li>Achieved grades: Pass or above</li>
+                <li>Achieved grades: A, A, B</li>
             </ul>
         </li>
         <li>Kingston University: Computer Science BSc (2022 - 2023)
