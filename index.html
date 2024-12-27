@@ -350,6 +350,34 @@
             }, 600);
         });
 
+        document.addEventListener("touchmove", (event) => {
+            const touch = event.touches[0];
+            const circle = document.createElement("div");
+            circle.className = "circle";
+            circle.style.left = `${touch.pageX}px`;
+            circle.style.top = `${touch.pageY}px`;
+            document.body.appendChild(circle);
+
+            setTimeout(() => {
+                circle.remove();
+            }, 300);
+        });
+
+        document.addEventListener("touchstart", (event) => {
+            const touch = event.touches[0];
+            const ripple = document.createElement("div");
+            ripple.className = "circle";
+            ripple.style.left = `${touch.pageX}px`;
+            ripple.style.top = `${touch.pageY}px`;
+            ripple.style.background = "rgba(255, 20, 147, 0.4)";
+            ripple.style.animation = "ripple 0.6s ease-out forwards";
+            document.body.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+
         window.onload = () => {
             navigateTo('about');
 
