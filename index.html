@@ -122,6 +122,10 @@
             transform: scale(1.1);
         }
 
+        .dropdown {
+            display: none;
+        }
+
         section {
             padding: 20px;
             display: none;
@@ -197,6 +201,47 @@
                 opacity: 0;
             }
         }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .dropdown {
+                display: block;
+                background-color: rgba(26, 0, 29, 0.8);
+                color: white;
+                text-shadow: 1px 1px 3px hotpink;
+                padding: 10px;
+                text-align: center;
+                position: relative;
+                z-index: 10;
+            }
+
+            .dropdown select {
+                background-color: rgba(26, 0, 29, 0.8);
+                color: white;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                text-shadow: 1px 1px 3px hotpink;
+                font-size: 1rem;
+            }
+
+            .node {
+                width: 4px;
+                height: 4px;
+            }
+
+            .circle {
+                width: 6px;
+                height: 6px;
+            }
+
+            footer {
+                font-size: 0.9rem;
+            }
+        }
     </style>
     <script>
         function navigateTo(sectionId) {
@@ -214,8 +259,9 @@
         function createConstellation(container, count) {
             const nodes = [];
 
-            // Create nodes
-            for (let i = 0; i < count; i++) {
+            const maxNodes = window.innerWidth < 768 ? 20 : count;
+
+            for (let i = 0; i < maxNodes; i++) {
                 const node = document.createElement('div');
                 node.className = 'node';
                 node.style.left = `${Math.random() * 100}vw`;
@@ -224,7 +270,6 @@
                 nodes.push({ element: node, dx: Math.random() * 2 - 1, dy: Math.random() * 2 - 1 });
             }
 
-            // Connect nodes
             const lines = [];
 
             function drawLines() {
@@ -331,6 +376,16 @@
     <a href="#" onclick="navigateTo('contact')">Contact</a>
 </nav>
 
+<div class="dropdown">
+    <select onchange="navigateTo(this.value)">
+        <option value="about">About Me</option>
+        <option value="skills">Skills</option>
+        <option value="experience">Experience</option>
+        <option value="education">Education</option>
+        <option value="contact">Contact</option>
+    </select>
+</div>
+
 <section id="about">
     <h2>About Me</h2>
     <ul>
@@ -386,7 +441,8 @@
                 <li>Improved door-to-door sales techniques.</li>
             </ul>
         </li>
-        <li><strong>Sales Associate</strong> - Homebase (2024 Summer)
+        <li><strong>Sales Associate</strong> - Home
+base (2024 Summer)
             <ul>
                 <li>Assisted with product selection and inventory management.</li>
             </ul>
@@ -396,6 +452,7 @@
 
 <section id="education">
     <h2>Education</h2>
+
     <ul>
         <li>Kingsley Academy: GCSE (2015 - 2020)
             <ul>
