@@ -20,21 +20,11 @@
         }
 
         @keyframes gradientMove {
-            0% {
-                background-position: 0% 0%;
-            }
-            25% {
-                background-position: 100% 0%;
-            }
-            50% {
-                background-position: 100% 100%;
-            }
-            75% {
-                background-position: 0% 100%;
-            }
-            100% {
-                background-position: 0% 0%;
-            }
+            0% { background-position: 0% 0%; }
+            25% { background-position: 100% 0%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+            100% { background-position: 0% 0%; }
         }
 
         .constellation-container {
@@ -70,21 +60,11 @@
         }
 
         @keyframes reverseGradientMove {
-            0% {
-                background-position: 0% 0%;
-            }
-            25% {
-                background-position: 0% 100%;
-            }
-            50% {
-                background-position: 100% 100%;
-            }
-            75% {
-                background-position: 100% 0%;
-            }
-            100% {
-                background-position: 0% 0%;
-            }
+            0% { background-position: 0% 0%; }
+            25% { background-position: 0% 100%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 100% 0%; }
+            100% { background-position: 0% 0%; }
         }
 
         header {
@@ -108,6 +88,7 @@
             box-shadow: 0 0 15px rgba(85, 26, 139, 0.5);
             position: relative;
             z-index: 10;
+            flex-wrap: wrap;
         }
 
         nav a {
@@ -135,6 +116,8 @@
             position: relative;
             z-index: 10;
             min-height: 100vh;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         section.visible {
@@ -144,29 +127,36 @@
         section h2 {
             text-shadow: 2px 2px 5px hotpink;
             animation: glow 2s infinite alternate;
+            border-bottom: 2px solid rgba(255, 20, 147, 0.5);
+            padding-bottom: 10px;
         }
 
         @keyframes glow {
-            from {
-                text-shadow: 1px 1px 3px hotpink;
-            }
-            to {
-                text-shadow: 3px 3px 6px white;
-            }
+            from { text-shadow: 1px 1px 3px hotpink; }
+            to { text-shadow: 3px 3px 6px white; }
         }
 
         ul li {
             background: rgba(85, 26, 139, 0.3);
             margin: 10px 0;
-            padding: 10px;
+            padding: 15px;
             border-radius: 5px;
             transition: transform 0.3s ease, background 0.3s ease;
             text-shadow: 1px 1px 3px hotpink;
+            list-style-type: none;
+        }
+
+        ul li ul li {
+            background: transparent;
+            padding: 5px 10px;
+            margin: 5px 0;
+            border-left: 2px solid hotpink;
+            border-radius: 0;
         }
 
         ul li:hover {
-            transform: scale(1.05);
-            background: rgba(85, 26, 139, 0.4);
+            transform: scale(1.02);
+            background: rgba(85, 26, 139, 0.5);
         }
 
         footer {
@@ -193,21 +183,12 @@
         }
 
         @keyframes ripple {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(5);
-                opacity: 0;
-            }
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(5); opacity: 0; }
         }
 
         @media (max-width: 768px) {
-            nav {
-                display: none;
-            }
-
+            nav { display: none; }
             .dropdown {
                 display: block;
                 background-color: rgba(26, 0, 29, 0.8);
@@ -218,7 +199,6 @@
                 position: relative;
                 z-index: 10;
             }
-
             .dropdown select {
                 background-color: rgba(26, 0, 29, 0.8);
                 color: white;
@@ -227,21 +207,10 @@
                 border-radius: 5px;
                 text-shadow: 1px 1px 3px hotpink;
                 font-size: 1rem;
+                width: 80%;
             }
-
-            .node {
-                width: 4px;
-                height: 4px;
-            }
-
-            .circle {
-                width: 6px;
-                height: 6px;
-            }
-
-            footer {
-                font-size: 0.9rem;
-            }
+            .node { width: 4px; height: 4px; }
+            .circle { width: 6px; height: 6px; }
         }
     </style>
     <script>
@@ -259,7 +228,6 @@
 
         function createConstellation(container, count) {
             const nodes = [];
-
             const maxNodes = window.innerWidth < 768 ? 20 : count;
 
             for (let i = 0; i < maxNodes; i++) {
@@ -331,10 +299,7 @@
             circle.style.left = `${event.pageX}px`;
             circle.style.top = `${event.pageY}px`;
             document.body.appendChild(circle);
-
-            setTimeout(() => {
-                circle.remove();
-            }, 300);
+            setTimeout(() => { circle.remove(); }, 300);
         });
 
         document.addEventListener("click", (event) => {
@@ -345,10 +310,7 @@
             ripple.style.background = "rgba(255, 20, 147, 0.4)";
             ripple.style.animation = "ripple 0.6s ease-out forwards";
             document.body.appendChild(ripple);
-
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
+            setTimeout(() => { ripple.remove(); }, 600);
         });
 
         document.addEventListener("touchmove", (event) => {
@@ -358,10 +320,7 @@
             circle.style.left = `${touch.pageX}px`;
             circle.style.top = `${touch.pageY}px`;
             document.body.appendChild(circle);
-
-            setTimeout(() => {
-                circle.remove();
-            }, 300);
+            setTimeout(() => { circle.remove(); }, 300);
         });
 
         document.addEventListener("touchstart", (event) => {
@@ -373,19 +332,14 @@
             ripple.style.background = "rgba(255, 20, 147, 0.4)";
             ripple.style.animation = "ripple 0.6s ease-out forwards";
             document.body.appendChild(ripple);
-
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
+            setTimeout(() => { ripple.remove(); }, 600);
         });
 
         window.onload = () => {
             navigateTo('about');
-
             const container = document.createElement('div');
             container.className = 'constellation-container';
             document.body.appendChild(container);
-
             createConstellation(container, 50);
         };
     </script>
@@ -393,14 +347,14 @@
 <body>
 <header>
     <h1 class="text-transition">Csanad Kope</h1>
-    <h3 class="text-transition">Computer Science Student</h3>
-    <h3 class="text-transition">E-commerce Enthusiast</h3>
+    <h3 class="text-transition">Software Engineer | Full-Stack Developer | Entrepreneur</h3>
 </header>
 
 <nav>
     <a href="#" onclick="navigateTo('about')">About Me</a>
     <a href="#" onclick="navigateTo('skills')">Skills</a>
-    <a href="#" onclick="navigateTo('experience')">Experience</a>
+    <a href="#" onclick="navigateTo('projects')">Projects</a>
+    <a href="#" onclick="navigateTo('experience')">Experience & Leadership</a>
     <a href="#" onclick="navigateTo('education')">Education</a>
     <a href="#" onclick="navigateTo('contact')">Contact</a>
 </nav>
@@ -409,7 +363,8 @@
     <select onchange="navigateTo(this.value)">
         <option value="about">About Me</option>
         <option value="skills">Skills</option>
-        <option value="experience">Experience</option>
+        <option value="projects">Projects</option>
+        <option value="experience">Experience & Leadership</option>
         <option value="education">Education</option>
         <option value="contact">Contact</option>
     </select>
@@ -418,132 +373,105 @@
 <section id="about">
     <h2>About Me</h2>
     <ul>
-        <li>The ability to create, innovate, and design a program from an idea excites me. In computer science, I found that I can achieve this.
-            <ul>
-                <li>It also gave me the ability to express my creativity, as I was never much of an artist growing up, in ways I ways I was unable to do so previously.</li>
-            </ul>
-        </li>
-        <li>My journey began with my first computer, where gaming and the introduction to programming transformed my life.
-            <ul>
-                <li>It initially began with gaming but due to having an older brother it allowed me to be introduced to coding at a young age and it opened a new world of opportunities to me. If I felt a game had limitations, I was able to superseded them by learning how to alter the code of the game and creating my own additions.</li>
-            </ul>
-        </li>
-        <li>At age 12 is when I began coding, I created a Minecraft GUI shop using Skript with over 75,000 characters, teaching me resilience and perseverance.
-            <ul>
-                <li>This language is most similar to psuedo code and python, however it allowed me to combine my enjoyment of gaming and coding into a passion.</li>
-            </ul>
-        </li>
-        <li>In A-level Computer Science, I built an aim trainer in Python, applying computational and mathematical principles learned in class and my own free time.
-            <ul>
-                <li>Studying other subject such as maths and geography also gave me a lot more global knowledge of global software markets such as Taiwan, as well as further developed my problem solving ability.</li>
-            </ul>
-        </li>
-        <li>Running my e-commerce business honed my time management, web development, and networking skills.
-            <ul>
-                <li>This also taught me how to run a profitable business using business scaling ideas and analysing my income and how to distribute it using for further development, using software such as Excel.</li>
-            </ul>
-        </li>
-        <li>A competitive athlete in basketball and athletics, I developed teamwork, independence, and a strong work ethic.
-            <ul>
-                <li>I am currently captain of the 1st team of basketball at university which helped me further develop my teamworking and team leading skills.</li>
-            </ul>
-        </li>
-        <li>Despite initial setbacks, I pursued a foundation year in Computer Science at Kingston University, gaining advanced preparation for university modules.
-            <ul>
-                <li>This taught me that through perseverce, hard work and a goal in mind I can get to my dream university of Royal Holloway which is where I am currently studying.</li>
-            </ul>
-        </li>
-        <li>Attending university and being currently in my 2nd year has further developed my team working, time management and coding ability.
-            <ul>
-                <li>It also allowed me to further develop as a programmer and become more independent.</li>
-            </ul>
-        </li>
-        <li>All of the above have allowed me to be able to focus on my own projects such as developing my own applications.
-            <ul>
-                <li>Currently working and developing my own ai "phaise it" empowered google extensions that helps users rephrase their work and make it sound more intellectual and academic.</li>
-            </ul>
-        </li>
+        <li><strong>Bridging Code & Commerce:</strong> I am a Computer Science student at Royal Holloway with an unconventional background. My journey didn't start with textbooks; it started with entrepreneurship. Scaling my own e-commerce business taught me the value of operational leverage, which drove me to master software engineering so I could build the systems I wished existed.</li>
+        <li><strong>Building Complex Architecture:</strong> From architecting fully automated, multi-tiered SaaS platforms using Python, REST APIs, and Stripe Webhooks, to developing high-speed AI text transformation tools. I specialize in identifying bottlenecks and engineering robust software solutions to solve them.</li>
+        <li><strong>Leadership & Performance:</strong> As the 1st Team Captain of the Royal Holloway Men's Basketball team, I orchestrated a performance turnaround, leading the squad to our first league promotion in 5 years and securing the LUSL Cup. I thrive in high-pressure environments, whether it's executing a 48-hour AI hackathon or leading a team to victory.</li>
+        <li><strong>The Hustle:</strong> Before diving deep into computer science, I ranked #1 in a cohort of 50+ in door-to-door sales, mastering negotiation and behavioral psychology. I don't just write code; I understand how to position products, manage KPIs, and communicate technical value to end-users.</li>
     </ul>
 </section>
 
 <section id="skills">
     <h2>Technical Skills</h2>
     <ul>
-        <li>Programming Languages
+        <li><strong>Languages</strong>
             <ul>
-                <li>Python, Java</li>
+                <li>Python, Java, JavaScript, TypeScript, HTML5/CSS3, SQL, C#</li>
             </ul>
         </li>
-        <li>Web Development
+        <li><strong>Frameworks & Backend</strong>
             <ul>
-                <li>HTML, CSS, JavaScript</li>
+                <li>React, Node.js, Spring Boot, Streamlit, Supabase, Firebase</li>
             </ul>
         </li>
-        <li>Database Management
+        <li><strong>Architecture & Integrations</strong>
             <ul>
-                <li>SQL</li>
+                <li>REST APIs, LLM/AI Integration, Stripe API, OAuth, Webhooks, SaaS Architecture</li>
             </ul>
         </li>
-        <li>Version Control
+        <li><strong>Cloud & Tools</strong>
             <ul>
-                <li>Git, GitHub</li>
+                <li>Google Cloud Platform (GCP), Git, GitHub, GitLab</li>
             </ul>
         </li>
-        <li>Data Analysis
+        <li><strong>Business & Analytics</strong>
             <ul>
-                <li>Excel</li>
+                <li>Product Management, SaaS Pricing Models, Market Analysis, Microsoft Excel, Adobe Photoshop, Customer Analytics</li>
             </ul>
         </li>
-        <li>Game Development
+        <li><strong>Languages</strong>
             <ul>
-                <li>C#</li>
+                <li>Fluent in English and Hungarian</li>
             </ul>
         </li>
-        <li>Language proficency
+    </ul>
+</section>
+
+<section id="projects">
+    <h2>Featured Projects</h2>
+    <ul>
+        <li><strong>Nync | SaaS Calendar & Meeting Management Platform</strong>
             <ul>
-                <li>Fluent in Hungarian, English; writing, speaking, reading.</li>
+                <li>Consolidated 4 separate workflows (Scheduling, Billing, Analytics, Notifications) into a single Python-based SaaS platform.</li>
+                <li>Reduced booking friction by ~90%, eliminating email back-and-forth by scanning 2 major calendar APIs (Google & Outlook) for instant availability.</li>
+                <li>Architected a billing infrastructure handling 4 distinct subscription tiers via fully automated Stripe webhooks.</li>
+                <li>Integrated external ecosystems (Discord & MS Teams), delivering real-time "Martyr Board" analytics to track meeting pain points for teams.</li>
+            </ul>
+        </li>
+        <li><strong>Goalify | Top 10 Finalist (Bolt.new AI Hackathon, London)</strong>
+            <ul>
+                <li>Secured a Top 10 rank by building an AI agent in TypeScript within a strict 48-hour deadline.</li>
+                <li>Automated 100% of the goal verification loop using AI vision and text analysis to eliminate manual user tracking.</li>
+                <li>Engineered a real-time feedback system that processes user evidence and returns actionable coaching insights in under 2 seconds.</li>
+            </ul>
+        </li>
+        <li><strong>Phraiseit | AI Text Transformation Tool</strong>
+            <ul>
+                <li>Developed a lightweight NLP interface capable of transforming text input via LLMs with sub-second latency.</li>
+                <li>Deployed a responsive HTML front-end that interfaces with external AI APIs to handle user requests efficiently.</li>
             </ul>
         </li>
     </ul>
 </section>
 
 <section id="experience">
-    <h2>Experience</h2>
+    <h2>Experience & Leadership</h2>
     <ul>
-        <li><strong>CEO</strong> - Thesneakaz (2019 - Present)
+        <li><strong>Computer Science Tutor (Head Teacher)</strong> | Code Camp UK (Sep 2025 - Current)
             <ul>
-                <li>Selling high-end goods, website optimisation, inventory management, and customer support to ensure customer satisfacting and reoccuring customers.</li>
+                <li>Led weekly structured coding sessions for cohorts of 10+ students, translating complex CS fundamentals (loops, variables, conditions) into functional projects.</li>
+                <li>Managed full classroom operations, maintaining 100% accuracy in attendance tracking and safety compliance.</li>
             </ul>
         </li>
-        <li><strong>Cashier/Server</strong> - Twickenham Stadium (2021 - Present)
+        <li><strong>Men's Basketball 1st Team Captain</strong> | Royal Holloway (Current)
             <ul>
-                <li>Provided excellent customer service and efficient event operations throughout extremely busy and in high pressure environment.</li>
+                <li>Elected by peers to manage training schedules, game logistics, and serve as the primary liaison between coaching staff and players.</li>
+                <li>Spearheaded a performance turnaround, leading the team to league promotion for the first time in 5 years and winning the LUSL Cup (first in club history).</li>
             </ul>
         </li>
-        <li><strong>Events Staff/Server</strong> - Haymarket Hotel (2022 - 2023)
+        <li><strong>Founder & CEO</strong> | Thesneakaz (Mar 2019 - Aug 2025)
             <ul>
-                <li>Managed event setups and high-profile interactions and offering the highest level of customemr service.</li>
+                <li>Generated £150,000+ in total revenue, managing a weekly inventory of 60+ units and executing high-volume B2B sales.</li>
+                <li>Secured a selective vendor spot at SneakerCon London, generating £3,000+ in single-day revenue across 200+ customer interactions.</li>
             </ul>
         </li>
-        <li><strong>Labourer</strong> - MRC (2023)
+        <li><strong>Retail Sales Supervisor</strong> | Havaianas, White City (Mar 2025 - Apr 2025)
             <ul>
-                <li>Supported construction logistics and safety compliance and conducted some procedures with robust tools and equipment.</li>
+                <li>Led a team of 6 in a high-traffic retail environment, analyzing daily sales KPIs using Excel to monitor staff performance against targets.</li>
             </ul>
         </li>
-        <li><strong>Salesperson</strong> - Link Marketing (2023 - 2024)
+        <li><strong>Door to Door Sales</strong> | Link Marketing (Dec 2023 - Feb 2024)
             <ul>
-                <li>Improved door-to-door sales techniques which can be applied to all types of sales it also improved my public speakign ability and confidence.</li>
-            </ul>
-        </li>
-        <li><strong>Sales Associate</strong> - Home
-base (2024 Summer)
-            <ul>
-                <li>Assisted with product selection and inventory management and customer service.</li>
-            </ul>
-        </li>
-        <li><strong>Waiter</strong> - 144 On The Hill (2024 - Current)
-            <ul>
-                <li>Providing great customer service to important affluent clientele.</li>
+                <li>Executed 50+ daily B2C interactions. Advanced from Level 1 to 3 in <2 weeks (fastest in the cohort) and ranked #1 out of 50+ trainees.</li>
             </ul>
         </li>
     </ul>
@@ -551,27 +479,22 @@ base (2024 Summer)
 
 <section id="education">
     <h2>Education</h2>
-
     <ul>
-        <li>Kingsley Academy: GCSE (2015 - 2020)
+        <li><strong>BSc Computer Science</strong> | Royal Holloway, University of London (Sep 2023 - Aug 2026)
             <ul>
-                <li>Grades Achieved: 6-9</li>
+                <li>On course for First-Class Honours (70+)</li>
+                <li>Relevant Modules: Software Engineering, Object Oriented Programming, Symbolic AI, Algorithms & Complexity, Databases, Network Security, Operating Systems, Digital Forensics, Cryptography.</li>
             </ul>
         </li>
-        <li>Kingsley Academy: A Levels (2020 - 2022) - Mathematics, Computer Science, Geography
+        <li><strong>Foundation Year in Computer Science</strong> | Kingston University (Sep 2022 - Aug 2023)
             <ul>
-                <li>Achieved grades: Pass or above</li>
+                <li>Achieved Grade: Distinction (75)</li>
             </ul>
         </li>
-        <li>Kingston University: Computer Science BSc (2022 - 2023)
+        <li><strong>A Levels & GCSEs</strong> | Kingsley Academy (2015 - 2022)
             <ul>
-                <li>Foundation Year - Achieved Grade: Distinction</li>
-            </ul>
-        </li>
-        <li>Royal Holloway: Computer Science BSc (2023 - Present)
-            <ul>
-                <li>Achieved 1st class in Year 1</li>
-                <li>On track for 1st class in Year 2</li>
+                <li>A Levels: Maths, Computer Science, Geography</li>
+                <li>GCSEs: Grades 6-9</li>
             </ul>
         </li>
     </ul>
@@ -580,25 +503,15 @@ base (2024 Summer)
 <section id="contact">
     <h2>Contact</h2>
     <ul>
-        <li>Email
-            <ul>
-                <li><a href="mailto:resume@thesneakaz.xyz">resume@thesneakaz.xyz</a></li>
-            </ul></li>
-        <li>Phone Number
-            <ul>
-                <li>+44 7480799967</li>
-            </ul>
-        </li>
-        <li>Residence
-            <ul>
-                <li>United Kingdom, London</li>
-            </ul>
-        </li>
+        <li><strong>Email:</strong> <a href="mailto:thesneakaz@gmail.com" style="color: hotpink;">thesneakaz@gmail.com</a></li>
+        <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/csanad-kope/" target="_blank" style="color: hotpink;">linkedin.com/in/csanad-kope</a></li>
+        <li><strong>GitHub:</strong> <a href="https://github.com/azarele" target="_blank" style="color: hotpink;">github.com/azarele</a></li>
+        <li><strong>Location:</strong> Twickenham, London, United Kingdom</li>
     </ul>
 </section>
 
 <footer>
-    <p>&copy; 2024 Csanad Kope</p>
+    <p>&copy; 2026 Csanad Kope</p>
 </footer>
 
 </body>
