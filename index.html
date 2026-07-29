@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Csanad Kope - Interactive Resume</title>
     <link rel="icon" href="favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        *, *::before, *::after { box-sizing: border-box; }
+
         body {
             font-family: 'Space Mono', monospace;
             margin: 0;
@@ -20,19 +23,17 @@
         }
 
         @keyframes gradientMove {
-            0% { background-position: 0% 0%; }
-            25% { background-position: 100% 0%; }
-            50% { background-position: 100% 100%; }
-            75% { background-position: 0% 100%; }
+            0%   { background-position: 0% 0%; }
+            25%  { background-position: 100% 0%; }
+            50%  { background-position: 100% 100%; }
+            75%  { background-position: 0% 100%; }
             100% { background-position: 0% 0%; }
         }
 
         .constellation-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             pointer-events: none;
             z-index: 0;
             overflow: hidden;
@@ -40,30 +41,29 @@
 
         .node {
             position: absolute;
-            width: 6px;
-            height: 6px;
-            background: linear-gradient(270deg, rgb(158, 0, 79), #1a001d, #2c0032);
+            width: 6px; height: 6px;
+            background: linear-gradient(270deg, rgb(158,0,79), #1a001d, #2c0032);
             background-size: 600% 600%;
             border-radius: 50%;
-            box-shadow: 0 0 8px rgba(255, 20, 147, 0.6);
+            box-shadow: 0 0 8px rgba(255,20,147,0.6);
             animation: reverseGradientMove 10s ease infinite;
         }
 
         .line {
             position: absolute;
             height: 1px;
-            background: linear-gradient(270deg, rgb(158, 0, 79), #1a001d, #2c0032);
+            background: linear-gradient(270deg, rgb(158,0,79), #1a001d, #2c0032);
             background-size: 600% 600%;
             animation: reverseGradientMove 10s ease infinite;
             transform-origin: top left;
-            box-shadow: 0 0 8px rgba(255, 20, 147, 0.6);
+            box-shadow: 0 0 8px rgba(255,20,147,0.6);
         }
 
         @keyframes reverseGradientMove {
-            0% { background-position: 0% 0%; }
-            25% { background-position: 0% 100%; }
-            50% { background-position: 100% 100%; }
-            75% { background-position: 100% 0%; }
+            0%   { background-position: 0% 0%; }
+            25%  { background-position: 0% 100%; }
+            50%  { background-position: 100% 100%; }
+            75%  { background-position: 100% 0%; }
             100% { background-position: 0% 0%; }
         }
 
@@ -72,291 +72,349 @@
             z-index: 10;
             background-color: transparent;
             color: white;
-            padding: 1rem;
+            padding: 1.5rem 1rem 1rem;
             text-align: center;
-            text-shadow: 2px 2px 4px hotpink;
         }
 
         header h1 {
-            margin-bottom: 0.5rem;
+            margin: 0 0 0.3rem;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            letter-spacing: 0.05em;
+            text-shadow: 0 0 20px hotpink, 2px 2px 4px #000;
+        }
+
+        header h3 {
+            margin: 0;
+            font-size: clamp(0.7rem, 2vw, 0.95rem);
+            font-weight: 400;
+            opacity: 0.85;
+            text-shadow: 1px 1px 3px hotpink;
+            letter-spacing: 0.08em;
         }
 
         nav {
             display: flex;
             justify-content: center;
-            background-color: rgba(26, 0, 29, 0.8);
-            box-shadow: 0 0 15px rgba(85, 26, 139, 0.5);
-            position: relative;
-            z-index: 10;
+            background-color: rgba(26,0,29,0.85);
+            box-shadow: 0 0 15px rgba(85,26,139,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 20;
             flex-wrap: wrap;
+            backdrop-filter: blur(6px);
         }
 
         nav a {
             color: white;
-            padding: 1rem;
+            padding: 0.9rem 0.8rem;
             text-decoration: none;
-            margin: 0 10px;
-            transition: transform 0.2s ease, color 0.3s ease;
+            margin: 0 4px;
+            font-size: 0.78rem;
+            transition: transform 0.2s ease, color 0.3s ease, text-shadow 0.3s ease;
             text-shadow: 1px 1px 3px hotpink;
+            letter-spacing: 0.04em;
         }
 
         nav a:hover {
             transform: scale(1.1);
+            text-shadow: 0 0 12px hotpink, 0 0 24px white;
         }
 
-        .dropdown {
-            display: none;
+        nav a.active {
+            text-shadow: 0 0 14px white, 0 0 6px hotpink;
+            border-bottom: 2px solid hotpink;
         }
+
+        .dropdown { display: none; }
 
         section {
-            padding: 20px;
+            padding: 32px 24px 60px;
             display: none;
-            opacity: 1;
-            text-shadow: 1px 1px 3px hotpink;
             position: relative;
             z-index: 10;
-            min-height: 100vh;
+            min-height: 80vh;
             max-width: 1000px;
             margin: 0 auto;
+            animation: fadeIn 0.35s ease;
         }
 
-        section.visible {
-            display: block;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
+
+        section.visible { display: block; }
 
         section h2 {
+            font-size: clamp(1.2rem, 3vw, 1.7rem);
             text-shadow: 2px 2px 5px hotpink;
             animation: glow 2s infinite alternate;
-            border-bottom: 2px solid rgba(255, 20, 147, 0.5);
+            border-bottom: 2px solid rgba(255,20,147,0.4);
             padding-bottom: 10px;
+            margin-bottom: 28px;
+            letter-spacing: 0.06em;
         }
 
         @keyframes glow {
             from { text-shadow: 1px 1px 3px hotpink; }
-            to { text-shadow: 3px 3px 6px white; }
+            to   { text-shadow: 3px 3px 10px white, 0 0 20px hotpink; }
         }
 
-        ul li {
-            background: rgba(85, 26, 139, 0.3);
-            margin: 10px 0;
-            padding: 15px;
-            border-radius: 5px;
-            transition: transform 0.3s ease, background 0.3s ease;
+        /* ── CARDS (shared base) ── */
+        .card {
+            background: rgba(85,26,139,0.22);
+            border: 1px solid rgba(255,20,147,0.18);
+            border-radius: 10px;
+            padding: 20px 22px;
+            margin-bottom: 18px;
+            transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,20,147,0.07) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            background: rgba(85,26,139,0.42);
+            box-shadow: 0 8px 30px rgba(255,20,147,0.2);
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 10px;
             text-shadow: 1px 1px 3px hotpink;
-            list-style-type: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        ul li ul li {
+        .card-title a {
+            color: hotpink;
+            text-decoration: none;
+            font-size: 0.75rem;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .card-title a:hover { opacity: 1; }
+
+        .card-meta {
+            font-size: 0.72rem;
+            opacity: 0.6;
+            margin-bottom: 10px;
+            letter-spacing: 0.04em;
+        }
+
+        .card ul {
+            margin: 8px 0 0;
+            padding: 0;
+        }
+
+        .card ul li {
             background: transparent;
+            border: none;
+            border-left: 2px solid rgba(255,20,147,0.5);
             padding: 5px 10px;
-            margin: 5px 0;
-            border-left: 2px solid hotpink;
+            margin: 6px 0;
             border-radius: 0;
+            font-size: 0.82rem;
+            line-height: 1.55;
+            text-shadow: none;
+            list-style: none;
+            transition: border-color 0.2s ease;
         }
 
-        ul li:hover {
-            transform: scale(1.02);
-            background: rgba(85, 26, 139, 0.5);
+        .card:hover ul li { border-left-color: hotpink; }
+
+        /* ── TAG CHIPS ── */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
         }
 
+        .tag {
+            background: rgba(255,20,147,0.15);
+            border: 1px solid rgba(255,20,147,0.35);
+            border-radius: 20px;
+            padding: 2px 10px;
+            font-size: 0.65rem;
+            letter-spacing: 0.05em;
+            color: rgba(255,200,220,0.9);
+            white-space: nowrap;
+        }
+
+        /* ── BADGE (hackathon, etc) ── */
+        .badge {
+            background: linear-gradient(90deg, rgba(255,20,147,0.7), rgba(140,0,80,0.7));
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 0.6rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: white;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        /* ── SKILLS GRID ── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+
+        .skill-block {
+            background: rgba(85,26,139,0.22);
+            border: 1px solid rgba(255,20,147,0.18);
+            border-radius: 10px;
+            padding: 16px 18px;
+            transition: transform 0.25s ease, background 0.25s ease;
+        }
+
+        .skill-block:hover {
+            transform: translateY(-2px);
+            background: rgba(85,26,139,0.42);
+        }
+
+        .skill-block h3 {
+            margin: 0 0 10px;
+            font-size: 0.8rem;
+            text-shadow: 1px 1px 3px hotpink;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        /* ── ABOUT ── */
+        #about ul { padding: 0; margin: 0; }
+        #about ul li {
+            background: rgba(85,26,139,0.22);
+            border: 1px solid rgba(255,20,147,0.18);
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin-bottom: 16px;
+            list-style: none;
+            transition: transform 0.25s ease, background 0.25s ease;
+            line-height: 1.6;
+            font-size: 0.88rem;
+        }
+        #about ul li:hover {
+            transform: translateY(-2px);
+            background: rgba(85,26,139,0.42);
+        }
+        #about ul li strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            text-shadow: 1px 1px 3px hotpink;
+        }
+
+        /* ── CONTACT ── */
+        #contact .card ul li {
+            border-left: none;
+            padding: 8px 0;
+            font-size: 0.88rem;
+        }
+        #contact .card ul li a {
+            color: hotpink;
+            text-decoration: none;
+        }
+        #contact .card ul li a:hover { text-decoration: underline; }
+
+        /* ── FOOTER ── */
         footer {
-            background-color: rgba(26, 0, 29, 0.8);
+            background-color: rgba(26,0,29,0.85);
             color: white;
             text-align: center;
-            padding: 10px 0;
+            padding: 14px 0;
             position: relative;
             width: 100%;
+            font-size: 0.75rem;
             text-shadow: 1px 1px 3px hotpink;
-            box-shadow: 0 0 15px rgba(85, 26, 139, 0.5);
+            box-shadow: 0 0 15px rgba(85,26,139,0.5);
             z-index: 10;
+            letter-spacing: 0.05em;
         }
 
+        /* ── CURSOR RIPPLE ── */
         .circle {
             position: absolute;
-            width: 8px;
-            height: 8px;
-            background: rgba(255, 20, 147, 0.85);
+            width: 8px; height: 8px;
+            background: rgba(255,20,147,0.85);
             border-radius: 50%;
             pointer-events: none;
-            box-shadow: 0 0 5px rgba(255, 20, 147, 0.5);
+            box-shadow: 0 0 5px rgba(255,20,147,0.5);
             animation: ripple 0.3s ease-out forwards;
+            z-index: 9999;
         }
 
         @keyframes ripple {
-            0% { transform: scale(1); opacity: 1; }
+            0%   { transform: scale(1); opacity: 1; }
             100% { transform: scale(5); opacity: 0; }
         }
 
+        /* ── MOBILE ── */
         @media (max-width: 768px) {
             nav { display: none; }
             .dropdown {
                 display: block;
-                background-color: rgba(26, 0, 29, 0.8);
+                background-color: rgba(26,0,29,0.85);
                 color: white;
-                text-shadow: 1px 1px 3px hotpink;
                 padding: 10px;
                 text-align: center;
-                position: relative;
-                z-index: 10;
+                position: sticky;
+                top: 0;
+                z-index: 20;
             }
             .dropdown select {
-                background-color: rgba(26, 0, 29, 0.8);
+                background-color: rgba(26,0,29,0.9);
                 color: white;
                 padding: 10px;
-                border: none;
+                border: 1px solid rgba(255,20,147,0.4);
                 border-radius: 5px;
-                text-shadow: 1px 1px 3px hotpink;
-                font-size: 1rem;
-                width: 80%;
+                font-size: 0.95rem;
+                width: 85%;
+                font-family: 'Space Mono', monospace;
             }
             .node { width: 4px; height: 4px; }
-            .circle { width: 6px; height: 6px; }
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
         }
     </style>
-    <script>
-        function navigateTo(sectionId) {
-            const sections = document.querySelectorAll('section');
-            sections.forEach(section => {
-                section.classList.remove('visible');
-            });
-
-            const targetSection = document.getElementById(sectionId);
-            targetSection.classList.add('visible');
-
-            window.scrollTo({ top: 0, behavior: 'instant' });
-        }
-
-        function createConstellation(container, count) {
-            const nodes = [];
-            const maxNodes = window.innerWidth < 768 ? 20 : count;
-
-            for (let i = 0; i < maxNodes; i++) {
-                const node = document.createElement('div');
-                node.className = 'node';
-                node.style.left = `${Math.random() * 100}vw`;
-                node.style.top = `${Math.random() * 100}vh`;
-                container.appendChild(node);
-                nodes.push({ element: node, dx: Math.random() * 2 - 1, dy: Math.random() * 2 - 1 });
-            }
-
-            const lines = [];
-
-            function drawLines() {
-                lines.forEach(line => line.remove());
-                lines.length = 0;
-
-                nodes.forEach((node, idx) => {
-                    nodes.forEach((otherNode) => {
-                        if (node === otherNode) return;
-
-                        const x1 = node.element.offsetLeft;
-                        const y1 = node.element.offsetTop;
-                        const x2 = otherNode.element.offsetLeft;
-                        const y2 = otherNode.element.offsetTop;
-                        const distance = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
-
-                        if (distance < 150) {
-                            const line = document.createElement('div');
-                            line.className = 'line';
-                            const length = distance;
-                            const angle = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
-                            line.style.width = `${length}px`;
-                            line.style.transform = `rotate(${angle}deg)`;
-                            line.style.left = `${x1}px`;
-                            line.style.top = `${y1}px`;
-                            container.appendChild(line);
-                            lines.push(line);
-                        }
-                    });
-                });
-            }
-
-            function moveNodes() {
-                nodes.forEach(node => {
-                    const rect = container.getBoundingClientRect();
-                    let x = node.element.offsetLeft + node.dx;
-                    let y = node.element.offsetTop + node.dy;
-
-                    if (x < 0 || x > rect.width) node.dx *= -1;
-                    if (y < 0 || y > rect.height) node.dy *= -1;
-
-                    x = Math.max(0, Math.min(rect.width, x));
-                    y = Math.max(0, Math.min(rect.height, y));
-
-                    node.element.style.left = `${x}px`;
-                    node.element.style.top = `${y}px`;
-                });
-
-                drawLines();
-            }
-
-            setInterval(moveNodes, 50);
-        }
-
-        document.addEventListener("mousemove", (event) => {
-            const circle = document.createElement("div");
-            circle.className = "circle";
-            circle.style.left = `${event.pageX}px`;
-            circle.style.top = `${event.pageY}px`;
-            document.body.appendChild(circle);
-            setTimeout(() => { circle.remove(); }, 300);
-        });
-
-        document.addEventListener("click", (event) => {
-            const ripple = document.createElement("div");
-            ripple.className = "circle";
-            ripple.style.left = `${event.pageX}px`;
-            ripple.style.top = `${event.pageY}px`;
-            ripple.style.background = "rgba(255, 20, 147, 0.4)";
-            ripple.style.animation = "ripple 0.6s ease-out forwards";
-            document.body.appendChild(ripple);
-            setTimeout(() => { ripple.remove(); }, 600);
-        });
-
-        document.addEventListener("touchmove", (event) => {
-            const touch = event.touches[0];
-            const circle = document.createElement("div");
-            circle.className = "circle";
-            circle.style.left = `${touch.pageX}px`;
-            circle.style.top = `${touch.pageY}px`;
-            document.body.appendChild(circle);
-            setTimeout(() => { circle.remove(); }, 300);
-        });
-
-        document.addEventListener("touchstart", (event) => {
-            const touch = event.touches[0];
-            const ripple = document.createElement("div");
-            ripple.className = "circle";
-            ripple.style.left = `${touch.pageX}px`;
-            ripple.style.top = `${touch.pageY}px`;
-            ripple.style.background = "rgba(255, 20, 147, 0.4)";
-            ripple.style.animation = "ripple 0.6s ease-out forwards";
-            document.body.appendChild(ripple);
-            setTimeout(() => { ripple.remove(); }, 600);
-        });
-
-        window.onload = () => {
-            navigateTo('about');
-            const container = document.createElement('div');
-            container.className = 'constellation-container';
-            document.body.appendChild(container);
-            createConstellation(container, 50);
-        };
-    </script>
 </head>
 <body>
+
 <header>
-    <h1 class="text-transition">Csanad Kope</h1>
-    <h3 class="text-transition">Software Engineer | Full-Stack Developer | Entrepreneur</h3>
+    <h1>Csanad Kope</h1>
+    <h3>Software Engineer &nbsp;·&nbsp; Full-Stack Developer &nbsp;·&nbsp; Entrepreneur</h3>
 </header>
 
 <nav>
-    <a href="#" onclick="navigateTo('about')">About Me</a>
-    <a href="#" onclick="navigateTo('skills')">Skills</a>
-    <a href="#" onclick="navigateTo('projects')">Projects</a>
-    <a href="#" onclick="navigateTo('experience')">Experience & Leadership</a>
-    <a href="#" onclick="navigateTo('education')">Education</a>
-    <a href="#" onclick="navigateTo('contact')">Contact</a>
+    <a href="#" onclick="navigateTo('about'); return false;">About</a>
+    <a href="#" onclick="navigateTo('skills'); return false;">Skills</a>
+    <a href="#" onclick="navigateTo('projects'); return false;">Projects</a>
+    <a href="#" onclick="navigateTo('experience'); return false;">Experience</a>
+    <a href="#" onclick="navigateTo('education'); return false;">Education</a>
+    <a href="#" onclick="navigateTo('contact'); return false;">Contact</a>
 </nav>
 
 <div class="dropdown">
@@ -364,155 +422,412 @@
         <option value="about">About Me</option>
         <option value="skills">Skills</option>
         <option value="projects">Projects</option>
-        <option value="experience">Experience & Leadership</option>
+        <option value="experience">Experience &amp; Leadership</option>
         <option value="education">Education</option>
         <option value="contact">Contact</option>
     </select>
 </div>
 
+<!-- ════════════════════════════════════════════
+     ABOUT
+═════════════════════════════════════════════ -->
 <section id="about">
     <h2>About Me</h2>
     <ul>
-        <li><strong>Bridging Code & Commerce:</strong> I am a Computer Science student at Royal Holloway with an unconventional background. My journey didn't start with textbooks; it started with entrepreneurship. Scaling my own e-commerce business taught me the value of operational leverage, which drove me to master software engineering so I could build the systems I wished existed.</li>
-        <li><strong>Building Complex Architecture:</strong> From architecting fully automated, multi-tiered SaaS platforms using Python, REST APIs, and Stripe Webhooks, to developing high-speed AI text transformation tools. I specialize in identifying bottlenecks and engineering robust software solutions to solve them.</li>
-        <li><strong>Leadership & Performance:</strong> As the 1st Team Captain of the Royal Holloway Men's Basketball team, I orchestrated a performance turnaround, leading the squad to our first league promotion in 5 years and securing the LUSL Cup. I thrive in high-pressure environments, whether it's executing a 48-hour AI hackathon or leading a team to victory.</li>
-        <li><strong>The Hustle:</strong> Before diving deep into computer science, I ranked #1 in a cohort of 50+ in door-to-door sales, mastering negotiation and behavioral psychology. I don't just write code; I understand how to position products, manage KPIs, and communicate technical value to end-users.</li>
+        <li>
+            <strong>Bridging Code &amp; Commerce</strong>
+            My journey didn't start with textbooks — it started with entrepreneurship. Scaling my own e-commerce business to £150K+ in revenue taught me operational leverage, which drove me to master software engineering so I could build the systems I wished existed.
+        </li>
+        <li>
+            <strong>Building Complex Architecture</strong>
+            From architecting production POS systems with full Shopify two-way sync, to SaaS platforms with Stripe billing, to cross-platform desktop games with Rust/Wasm and Go microservices — I specialise in identifying bottlenecks and engineering robust solutions to eliminate them.
+        </li>
+        <li>
+            <strong>Leadership &amp; Performance</strong>
+            As 1st Team Captain of the Royal Holloway Men's Basketball team, I led the squad to league promotion for the first time in 5 years and secured the LUSL Cup — the club's first ever. I thrive in high-pressure environments, from 48-hour hackathons to production deployments.
+        </li>
+        <li>
+            <strong>The Hustle</strong>
+            Before diving deep into CS, I ranked #1 in a cohort of 50+ in door-to-door sales, mastering negotiation and behavioural psychology. I don't just write code — I understand how to position products, manage KPIs, and communicate technical value to end-users.
+        </li>
     </ul>
 </section>
 
+<!-- ════════════════════════════════════════════
+     SKILLS
+═════════════════════════════════════════════ -->
 <section id="skills">
     <h2>Technical Skills</h2>
-    <ul>
-        <li><strong>Languages</strong>
-            <ul>
-                <li>Python, Java, JavaScript, TypeScript, HTML5/CSS3, SQL, C#</li>
-            </ul>
-        </li>
-        <li><strong>Frameworks & Backend</strong>
-            <ul>
-                <li>React, Node.js, Spring Boot, Streamlit, Supabase, Firebase</li>
-            </ul>
-        </li>
-        <li><strong>Architecture & Integrations</strong>
-            <ul>
-                <li>REST APIs, LLM/AI Integration, Stripe API, OAuth, Webhooks, SaaS Architecture</li>
-            </ul>
-        </li>
-        <li><strong>Cloud & Tools</strong>
-            <ul>
-                <li>Google Cloud Platform (GCP), Git, GitHub, GitLab</li>
-            </ul>
-        </li>
-        <li><strong>Business & Analytics</strong>
-            <ul>
-                <li>Product Management, SaaS Pricing Models, Market Analysis, Microsoft Excel, Adobe Photoshop, Customer Analytics</li>
-            </ul>
-        </li>
-        <li><strong>Languages</strong>
-            <ul>
-                <li>Fluent in English and Hungarian</li>
-            </ul>
-        </li>
-    </ul>
+    <div class="skills-grid">
+        <div class="skill-block">
+            <h3>Languages</h3>
+            <div class="skill-tags">
+                <span class="tag">Python</span><span class="tag">TypeScript</span><span class="tag">JavaScript</span>
+                <span class="tag">Java</span><span class="tag">Rust</span><span class="tag">Go</span>
+                <span class="tag">C#</span><span class="tag">HTML5/CSS3</span><span class="tag">SQL</span>
+            </div>
+        </div>
+        <div class="skill-block">
+            <h3>Frameworks &amp; Backend</h3>
+            <div class="skill-tags">
+                <span class="tag">Node.js</span><span class="tag">React</span><span class="tag">Spring Boot</span>
+                <span class="tag">Prisma</span><span class="tag">.NET 8</span><span class="tag">Streamlit</span>
+                <span class="tag">PixiJS</span><span class="tag">Tauri 2.0</span>
+            </div>
+        </div>
+        <div class="skill-block">
+            <h3>Databases &amp; Cloud</h3>
+            <div class="skill-tags">
+                <span class="tag">PostgreSQL</span><span class="tag">Supabase</span><span class="tag">Firebase</span>
+                <span class="tag">Railway</span><span class="tag">GCP</span><span class="tag">Docker</span>
+                <span class="tag">Nginx</span>
+            </div>
+        </div>
+        <div class="skill-block">
+            <h3>APIs &amp; Integrations</h3>
+            <div class="skill-tags">
+                <span class="tag">REST APIs</span><span class="tag">OAuth 2.0</span><span class="tag">Webhooks</span>
+                <span class="tag">Shopify API</span><span class="tag">eBay API</span><span class="tag">Stripe API</span>
+                <span class="tag">Google Calendar</span><span class="tag">Outlook</span><span class="tag">Discord</span>
+                <span class="tag">Web Push (VAPID)</span>
+            </div>
+        </div>
+        <div class="skill-block">
+            <h3>Architecture &amp; DevOps</h3>
+            <div class="skill-tags">
+                <span class="tag">SaaS Architecture</span><span class="tag">LLM/AI Integration</span>
+                <span class="tag">Microservices</span><span class="tag">WebAssembly</span>
+                <span class="tag">Git / GitHub / GitLab</span><span class="tag">Agile / Sprints</span>
+            </div>
+        </div>
+        <div class="skill-block">
+            <h3>Business &amp; Soft Skills</h3>
+            <div class="skill-tags">
+                <span class="tag">Product Management</span><span class="tag">SaaS Pricing</span>
+                <span class="tag">Market Analysis</span><span class="tag">Excel / KPI Reporting</span>
+                <span class="tag">Customer Analytics</span><span class="tag">Sales &amp; Negotiation</span>
+                <span class="tag">Hungarian (Fluent)</span>
+            </div>
+        </div>
+    </div>
 </section>
 
+<!-- ════════════════════════════════════════════
+     PROJECTS
+═════════════════════════════════════════════ -->
 <section id="projects">
     <h2>Featured Projects</h2>
-    <ul>
-        <li><strong>Nync | SaaS Calendar & Meeting Management Platform</strong>
-            <ul>
-                <li>Consolidated 4 separate workflows (Scheduling, Billing, Analytics, Notifications) into a single Python-based SaaS platform.</li>
-                <li>Reduced booking friction by ~90%, eliminating email back-and-forth by scanning 2 major calendar APIs (Google & Outlook) for instant availability.</li>
-                <li>Architected a billing infrastructure handling 4 distinct subscription tiers via fully automated Stripe webhooks.</li>
-                <li>Integrated external ecosystems (Discord & MS Teams), delivering real-time "Martyr Board" analytics to track meeting pain points for teams.</li>
-            </ul>
-        </li>
-        <li><strong>Goalify | Top 10 Finalist (Bolt.new AI Hackathon, London)</strong>
-            <ul>
-                <li>Secured a Top 10 rank by building an AI agent in TypeScript within a strict 48-hour deadline.</li>
-                <li>Automated 100% of the goal verification loop using AI vision and text analysis to eliminate manual user tracking.</li>
-                <li>Engineered a real-time feedback system that processes user evidence and returns actionable coaching insights in under 2 seconds.</li>
-            </ul>
-        </li>
-        <li><strong>Phraiseit | AI Text Transformation Tool</strong>
-            <ul>
-                <li>Developed a lightweight NLP interface capable of transforming text input via LLMs with sub-second latency.</li>
-                <li>Deployed a responsive HTML front-end that interfaces with external AI APIs to handle user requests efficiently.</li>
-            </ul>
-        </li>
-    </ul>
+
+    <div class="card">
+        <div class="card-title">
+            ShopOS v4 &nbsp;|&nbsp; Production POS &amp; Inventory System
+            <span class="badge">Production</span>
+        </div>
+        <div class="card-meta">TypeScript · Node.js · Prisma · PostgreSQL · Railway · Shopify API</div>
+        <ul>
+            <li>Converted a single-file HTML prototype into a production-ready 32-file multi-user POS system with zero type errors; deployed on Railway.</li>
+            <li>Engineered full two-way Shopify sync via OAuth 2.0 and webhooks — bidirectionally updating inventory, orders, and customers across physical and online store in real time.</li>
+            <li>Built barcode/QR label generation, role-based access control, and a KPI analytics dashboard with staff performance and stock-level reporting.</li>
+        </ul>
+        <div class="tags">
+            <span class="tag">Full-Stack</span><span class="tag">Shopify</span><span class="tag">OAuth 2.0</span>
+            <span class="tag">Webhooks</span><span class="tag">RBAC</span><span class="tag">PostgreSQL</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            PokéManager &nbsp;|&nbsp; Pokémon Card Inventory &amp; eBay Sales Platform
+        </div>
+        <div class="card-meta">TypeScript · Node.js · Supabase · eBay API · Web Push</div>
+        <ul>
+            <li>Built a full-stack card inventory and sales management system with real-time eBay order sync, automated profit/fee calculation, and bundle sale handling across multi-quantity listings.</li>
+            <li>Integrated eBay OAuth token auto-refresh, web push notifications (VAPID), and CSV export.</li>
+            <li>Architected Supabase PostgreSQL backend with per-item profit tracking and promoted listing fee reconciliation.</li>
+        </ul>
+        <div class="tags">
+            <span class="tag">eBay API</span><span class="tag">Supabase</span><span class="tag">Web Push</span>
+            <span class="tag">VAPID</span><span class="tag">CSV Export</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            TradeQuest &nbsp;|&nbsp; Cross-Platform Mobile Trading Game
+            <span class="badge">In Development</span>
+        </div>
+        <div class="card-meta">Tauri 2.0 · Rust / WebAssembly · PixiJS · Go Microservices</div>
+        <ul>
+            <li>Building a cross-platform desktop/mobile trading game using Tauri 2.0 with a Rust/Wasm core for high-performance game logic.</li>
+            <li>PixiJS front-end rendering with Go microservices backend; developed using a sprint-prompt workflow with full-stack WSL 2 debugging pipeline.</li>
+        </ul>
+        <div class="tags">
+            <span class="tag">Tauri 2.0</span><span class="tag">Rust</span><span class="tag">WebAssembly</span>
+            <span class="tag">PixiJS</span><span class="tag">Go</span><span class="tag">Microservices</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            HolidayExplorer &nbsp;|&nbsp; Mobile App Technical Assessment
+            <span class="badge">.NET 8 / C#</span>
+        </div>
+        <div class="card-meta">.NET 8 · C# · Nager Date API</div>
+        <ul>
+            <li>Completed a graduate-level technical assessment: fixed existing bugs, implemented <code>GetLongWeekendsAsync</code>, and resolved a canary-trap zero-width space preservation challenge.</li>
+            <li>All 16 tests passed; PR submitted and accepted.</li>
+        </ul>
+        <div class="tags">
+            <span class="tag">.NET 8</span><span class="tag">C#</span><span class="tag">REST API</span>
+            <span class="tag">Unit Testing</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            Nync &nbsp;|&nbsp; SaaS Calendar &amp; Meeting Management Platform
+        </div>
+        <div class="card-meta">Python · Google Calendar API · Outlook API · Stripe · Discord · MS Teams</div>
+        <ul>
+            <li>Consolidated 4 separate workflows (Scheduling, Billing, Analytics, Notifications) into a single Python-based SaaS platform.</li>
+            <li>Reduced booking friction by ~90% via dual calendar API scanning (Google &amp; Outlook) for instant availability.</li>
+            <li>Architected Stripe billing across 4 subscription tiers with automated webhooks; integrated Discord &amp; MS Teams with real-time "Martyr Board" meeting analytics.</li>
+        </ul>
+        <div class="tags">
+            <span class="tag">Python</span><span class="tag">SaaS</span><span class="tag">Stripe</span>
+            <span class="tag">Calendar APIs</span><span class="tag">Webhooks</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            Goalify &nbsp;|&nbsp; AI Goal Tracking Agent
+            <span class="badge">Top 10 — Bolt.new Hackathon London</span>
+        </div>
+        <div class="card-meta">TypeScript · AI Vision · LLM APIs</div>
+        <ul>
+            <li>Secured Top 10 rank by building an AI agent within a strict 48-hour deadline.</li>
+            <li>Automated 100% of the goal verification loop using AI vision and text analysis to eliminate manual user tracking.</li>
+            <li>Engineered a real-time feedback system that processes user evidence and returns actionable coaching insights in under 2 seconds.</li>
+        </ul>
+        <div class="tags">
+            <span class="tag">AI Agent</span><span class="tag">TypeScript</span><span class="tag">LLM</span>
+            <span class="tag">Hackathon</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            Phraiseit &nbsp;|&nbsp; AI Text Transformation Tool
+        </div>
+        <div class="card-meta">HTML · JavaScript · LLM API</div>
+        <ul>
+            <li>Built a lightweight NLP interface capable of transforming text via LLMs with sub-second latency.</li>
+            <li>Responsive front-end interfacing with external AI APIs to handle user requests efficiently.</li>
+        </ul>
+        <div class="tags">
+            <span class="tag">NLP</span><span class="tag">LLM</span><span class="tag">JavaScript</span>
+        </div>
+    </div>
 </section>
 
+<!-- ════════════════════════════════════════════
+     EXPERIENCE
+═════════════════════════════════════════════ -->
 <section id="experience">
-    <h2>Experience & Leadership</h2>
-    <ul>
-        <li><strong>Computer Science Tutor (Head Teacher)</strong> | Code Camp UK (Sep 2025 - Current)
-            <ul>
-                <li>Led weekly structured coding sessions for cohorts of 10+ students, translating complex CS fundamentals (loops, variables, conditions) into functional projects.</li>
-                <li>Managed full classroom operations, maintaining 100% accuracy in attendance tracking and safety compliance.</li>
-            </ul>
-        </li>
-        <li><strong>Men's Basketball 1st Team Captain</strong> | Royal Holloway (Current)
-            <ul>
-                <li>Elected by peers to manage training schedules, game logistics, and serve as the primary liaison between coaching staff and players.</li>
-                <li>Spearheaded a performance turnaround, leading the team to league promotion for the first time in 5 years and winning the LUSL Cup (first in club history).</li>
-            </ul>
-        </li>
-        <li><strong>Founder & CEO</strong> | Thesneakaz (Mar 2019 - Aug 2025)
-            <ul>
-                <li>Generated £150,000+ in total revenue, managing a weekly inventory of 60+ units and executing high-volume B2B sales.</li>
-                <li>Secured a selective vendor spot at SneakerCon London, generating £3,000+ in single-day revenue across 200+ customer interactions.</li>
-            </ul>
-        </li>
-        <li><strong>Retail Sales Supervisor</strong> | Havaianas, White City (Mar 2025 - Apr 2025)
-            <ul>
-                <li>Led a team of 6 in a high-traffic retail environment, analyzing daily sales KPIs using Excel to monitor staff performance against targets.</li>
-            </ul>
-        </li>
-        <li><strong>Door to Door Sales</strong> | Link Marketing (Dec 2023 - Feb 2024)
-            <ul>
-                <li>Executed 50+ daily B2C interactions. Advanced from Level 1 to 3 in <2 weeks (fastest in the cohort) and ranked #1 out of 50+ trainees.</li>
-            </ul>
-        </li>
-    </ul>
+    <h2>Experience &amp; Leadership</h2>
+
+    <div class="card">
+        <div class="card-title">Computer Science Tutor (Head Teacher)</div>
+        <div class="card-meta">Code Camp UK &nbsp;·&nbsp; Sep 2025 – Present</div>
+        <ul>
+            <li>Led weekly structured coding sessions for cohorts of 10+ students (ages 6–10), translating complex CS fundamentals into age-appropriate, project-based lessons.</li>
+            <li>Delivered 100% of curriculum goals; students built functional projects by term-end. Maintained 100% accuracy in attendance tracking and safety compliance.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Men's Basketball 1st Team Captain</div>
+        <div class="card-meta">Royal Holloway, University of London &nbsp;·&nbsp; 2023 – 2026</div>
+        <ul>
+            <li>Elected by peers to lead the 1st Team; managed training schedules, game logistics, and coaching liaison.</li>
+            <li>Led the team to league promotion for the first time in 5 years and captained the squad to the club's first-ever LUSL Cup victory.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Founder &amp; CEO</div>
+        <div class="card-meta">Thesneakaz &nbsp;·&nbsp; Mar 2019 – Aug 2025</div>
+        <ul>
+            <li>Generated £150,000+ in total revenue managing a weekly inventory of 60+ units; executed high-volume B2B sales via StockX and Alias.</li>
+            <li>Secured a vendor spot at SneakerCon (Olympia London), generating £3,000+ in single-day revenue across 200+ customer interactions.</li>
+            <li>Grew brand presence to 400+ Instagram followers through daily content strategies and service-led customer retention.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Retail Sales Supervisor</div>
+        <div class="card-meta">Havaianas, Westfield White City &nbsp;·&nbsp; Mar 2025 – Apr 2025</div>
+        <ul>
+            <li>Led a team of 6 in a high-traffic retail environment, overseeing full operational life-cycles including opening, closing, and software reconciliation.</li>
+            <li>Analysed daily sales KPIs using Excel; generated end-of-day reports to optimise revenue strategies while servicing ~200 customers daily.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Door to Door Sales</div>
+        <div class="card-meta">Link Marketing, Slough &nbsp;·&nbsp; Dec 2023 – Feb 2024</div>
+        <ul>
+            <li>Executed 50+ daily B2C interactions; advanced from Level 1 to 3 in under 2 weeks — fastest in the cohort.</li>
+            <li>Ranked #1 in a training cohort of 50+.</li>
+        </ul>
+    </div>
 </section>
 
+<!-- ════════════════════════════════════════════
+     EDUCATION
+═════════════════════════════════════════════ -->
 <section id="education">
     <h2>Education</h2>
-    <ul>
-        <li><strong>BSc Computer Science</strong> | Royal Holloway, University of London (Sep 2023 - Aug 2026)
-            <ul>
-                <li>On course for First-Class Honours (70+)</li>
-                <li>Relevant Modules: Software Engineering, Object Oriented Programming, Symbolic AI, Algorithms & Complexity, Databases, Network Security, Operating Systems, Digital Forensics, Cryptography.</li>
-            </ul>
-        </li>
-        <li><strong>Foundation Year in Computer Science</strong> | Kingston University (Sep 2022 - Aug 2023)
-            <ul>
-                <li>Achieved Grade: Distinction (75)</li>
-            </ul>
-        </li>
-        <li><strong>A Levels & GCSEs</strong> | Kingsley Academy (2015 - 2022)
-            <ul>
-                <li>A Levels: Maths, Computer Science, Geography</li>
-                <li>GCSEs: Grades 6-9</li>
-            </ul>
-        </li>
-    </ul>
+
+    <div class="card">
+        <div class="card-title">BSc Computer Science &nbsp;— Second Class Upper with Honours</div>
+        <div class="card-meta">Royal Holloway, University of London &nbsp;·&nbsp; Sep 2023 – Jul 2026</div>
+        <ul>
+            <li>Second Class Upper with Honours Achieved (60%+)</li>
+            <li>Relevant modules: Software Engineering, OOP, Symbolic AI, Algorithms &amp; Complexity, Databases, Network Security, Operating Systems, Software Design, IT Project Management, Digital Forensics, Cryptography.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Foundation Year in Computer Science</div>
+        <div class="card-meta">Kingston University &nbsp;·&nbsp; Sep 2022 – Aug 2023</div>
+        <ul>
+            <li>Achieved Distinction (75)</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-title">A Levels &amp; GCSEs</div>
+        <div class="card-meta">Kingsley Academy &nbsp;·&nbsp; 2015 – 2022</div>
+        <ul>
+            <li>A Levels: Maths, Computer Science, Geography</li>
+            <li>GCSEs: Grades 6–9</li>
+        </ul>
+    </div>
 </section>
 
+<!-- ════════════════════════════════════════════
+     CONTACT
+═════════════════════════════════════════════ -->
 <section id="contact">
     <h2>Contact</h2>
-    <ul>
-        <li><strong>Email:</strong> <a href="mailto:thesneakaz@gmail.com" style="color: hotpink;">thesneakaz@gmail.com</a></li>
-        <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/csanad-kope/" target="_blank" style="color: hotpink;">linkedin.com/in/csanad-kope</a></li>
-        <li><strong>GitHub:</strong> <a href="https://github.com/azarele" target="_blank" style="color: hotpink;">github.com/azarele</a></li>
-        <li><strong>Location:</strong> Twickenham, London, United Kingdom</li>
-    </ul>
+    <div class="card">
+        <ul>
+            <li><strong>Email:</strong> <a href="mailto:thesneakaz@gmail.com">thesneakaz@gmail.com</a></li>
+            <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/csanad-kope/" target="_blank">linkedin.com/in/csanad-kope</a></li>
+            <li><strong>GitHub:</strong> <a href="https://github.com/azarele" target="_blank">github.com/azarele</a></li>
+            <li><strong>Website:</strong> <a href="https://www.resume.thesneakaz.xyz" target="_blank">resume.thesneakaz.xyz</a></li>
+            <li><strong>Location:</strong> Twickenham, London, United Kingdom</li>
+        </ul>
+    </div>
 </section>
 
 <footer>
     <p>&copy; 2026 Csanad Kope</p>
 </footer>
 
+<script>
+    function navigateTo(sectionId) {
+        document.querySelectorAll('section').forEach(s => s.classList.remove('visible'));
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+
+        const target = document.getElementById(sectionId);
+        if (target) target.classList.add('visible');
+
+        const activeLink = document.querySelector(`nav a[onclick*="'${sectionId}'"]`);
+        if (activeLink) activeLink.classList.add('active');
+
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function createConstellation(container, count) {
+        const nodes = [];
+        const maxNodes = window.innerWidth < 768 ? 20 : count;
+
+        for (let i = 0; i < maxNodes; i++) {
+            const node = document.createElement('div');
+            node.className = 'node';
+            node.style.left = `${Math.random() * 100}vw`;
+            node.style.top = `${Math.random() * 100}vh`;
+            container.appendChild(node);
+            nodes.push({ element: node, dx: (Math.random() * 2 - 1) * 0.8, dy: (Math.random() * 2 - 1) * 0.8 });
+        }
+
+        const lines = [];
+
+        function drawLines() {
+            lines.forEach(l => l.remove());
+            lines.length = 0;
+            nodes.forEach(node => {
+                nodes.forEach(other => {
+                    if (node === other) return;
+                    const x1 = node.element.offsetLeft, y1 = node.element.offsetTop;
+                    const x2 = other.element.offsetLeft, y2 = other.element.offsetTop;
+                    const dist = Math.hypot(x2 - x1, y2 - y1);
+                    if (dist < 150) {
+                        const line = document.createElement('div');
+                        line.className = 'line';
+                        line.style.width = `${dist}px`;
+                        line.style.transform = `rotate(${Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI}deg)`;
+                        line.style.left = `${x1}px`;
+                        line.style.top = `${y1}px`;
+                        container.appendChild(line);
+                        lines.push(line);
+                    }
+                });
+            });
+        }
+
+        function moveNodes() {
+            const w = container.offsetWidth, h = container.offsetHeight;
+            nodes.forEach(n => {
+                let x = n.element.offsetLeft + n.dx;
+                let y = n.element.offsetTop + n.dy;
+                if (x < 0 || x > w) n.dx *= -1;
+                if (y < 0 || y > h) n.dy *= -1;
+                n.element.style.left = `${Math.max(0, Math.min(w, x))}px`;
+                n.element.style.top  = `${Math.max(0, Math.min(h, y))}px`;
+            });
+            drawLines();
+        }
+
+        setInterval(moveNodes, 50);
+    }
+
+    // Cursor trail
+    const spawnCircle = (x, y, big) => {
+        const c = document.createElement('div');
+        c.className = 'circle';
+        c.style.left = `${x}px`;
+        c.style.top = `${y}px`;
+        if (big) { c.style.background = 'rgba(255,20,147,0.4)'; c.style.animation = 'ripple 0.6s ease-out forwards'; }
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), big ? 600 : 300);
+    };
+
+    document.addEventListener('mousemove',  e => spawnCircle(e.pageX, e.pageY, false));
+    document.addEventListener('click',      e => spawnCircle(e.pageX, e.pageY, true));
+    document.addEventListener('touchmove',  e => spawnCircle(e.touches[0].pageX, e.touches[0].pageY, false));
+    document.addEventListener('touchstart', e => spawnCircle(e.touches[0].pageX, e.touches[0].pageY, true));
+
+    window.onload = () => {
+        navigateTo('about');
+        const container = document.createElement('div');
+        container.className = 'constellation-container';
+        document.body.appendChild(container);
+        createConstellation(container, 50);
+    };
+</script>
 </body>
 </html>
