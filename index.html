@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Csanad Kope - Interactive Resume</title>
     <link rel="icon" href="favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -10,12 +10,9 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --pink: hotpink;
             --pink-rgb: 255, 20, 147;
-            --purple-deep: #1a001d;
-            --purple-mid: #2c0032;
-            --purple-card: rgba(85,26,139,0.22);
-            --purple-card-hover: rgba(85,26,139,0.48);
+            --card-bg: rgba(85,26,139,0.22);
+            --card-hover: rgba(85,26,139,0.48);
             --border: rgba(255,20,147,0.18);
             --border-hover: rgba(255,20,147,0.55);
         }
@@ -25,13 +22,12 @@
         body {
             font-family: 'Space Mono', monospace;
             overflow-x: hidden;
-            overflow-y: auto;
             background: linear-gradient(270deg, #2c0032, #1a001d, rgb(158,0,79));
             background-size: 600% 600%;
             animation: gradientMove 12s ease infinite;
             color: white;
-            position: relative;
             min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
         }
 
         @keyframes gradientMove {
@@ -44,41 +40,31 @@
 
         /* ── CONSTELLATION ── */
         .constellation-container {
-            position: fixed;
-            inset: 0;
+            position: fixed; inset: 0;
             pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
+            z-index: 0; overflow: hidden;
         }
-
         .node {
-            position: absolute;
-            width: 5px; height: 5px;
-            background: rgba(255,20,147,0.75);
-            border-radius: 50%;
+            position: absolute; width: 5px; height: 5px;
+            background: rgba(255,20,147,0.75); border-radius: 50%;
             box-shadow: 0 0 6px rgba(255,20,147,0.5), 0 0 12px rgba(255,20,147,0.2);
         }
-
         .line {
-            position: absolute;
-            height: 1px;
+            position: absolute; height: 1px;
             background: rgba(255,20,147,0.25);
             transform-origin: left center;
         }
 
-        /* ── CURSOR RIPPLE ── */
+        /* ── CURSOR RIPPLE (desktop only) ── */
         .circle {
-            position: fixed;
-            width: 8px; height: 8px;
+            position: fixed; width: 8px; height: 8px;
             background: rgba(var(--pink-rgb), 0.85);
-            border-radius: 50%;
-            pointer-events: none;
+            border-radius: 50%; pointer-events: none;
             box-shadow: 0 0 6px rgba(var(--pink-rgb), 0.5);
             animation: ripple 0.35s ease-out forwards;
             z-index: 9999;
             transform: translate(-50%, -50%);
         }
-
         @keyframes ripple {
             0%   { transform: translate(-50%,-50%) scale(1); opacity: 1; }
             100% { transform: translate(-50%,-50%) scale(6); opacity: 0; }
@@ -86,149 +72,119 @@
 
         /* ── HEADER ── */
         header {
-            position: relative;
-            z-index: 10;
-            padding: 2.2rem 1rem 1.2rem;
-            text-align: center;
-            overflow: hidden;
+            position: relative; z-index: 10;
+            padding: 2rem 1rem 1.2rem;
+            text-align: center; overflow: hidden;
         }
-
         header::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 50%;
-            transform: translateX(-50%);
+            content: ''; position: absolute;
+            bottom: 0; left: 50%; transform: translateX(-50%);
             width: 0; height: 1px;
             background: linear-gradient(90deg, transparent, hotpink, transparent);
             animation: headerLine 1.2s 0.4s ease forwards;
         }
-
-        @keyframes headerLine {
-            to { width: 60%; }
-        }
+        @keyframes headerLine { to { width: 60%; } }
 
         header h1 {
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-size: clamp(1.6rem, 6vw, 2.8rem);
             letter-spacing: 0.08em;
-            text-shadow: 0 0 30px rgba(var(--pink-rgb), 0.7), 0 0 60px rgba(var(--pink-rgb), 0.3);
+            text-shadow: 0 0 30px rgba(var(--pink-rgb),0.7), 0 0 60px rgba(var(--pink-rgb),0.3);
             animation: headerEntrance 0.8s cubic-bezier(0.16,1,0.3,1) both;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
         }
-
         @keyframes headerEntrance {
-            from { opacity: 0; transform: translateY(-20px) scale(0.95); letter-spacing: 0.2em; }
+            from { opacity: 0; transform: translateY(-20px) scale(0.95); }
             to   { opacity: 1; transform: translateY(0) scale(1); }
         }
-
         header h3 {
-            font-size: clamp(0.65rem, 2vw, 0.88rem);
-            font-weight: 400;
-            letter-spacing: 0.12em;
-            opacity: 0;
-            animation: fadeUp 0.6s 0.5s ease forwards;
-            color: rgba(255,200,220,0.85);
-            min-height: 1.4em;
+            font-size: clamp(0.6rem, 2.5vw, 0.88rem);
+            font-weight: 400; letter-spacing: 0.1em;
+            opacity: 0; animation: fadeUp 0.6s 0.5s ease forwards;
+            color: rgba(255,200,220,0.85); min-height: 1.5em;
         }
-
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(8px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* ── NAV ── */
+        /* ── DESKTOP NAV ── */
         nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(18,0,22,0.82);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            box-shadow: 0 1px 0 rgba(var(--pink-rgb),0.15), 0 4px 24px rgba(0,0,0,0.4);
-            position: sticky;
-            top: 0;
-            z-index: 20;
-            flex-wrap: wrap;
+            display: flex; justify-content: center; align-items: center;
+            background: rgba(18,0,22,0.88);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 1px 0 rgba(var(--pink-rgb),0.15), 0 4px 24px rgba(0,0,0,0.5);
+            position: sticky; top: 0; z-index: 20; flex-wrap: wrap;
         }
-
         nav a {
-            color: rgba(255,200,220,0.75);
-            padding: 0.9rem 0.95rem;
-            text-decoration: none;
-            font-size: 0.72rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+            color: rgba(255,200,220,0.7);
+            padding: 0.85rem 0.9rem;
+            text-decoration: none; font-size: 0.7rem;
+            letter-spacing: 0.08em; text-transform: uppercase;
             transition: color 0.2s ease, text-shadow 0.2s ease;
             position: relative;
         }
-
         nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 50%; right: 50%;
-            height: 2px;
+            content: ''; position: absolute;
+            bottom: 0; left: 50%; right: 50%; height: 2px;
             background: hotpink;
             transition: left 0.25s ease, right 0.25s ease;
             box-shadow: 0 0 8px hotpink;
         }
-
-        nav a:hover {
-            color: white;
-            text-shadow: 0 0 10px rgba(var(--pink-rgb),0.8);
-        }
-
-        nav a:hover::after,
-        nav a.active::after {
-            left: 12%; right: 12%;
-        }
-
+        nav a:hover { color: white; text-shadow: 0 0 10px rgba(var(--pink-rgb),0.8); }
+        nav a:hover::after, nav a.active::after { left: 12%; right: 12%; }
         nav a.active {
             color: white;
             text-shadow: 0 0 12px rgba(var(--pink-rgb),0.9), 0 0 24px rgba(var(--pink-rgb),0.4);
         }
 
-        /* ── MOBILE DROPDOWN ── */
-        .dropdown { display: none; }
+        /* ── MOBILE NAV ── */
+        .mobile-nav {
+            display: none;
+            background: rgba(18,0,22,0.92);
+            backdrop-filter: blur(14px);
+            position: sticky; top: 0; z-index: 20;
+            border-bottom: 1px solid rgba(var(--pink-rgb),0.15);
+            padding: 10px 12px;
+        }
+        .mobile-nav select {
+            width: 100%;
+            background: rgba(40,0,50,0.95);
+            color: white; border: 1px solid rgba(var(--pink-rgb),0.4);
+            border-radius: 8px; padding: 12px 14px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem; outline: none;
+            -webkit-appearance: none; appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ff1493' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
 
         /* ── SECTIONS ── */
         section {
-            padding: 36px 24px 64px;
-            display: none;
-            position: relative;
-            z-index: 10;
-            min-height: 80vh;
-            max-width: 1000px;
-            margin: 0 auto;
+            padding: 28px 20px 60px;
+            display: none; position: relative; z-index: 10;
+            min-height: 80vh; max-width: 1000px; margin: 0 auto;
         }
-
         section.visible {
             display: block;
             animation: sectionIn 0.4s cubic-bezier(0.16,1,0.3,1) both;
         }
-
         @keyframes sectionIn {
             from { opacity: 0; transform: translateY(16px); filter: blur(4px); }
             to   { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
         section h2 {
-            font-size: clamp(1.1rem, 3vw, 1.6rem);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            letter-spacing: 0.1em; text-transform: uppercase;
             border-bottom: 1px solid rgba(var(--pink-rgb),0.3);
-            padding-bottom: 12px;
-            margin-bottom: 28px;
-            position: relative;
+            padding-bottom: 12px; margin-bottom: 24px;
             animation: glow 3s ease infinite alternate;
         }
-
         section h2::before {
-            content: '//';
-            margin-right: 10px;
-            color: hotpink;
-            font-style: italic;
-            opacity: 0.7;
+            content: '// '; color: hotpink; font-style: italic; opacity: 0.7;
         }
-
         @keyframes glow {
             from { text-shadow: 0 0 4px rgba(var(--pink-rgb),0.4); }
             to   { text-shadow: 0 0 16px rgba(var(--pink-rgb),0.8), 0 0 32px rgba(var(--pink-rgb),0.3); }
@@ -236,256 +192,298 @@
 
         /* ── CARDS ── */
         .card {
-            background: var(--purple-card);
+            background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 22px 24px;
-            margin-bottom: 16px;
-            position: relative;
-            overflow: hidden;
+            border-radius: 12px; padding: 18px 20px;
+            margin-bottom: 14px; position: relative; overflow: hidden;
             transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, background 0.3s ease;
-            cursor: default;
         }
-
-        /* Mouse-tracking glow */
         .card::before {
-            content: '';
-            position: absolute;
+            content: ''; position: absolute;
             width: 300px; height: 300px;
             background: radial-gradient(circle, rgba(var(--pink-rgb),0.12) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
+            border-radius: 50%; pointer-events: none;
             transform: translate(-50%,-50%);
-            left: var(--mx, 50%);
-            top: var(--my, 50%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            left: var(--mx, 50%); top: var(--my, 50%);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .card:hover::before { opacity: 1; }
+        .card:hover {
+            transform: translateY(-3px); background: var(--card-hover);
+            border-color: var(--border-hover);
+            box-shadow: 0 10px 36px rgba(var(--pink-rgb),0.18);
         }
 
-        .card:hover::before { opacity: 1; }
-
-        .card:hover {
-            transform: translateY(-4px);
-            background: var(--purple-card-hover);
-            border-color: var(--border-hover);
-            box-shadow: 0 12px 40px rgba(var(--pink-rgb),0.18), 0 0 0 1px rgba(var(--pink-rgb),0.08);
+        /* Project cards are clickable */
+        .project-card {
+            cursor: pointer;
+        }
+        .project-card .click-hint {
+            position: absolute; top: 14px; right: 16px;
+            font-size: 0.6rem; letter-spacing: 0.08em;
+            color: rgba(var(--pink-rgb),0.5);
+            text-transform: uppercase;
+            transition: color 0.2s, opacity 0.2s;
+        }
+        .project-card:hover .click-hint {
+            color: hotpink; opacity: 1;
         }
 
         .card-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            line-height: 1.4;
-            color: rgba(255,220,235,0.97);
+            font-size: 0.9rem; font-weight: 700;
+            margin-bottom: 5px;
+            display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+            line-height: 1.4; color: rgba(255,220,235,0.97);
+            padding-right: 64px; /* space for click hint */
         }
-
-        .card-title a {
-            color: hotpink;
-            text-decoration: none;
-            font-size: 0.72rem;
-            opacity: 0.75;
-            transition: opacity 0.2s, text-shadow 0.2s;
-        }
-        .card-title a:hover { opacity: 1; text-shadow: 0 0 8px hotpink; }
-
         .card-meta {
-            font-size: 0.7rem;
-            color: rgba(255,180,210,0.55);
-            margin-bottom: 12px;
-            letter-spacing: 0.04em;
+            font-size: 0.68rem; color: rgba(255,180,210,0.5);
+            margin-bottom: 10px; letter-spacing: 0.04em;
         }
-
         .card ul { margin: 0; padding: 0; }
-
         .card ul li {
-            list-style: none;
-            font-size: 0.81rem;
-            line-height: 1.6;
-            padding: 5px 10px 5px 14px;
-            margin: 4px 0;
+            list-style: none; font-size: 0.79rem; line-height: 1.6;
+            padding: 4px 10px 4px 14px; margin: 3px 0;
             border-left: 2px solid rgba(var(--pink-rgb),0.35);
             transition: border-color 0.2s ease, padding-left 0.2s ease;
-            color: rgba(255,235,245,0.88);
+            color: rgba(255,235,245,0.85);
         }
-
-        .card:hover ul li {
-            border-left-color: rgba(var(--pink-rgb),0.8);
-            padding-left: 16px;
-        }
+        .card:hover ul li { border-left-color: rgba(var(--pink-rgb),0.8); padding-left: 16px; }
 
         /* ── TAGS ── */
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 14px;
-        }
-
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
         .tag {
             background: rgba(var(--pink-rgb),0.1);
             border: 1px solid rgba(var(--pink-rgb),0.28);
-            border-radius: 20px;
-            padding: 3px 11px;
-            font-size: 0.62rem;
-            letter-spacing: 0.06em;
-            color: rgba(255,200,225,0.85);
-            white-space: nowrap;
-            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 20px; padding: 3px 10px;
+            font-size: 0.6rem; letter-spacing: 0.06em;
+            color: rgba(255,200,225,0.85); white-space: nowrap;
+            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
         }
-
         .tag:hover {
             background: rgba(var(--pink-rgb),0.25);
-            border-color: rgba(var(--pink-rgb),0.7);
-            color: white;
+            border-color: rgba(var(--pink-rgb),0.7); color: white;
             box-shadow: 0 0 8px rgba(var(--pink-rgb),0.35);
         }
 
         /* ── BADGES ── */
         .badge {
             background: linear-gradient(90deg, rgba(var(--pink-rgb),0.65), rgba(140,0,80,0.65));
-            border-radius: 4px;
-            padding: 2px 9px;
-            font-size: 0.58rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            font-weight: 700;
-            white-space: nowrap;
+            border-radius: 4px; padding: 2px 8px;
+            font-size: 0.57rem; letter-spacing: 0.08em;
+            text-transform: uppercase; font-weight: 700; white-space: nowrap;
             box-shadow: 0 0 8px rgba(var(--pink-rgb),0.3);
         }
 
         /* ── SKILLS GRID ── */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
-            gap: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
         }
-
         .skill-block {
-            background: var(--purple-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 18px 20px;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 12px; padding: 16px 18px;
             transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
         }
-
         .skill-block:hover {
-            transform: translateY(-3px);
-            background: var(--purple-card-hover);
+            transform: translateY(-3px); background: var(--card-hover);
             border-color: var(--border-hover);
         }
-
         .skill-block h3 {
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 12px;
-            color: hotpink;
-            opacity: 0.85;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+            margin-bottom: 10px; color: hotpink; opacity: 0.85;
         }
-
         .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 
         /* ── ABOUT ── */
         #about ul { padding: 0; list-style: none; }
-
         #about ul li {
-            background: var(--purple-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px 24px;
-            margin-bottom: 14px;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 12px; padding: 18px 20px; margin-bottom: 12px;
             transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-            line-height: 1.65;
-            font-size: 0.86rem;
-            color: rgba(255,235,245,0.88);
+            line-height: 1.65; font-size: 0.84rem; color: rgba(255,235,245,0.88);
         }
-
         #about ul li:hover {
-            transform: translateY(-3px);
-            background: var(--purple-card-hover);
-            border-color: var(--border-hover);
+            transform: translateY(-2px); background: var(--card-hover); border-color: var(--border-hover);
         }
-
         #about ul li strong {
-            display: block;
-            margin-bottom: 7px;
-            font-size: 0.92rem;
-            color: rgba(255,220,235,1);
-            text-shadow: 0 0 8px rgba(var(--pink-rgb),0.5);
+            display: block; margin-bottom: 6px; font-size: 0.9rem;
+            color: rgba(255,220,235,1); text-shadow: 0 0 8px rgba(var(--pink-rgb),0.5);
         }
 
         /* ── CONTACT ── */
-        #contact .card ul li {
-            border-left: none;
-            padding: 9px 0;
-            font-size: 0.86rem;
-        }
+        #contact .card ul li { border-left: none; padding: 9px 0; font-size: 0.85rem; }
         #contact .card:hover ul li { padding-left: 0; }
-        #contact .card ul li a {
-            color: hotpink;
-            text-decoration: none;
-            transition: text-shadow 0.2s;
-        }
+        #contact .card ul li a { color: hotpink; text-decoration: none; transition: text-shadow 0.2s; }
         #contact .card ul li a:hover { text-shadow: 0 0 10px hotpink; }
+
+        /* ── STAGGER IN ── */
+        .card, #about ul li, .skill-block {
+            opacity: 0; transform: translateY(12px);
+        }
+        .stagger-visible { animation: staggerIn 0.4s ease forwards; }
+        @keyframes staggerIn { to { opacity: 1; transform: translateY(0); } }
 
         /* ── FOOTER ── */
         footer {
-            background: rgba(14,0,18,0.9);
-            color: rgba(255,200,220,0.5);
-            text-align: center;
-            padding: 16px 0;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
+            background: rgba(14,0,18,0.9); color: rgba(255,200,220,0.45);
+            text-align: center; padding: 16px 0; font-size: 0.68rem;
+            letter-spacing: 0.1em; position: relative; z-index: 10;
             box-shadow: 0 -1px 0 rgba(var(--pink-rgb),0.1);
+        }
+
+        /* ════════════════════════════════════
+           PROJECT MODAL
+        ════════════════════════════════════ */
+        .modal-overlay {
+            position: fixed; inset: 0; z-index: 100;
+            background: rgba(10,0,14,0.92);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 16px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.open {
+            opacity: 1; pointer-events: all;
+        }
+        .modal {
+            background: linear-gradient(145deg, rgba(44,0,50,0.98), rgba(26,0,30,0.98));
+            border: 1px solid rgba(var(--pink-rgb),0.35);
+            border-radius: 16px;
+            width: 100%; max-width: 720px;
+            max-height: 90vh; overflow-y: auto;
+            padding: 28px 28px 32px;
             position: relative;
-            z-index: 10;
+            box-shadow: 0 0 60px rgba(var(--pink-rgb),0.2), 0 0 120px rgba(var(--pink-rgb),0.07);
+            transform: translateY(20px) scale(0.97);
+            transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(var(--pink-rgb),0.3) transparent;
+        }
+        .modal-overlay.open .modal {
+            transform: translateY(0) scale(1);
+        }
+        .modal::-webkit-scrollbar { width: 4px; }
+        .modal::-webkit-scrollbar-track { background: transparent; }
+        .modal::-webkit-scrollbar-thumb { background: rgba(var(--pink-rgb),0.3); border-radius: 2px; }
+
+        .modal-close {
+            position: absolute; top: 16px; right: 18px;
+            background: rgba(var(--pink-rgb),0.1);
+            border: 1px solid rgba(var(--pink-rgb),0.3);
+            color: hotpink; font-family: 'Space Mono', monospace;
+            font-size: 1rem; cursor: pointer; border-radius: 8px;
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s, transform 0.2s;
+            z-index: 2;
+        }
+        .modal-close:hover { background: rgba(var(--pink-rgb),0.25); transform: rotate(90deg); }
+
+        .modal-badge-row {
+            display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;
+        }
+        .modal-title {
+            font-size: clamp(1rem, 4vw, 1.4rem); font-weight: 700;
+            margin-bottom: 4px; line-height: 1.3;
+            color: rgba(255,220,235,1);
+            text-shadow: 0 0 20px rgba(var(--pink-rgb),0.4);
+        }
+        .modal-subtitle {
+            font-size: 0.72rem; color: rgba(255,180,210,0.55);
+            margin-bottom: 18px; letter-spacing: 0.04em;
+        }
+        .modal-divider {
+            height: 1px;
+            background: linear-gradient(90deg, rgba(var(--pink-rgb),0.4), transparent);
+            margin: 16px 0;
+        }
+        .modal-section-title {
+            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em;
+            color: hotpink; opacity: 0.7; margin-bottom: 10px;
+        }
+        .modal-body p {
+            font-size: 0.82rem; line-height: 1.7;
+            color: rgba(255,235,245,0.85); margin-bottom: 10px;
+        }
+        .modal-body ul { padding: 0; margin: 0 0 10px; list-style: none; }
+        .modal-body ul li {
+            font-size: 0.82rem; line-height: 1.6;
+            padding: 6px 10px 6px 16px;
+            border-left: 2px solid rgba(var(--pink-rgb),0.5);
+            margin: 5px 0; color: rgba(255,235,245,0.85);
+        }
+        .modal-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; }
+
+        /* Screenshot gallery */
+        .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px; margin-top: 4px;
+        }
+        .modal-gallery img {
+            width: 100%; border-radius: 8px;
+            border: 1px solid rgba(var(--pink-rgb),0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: zoom-in;
+        }
+        .modal-gallery img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(var(--pink-rgb),0.3);
+        }
+        .modal-gallery-placeholder {
+            border: 1px dashed rgba(var(--pink-rgb),0.25);
+            border-radius: 8px; padding: 24px;
+            text-align: center; font-size: 0.7rem;
+            color: rgba(255,180,210,0.35); letter-spacing: 0.06em;
         }
 
-        /* ── STAGGER ANIMATION ── */
-        .card, #about ul li, .skill-block {
-            opacity: 0;
-            transform: translateY(12px);
-        }
-
-        .stagger-visible {
-            animation: staggerIn 0.4s ease forwards;
-        }
-
-        @keyframes staggerIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ── MOBILE ── */
+        /* ════════════════════════════════════
+           MOBILE STYLES
+        ════════════════════════════════════ */
         @media (max-width: 768px) {
             nav { display: none; }
-            .dropdown {
-                display: block;
-                background: rgba(18,0,22,0.9);
-                padding: 10px;
-                text-align: center;
-                position: sticky;
-                top: 0;
-                z-index: 20;
-                border-bottom: 1px solid rgba(var(--pink-rgb),0.15);
-            }
-            .dropdown select {
-                background: rgba(26,0,29,0.95);
-                color: white;
-                padding: 10px 14px;
-                border: 1px solid rgba(var(--pink-rgb),0.4);
-                border-radius: 8px;
-                font-size: 0.9rem;
-                width: 85%;
-                font-family: 'Space Mono', monospace;
-                outline: none;
-            }
+            .mobile-nav { display: block; }
+
+            header { padding: 1.5rem 1rem 1rem; }
+
+            section { padding: 20px 14px 50px; }
+
+            .card { padding: 14px 16px; margin-bottom: 12px; border-radius: 10px; }
+            .card-title { font-size: 0.82rem; padding-right: 56px; }
+            .card-meta { font-size: 0.64rem; }
+            .card ul li { font-size: 0.76rem; padding: 4px 8px 4px 12px; }
+            .card:hover { transform: none; } /* No hover lift on touch — use active */
+            .card:active { background: var(--card-hover); border-color: var(--border-hover); }
+
+            .project-card .click-hint { font-size: 0.55rem; top: 12px; right: 12px; opacity: 0.6; }
+
+            .tag { font-size: 0.58rem; padding: 2px 8px; }
+            .badge { font-size: 0.54rem; padding: 2px 6px; }
+
+            .skills-grid { grid-template-columns: 1fr; gap: 10px; }
+            .skill-block { padding: 14px 16px; border-radius: 10px; }
+            .skill-block:hover { transform: none; }
+
+            #about ul li { padding: 14px 16px; font-size: 0.8rem; border-radius: 10px; }
+            #about ul li:hover { transform: none; }
+            #about ul li strong { font-size: 0.86rem; }
+
+            .modal { padding: 20px 18px 24px; border-radius: 14px; max-height: 92vh; }
+            .modal-title { font-size: 1rem; }
+            .modal-body ul li { font-size: 0.78rem; }
+            .modal-body p { font-size: 0.78rem; }
+            .modal-gallery { grid-template-columns: 1fr; }
+            .modal-close { top: 12px; right: 12px; width: 34px; height: 34px; }
+
             .node { width: 4px; height: 4px; }
-            .skills-grid { grid-template-columns: 1fr; }
-            section { padding: 24px 16px 48px; }
+        }
+
+        @media (max-width: 400px) {
+            header h1 { font-size: 1.4rem; }
+            .card-title { font-size: 0.78rem; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -512,8 +510,8 @@
     <a href="#" onclick="navigateTo('contact'); return false;">Contact</a>
 </nav>
 
-<div class="dropdown">
-    <select onchange="navigateTo(this.value)">
+<div class="mobile-nav">
+    <select onchange="navigateTo(this.value)" id="mobileSelect">
         <option value="about">About Me</option>
         <option value="skills">Skills</option>
         <option value="projects">Projects</option>
@@ -523,275 +521,175 @@
     </select>
 </div>
 
-<!-- ABOUT -->
+<!-- ══════════════════════ ABOUT ══════════════════════ -->
 <section id="about">
     <h2>About Me</h2>
     <ul>
-        <li>
-            <strong>Bridging Code &amp; Commerce</strong>
-            My journey didn't start with textbooks — it started with entrepreneurship. Scaling my own e-commerce business to £150K+ in revenue taught me operational leverage, which drove me to master software engineering so I could build the systems I wished existed.
-        </li>
-        <li>
-            <strong>Building Complex Architecture</strong>
-            From architecting production POS systems with full Shopify two-way sync, to SaaS platforms with Stripe billing, to cross-platform desktop games with Rust/Wasm and Go microservices — I specialise in identifying bottlenecks and engineering robust solutions to eliminate them.
-        </li>
-        <li>
-            <strong>Leadership &amp; Performance</strong>
-            As 1st Team Captain of the Royal Holloway Men's Basketball team, I led the squad to league promotion for the first time in 5 years and secured the LUSL Cup — the club's first ever. I thrive in high-pressure environments, from 48-hour hackathons to production deployments.
-        </li>
-        <li>
-            <strong>The Hustle</strong>
-            Before diving deep into CS, I ranked #1 in a cohort of 50+ in door-to-door sales, mastering negotiation and behavioural psychology. I don't just write code — I understand how to position products, manage KPIs, and communicate technical value to end-users.
-        </li>
+        <li><strong>Bridging Code &amp; Commerce</strong>My journey didn't start with textbooks — it started with entrepreneurship. Scaling my own e-commerce business to £150K+ in revenue taught me operational leverage, which drove me to master software engineering so I could build the systems I wished existed.</li>
+        <li><strong>Building Complex Architecture</strong>From architecting production POS systems with full Shopify two-way sync, to SaaS platforms with Stripe billing, to cross-platform desktop games with Rust/Wasm and Go microservices — I specialise in identifying bottlenecks and engineering robust solutions to eliminate them.</li>
+        <li><strong>Leadership &amp; Performance</strong>As 1st Team Captain of the Royal Holloway Men's Basketball team, I led the squad to league promotion for the first time in 5 years and secured the LUSL Cup — the club's first ever. I thrive in high-pressure environments, from 48-hour hackathons to production deployments.</li>
+        <li><strong>The Hustle</strong>Before diving deep into CS, I ranked #1 in a cohort of 50+ in door-to-door sales, mastering negotiation and behavioural psychology. I don't just write code — I understand how to position products, manage KPIs, and communicate technical value to end-users.</li>
     </ul>
 </section>
 
-<!-- SKILLS -->
+<!-- ══════════════════════ SKILLS ══════════════════════ -->
 <section id="skills">
     <h2>Technical Skills</h2>
     <div class="skills-grid">
-        <div class="skill-block">
-            <h3>Languages</h3>
-            <div class="skill-tags">
-                <span class="tag">Python</span><span class="tag">TypeScript</span><span class="tag">JavaScript</span>
-                <span class="tag">Java</span><span class="tag">Rust</span><span class="tag">Go</span>
-                <span class="tag">C#</span><span class="tag">HTML5/CSS3</span><span class="tag">SQL</span>
-            </div>
-        </div>
-        <div class="skill-block">
-            <h3>Frameworks &amp; Backend</h3>
-            <div class="skill-tags">
-                <span class="tag">Node.js</span><span class="tag">React</span><span class="tag">Spring Boot</span>
-                <span class="tag">Prisma</span><span class="tag">.NET 8</span><span class="tag">Streamlit</span>
-                <span class="tag">PixiJS</span><span class="tag">Tauri 2.0</span>
-            </div>
-        </div>
-        <div class="skill-block">
-            <h3>Databases &amp; Cloud</h3>
-            <div class="skill-tags">
-                <span class="tag">PostgreSQL</span><span class="tag">Supabase</span><span class="tag">Firebase</span>
-                <span class="tag">Railway</span><span class="tag">GCP</span><span class="tag">Docker</span>
-                <span class="tag">Nginx</span>
-            </div>
-        </div>
-        <div class="skill-block">
-            <h3>APIs &amp; Integrations</h3>
-            <div class="skill-tags">
-                <span class="tag">REST APIs</span><span class="tag">OAuth 2.0</span><span class="tag">Webhooks</span>
-                <span class="tag">Shopify API</span><span class="tag">eBay API</span><span class="tag">Stripe API</span>
-                <span class="tag">Google Calendar</span><span class="tag">Outlook</span><span class="tag">Discord</span>
-                <span class="tag">Web Push (VAPID)</span>
-            </div>
-        </div>
-        <div class="skill-block">
-            <h3>Architecture &amp; DevOps</h3>
-            <div class="skill-tags">
-                <span class="tag">SaaS Architecture</span><span class="tag">LLM/AI Integration</span>
-                <span class="tag">Microservices</span><span class="tag">WebAssembly</span>
-                <span class="tag">Git / GitHub / GitLab</span><span class="tag">Agile / Sprints</span>
-            </div>
-        </div>
-        <div class="skill-block">
-            <h3>Business &amp; Soft Skills</h3>
-            <div class="skill-tags">
-                <span class="tag">Product Management</span><span class="tag">SaaS Pricing</span>
-                <span class="tag">Market Analysis</span><span class="tag">Excel / KPI Reporting</span>
-                <span class="tag">Customer Analytics</span><span class="tag">Sales &amp; Negotiation</span>
-                <span class="tag">Hungarian (Fluent)</span>
-            </div>
-        </div>
+        <div class="skill-block"><h3>Languages</h3><div class="skill-tags"><span class="tag">Python</span><span class="tag">TypeScript</span><span class="tag">JavaScript</span><span class="tag">Java</span><span class="tag">Rust</span><span class="tag">Go</span><span class="tag">C#</span><span class="tag">HTML5/CSS3</span><span class="tag">SQL</span></div></div>
+        <div class="skill-block"><h3>Frameworks &amp; Backend</h3><div class="skill-tags"><span class="tag">Node.js</span><span class="tag">React</span><span class="tag">Spring Boot</span><span class="tag">Prisma</span><span class="tag">.NET 8</span><span class="tag">Streamlit</span><span class="tag">PixiJS</span><span class="tag">Tauri 2.0</span></div></div>
+        <div class="skill-block"><h3>Databases &amp; Cloud</h3><div class="skill-tags"><span class="tag">PostgreSQL</span><span class="tag">Supabase</span><span class="tag">Firebase</span><span class="tag">Railway</span><span class="tag">GCP</span><span class="tag">Docker</span><span class="tag">Nginx</span></div></div>
+        <div class="skill-block"><h3>APIs &amp; Integrations</h3><div class="skill-tags"><span class="tag">REST APIs</span><span class="tag">OAuth 2.0</span><span class="tag">Webhooks</span><span class="tag">Shopify API</span><span class="tag">eBay API</span><span class="tag">Stripe API</span><span class="tag">Google Calendar</span><span class="tag">Outlook</span><span class="tag">Discord</span><span class="tag">Web Push (VAPID)</span></div></div>
+        <div class="skill-block"><h3>Architecture &amp; DevOps</h3><div class="skill-tags"><span class="tag">SaaS Architecture</span><span class="tag">LLM/AI Integration</span><span class="tag">Microservices</span><span class="tag">WebAssembly</span><span class="tag">Git / GitHub / GitLab</span><span class="tag">Agile / Sprints</span></div></div>
+        <div class="skill-block"><h3>Business &amp; Soft Skills</h3><div class="skill-tags"><span class="tag">Product Management</span><span class="tag">SaaS Pricing</span><span class="tag">Market Analysis</span><span class="tag">Excel / KPI Reporting</span><span class="tag">Customer Analytics</span><span class="tag">Sales &amp; Negotiation</span><span class="tag">Hungarian (Fluent)</span></div></div>
     </div>
 </section>
 
-<!-- PROJECTS -->
+<!-- ══════════════════════ PROJECTS ══════════════════════ -->
 <section id="projects">
     <h2>Featured Projects</h2>
 
-    <div class="card">
-        <div class="card-title">
-            ShopOS v4 &nbsp;|&nbsp; Production POS &amp; Inventory System
-            <span class="badge">Production</span>
-        </div>
+    <div class="card project-card" onclick="openProject('shopos')">
+        <span class="click-hint">tap to expand ↗</span>
+        <div class="card-title">ShopOS v4 &nbsp;|&nbsp; Production POS &amp; Inventory System <span class="badge">Production</span></div>
         <div class="card-meta">TypeScript · Node.js · Prisma · PostgreSQL · Railway · Shopify API</div>
         <ul>
-            <li>Converted a single-file HTML prototype into a production-ready 32-file multi-user POS system with zero type errors; deployed on Railway.</li>
-            <li>Engineered full two-way Shopify sync via OAuth 2.0 and webhooks — bidirectionally updating inventory, orders, and customers across physical and online store in real time.</li>
-            <li>Built barcode/QR label generation, role-based access control, and a KPI analytics dashboard with staff performance and stock-level reporting.</li>
+            <li>Converted a single-file HTML prototype into a production-ready 32-file multi-user POS system with zero type errors.</li>
+            <li>Full two-way Shopify sync via OAuth 2.0 and webhooks — real-time bidirectional inventory, orders, and customers.</li>
+            <li>Barcode/QR label generation, RBAC, and KPI analytics dashboard.</li>
         </ul>
-        <div class="tags">
-            <span class="tag">Full-Stack</span><span class="tag">Shopify</span><span class="tag">OAuth 2.0</span>
-            <span class="tag">Webhooks</span><span class="tag">RBAC</span><span class="tag">PostgreSQL</span>
-        </div>
+        <div class="tags"><span class="tag">Full-Stack</span><span class="tag">Shopify</span><span class="tag">OAuth 2.0</span><span class="tag">Webhooks</span><span class="tag">RBAC</span><span class="tag">PostgreSQL</span></div>
     </div>
 
-    <div class="card">
-        <div class="card-title">
-            PokéManager &nbsp;|&nbsp; Pokémon Card Inventory &amp; eBay Sales Platform
-        </div>
+    <div class="card project-card" onclick="openProject('pokeman')">
+        <span class="click-hint">tap to expand ↗</span>
+        <div class="card-title">PokéManager &nbsp;|&nbsp; Pokémon Card Inventory &amp; eBay Sales Platform</div>
         <div class="card-meta">TypeScript · Node.js · Supabase · eBay API · Web Push</div>
         <ul>
-            <li>Built a full-stack card inventory and sales management system with real-time eBay order sync, automated profit/fee calculation, and bundle sale handling across multi-quantity listings.</li>
-            <li>Integrated eBay OAuth token auto-refresh, web push notifications (VAPID), and CSV export.</li>
-            <li>Architected Supabase PostgreSQL backend with per-item profit tracking and promoted listing fee reconciliation.</li>
+            <li>Full-stack card inventory with real-time eBay order sync and automated profit/fee calculation.</li>
+            <li>eBay OAuth token auto-refresh, VAPID web push notifications, and CSV export.</li>
+            <li>Supabase PostgreSQL backend with per-item profit tracking and promoted listing reconciliation.</li>
         </ul>
-        <div class="tags">
-            <span class="tag">eBay API</span><span class="tag">Supabase</span><span class="tag">Web Push</span>
-            <span class="tag">VAPID</span><span class="tag">CSV Export</span>
-        </div>
+        <div class="tags"><span class="tag">eBay API</span><span class="tag">Supabase</span><span class="tag">Web Push</span><span class="tag">VAPID</span><span class="tag">CSV Export</span></div>
     </div>
 
-    <div class="card">
-        <div class="card-title">
-            TradeQuest &nbsp;|&nbsp; Cross-Platform Mobile Trading Game
-            <span class="badge">In Development</span>
-        </div>
+    <div class="card project-card" onclick="openProject('tradequest')">
+        <span class="click-hint">tap to expand ↗</span>
+        <div class="card-title">TradeQuest &nbsp;|&nbsp; Cross-Platform Trading Game <span class="badge">In Development</span></div>
         <div class="card-meta">Tauri 2.0 · Rust / WebAssembly · PixiJS · Go Microservices</div>
         <ul>
-            <li>Building a cross-platform desktop/mobile trading game using Tauri 2.0 with a Rust/Wasm core for high-performance game logic.</li>
-            <li>PixiJS front-end rendering with Go microservices backend; developed using a sprint-prompt workflow with full-stack WSL 2 debugging pipeline.</li>
+            <li>Cross-platform desktop/mobile trading game — Tauri 2.0 shell with Rust/Wasm high-performance core.</li>
+            <li>PixiJS rendering front-end, Go microservices backend, WSL 2 development pipeline.</li>
         </ul>
-        <div class="tags">
-            <span class="tag">Tauri 2.0</span><span class="tag">Rust</span><span class="tag">WebAssembly</span>
-            <span class="tag">PixiJS</span><span class="tag">Go</span><span class="tag">Microservices</span>
-        </div>
+        <div class="tags"><span class="tag">Tauri 2.0</span><span class="tag">Rust</span><span class="tag">WebAssembly</span><span class="tag">PixiJS</span><span class="tag">Go</span><span class="tag">Microservices</span></div>
     </div>
 
-    <div class="card">
-        <div class="card-title">
-            HolidayExplorer &nbsp;|&nbsp; Mobile App Technical Assessment
-            <span class="badge">.NET 8 / C#</span>
-        </div>
+    <div class="card project-card" onclick="openProject('holiday')">
+        <span class="click-hint">tap to expand ↗</span>
+        <div class="card-title">HolidayExplorer &nbsp;|&nbsp; Technical Assessment <span class="badge">.NET 8</span></div>
         <div class="card-meta">.NET 8 · C# · Nager Date API</div>
         <ul>
-            <li>Completed a graduate-level technical assessment: fixed existing bugs, implemented <code>GetLongWeekendsAsync</code>, and resolved a canary-trap zero-width space preservation challenge.</li>
+            <li>Graduate-level technical assessment — bug fixes, <code>GetLongWeekendsAsync</code> implementation, canary-trap handling.</li>
             <li>All 16 tests passed; PR submitted and accepted.</li>
         </ul>
-        <div class="tags">
-            <span class="tag">.NET 8</span><span class="tag">C#</span><span class="tag">REST API</span>
-            <span class="tag">Unit Testing</span>
-        </div>
+        <div class="tags"><span class="tag">.NET 8</span><span class="tag">C#</span><span class="tag">REST API</span><span class="tag">Unit Testing</span></div>
     </div>
 
-    <div class="card">
-        <div class="card-title">
-            Nync &nbsp;|&nbsp; SaaS Calendar &amp; Meeting Management Platform
-        </div>
+    <div class="card project-card" onclick="openProject('nync')">
+        <span class="click-hint">tap to expand ↗</span>
+        <div class="card-title">Nync &nbsp;|&nbsp; SaaS Calendar &amp; Meeting Platform</div>
         <div class="card-meta">Python · Google Calendar API · Outlook API · Stripe · Discord · MS Teams</div>
         <ul>
-            <li>Consolidated 4 separate workflows (Scheduling, Billing, Analytics, Notifications) into a single Python-based SaaS platform.</li>
-            <li>Reduced booking friction by ~90% via dual calendar API scanning (Google &amp; Outlook) for instant availability.</li>
-            <li>Architected Stripe billing across 4 subscription tiers with automated webhooks; integrated Discord &amp; MS Teams with real-time "Martyr Board" meeting analytics.</li>
+            <li>4 workflows (Scheduling, Billing, Analytics, Notifications) in one Python SaaS platform.</li>
+            <li>~90% reduction in booking friction via dual calendar API scanning.</li>
+            <li>Stripe billing across 4 tiers; Discord &amp; MS Teams "Martyr Board" meeting analytics.</li>
         </ul>
-        <div class="tags">
-            <span class="tag">Python</span><span class="tag">SaaS</span><span class="tag">Stripe</span>
-            <span class="tag">Calendar APIs</span><span class="tag">Webhooks</span>
-        </div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">SaaS</span><span class="tag">Stripe</span><span class="tag">Calendar APIs</span><span class="tag">Webhooks</span></div>
     </div>
 
-    <div class="card">
-        <div class="card-title">
-            Goalify &nbsp;|&nbsp; AI Goal Tracking Agent
-            <span class="badge">Top 10 — Bolt.new Hackathon London</span>
-        </div>
+    <div class="card project-card" onclick="openProject('goalify')">
+        <span class="click-hint">tap to expand ↗</span>
+        <div class="card-title">Goalify &nbsp;|&nbsp; AI Goal Tracking Agent <span class="badge">Top 10 — Bolt.new Hackathon London</span></div>
         <div class="card-meta">TypeScript · AI Vision · LLM APIs</div>
         <ul>
-            <li>Secured Top 10 rank by building an AI agent within a strict 48-hour deadline.</li>
-            <li>Automated 100% of the goal verification loop using AI vision and text analysis to eliminate manual user tracking.</li>
-            <li>Engineered a real-time feedback system that processes user evidence and returns actionable coaching insights in under 2 seconds.</li>
+            <li>Top 10 out of hundreds — AI agent built end-to-end in 48 hours.</li>
+            <li>Automated 100% of goal verification loop using AI vision and text analysis.</li>
+            <li>Real-time coaching feedback in under 2 seconds.</li>
         </ul>
-        <div class="tags">
-            <span class="tag">AI Agent</span><span class="tag">TypeScript</span><span class="tag">LLM</span>
-            <span class="tag">Hackathon</span>
-        </div>
+        <div class="tags"><span class="tag">AI Agent</span><span class="tag">TypeScript</span><span class="tag">LLM</span><span class="tag">Hackathon</span></div>
     </div>
 
-    <div class="card">
-        <div class="card-title">
-            Phraiseit &nbsp;|&nbsp; AI Text Transformation Tool
-        </div>
+    <div class="card project-card" onclick="openProject('phraiseit')">
+        <span class="click-hint">tap to expand ↗</span>
+        <div class="card-title">Phraiseit &nbsp;|&nbsp; AI Text Transformation Tool</div>
         <div class="card-meta">HTML · JavaScript · LLM API</div>
         <ul>
-            <li>Built a lightweight NLP interface capable of transforming text via LLMs with sub-second latency.</li>
-            <li>Responsive front-end interfacing with external AI APIs to handle user requests efficiently.</li>
+            <li>Lightweight NLP interface for LLM-powered text transformation with sub-second latency.</li>
         </ul>
-        <div class="tags">
-            <span class="tag">NLP</span><span class="tag">LLM</span><span class="tag">JavaScript</span>
-        </div>
+        <div class="tags"><span class="tag">NLP</span><span class="tag">LLM</span><span class="tag">JavaScript</span></div>
     </div>
 </section>
 
-<!-- EXPERIENCE -->
+<!-- ══════════════════════ EXPERIENCE ══════════════════════ -->
 <section id="experience">
     <h2>Experience &amp; Leadership</h2>
-
     <div class="card">
         <div class="card-title">Computer Science Tutor (Head Teacher)</div>
         <div class="card-meta">Code Camp UK &nbsp;·&nbsp; Sep 2025 – Present</div>
         <ul>
-            <li>Led weekly structured coding sessions for cohorts of 10+ students (ages 6–10), translating complex CS fundamentals into age-appropriate, project-based lessons.</li>
-            <li>Delivered 100% of curriculum goals; students built functional projects by term-end. Maintained 100% accuracy in attendance tracking and safety compliance.</li>
+            <li>Led weekly structured coding sessions for cohorts of 10+ students (ages 6–10), translating complex CS fundamentals into project-based lessons.</li>
+            <li>Delivered 100% of curriculum goals; students built functional projects by term-end.</li>
         </ul>
     </div>
-
     <div class="card">
         <div class="card-title">Men's Basketball 1st Team Captain</div>
         <div class="card-meta">Royal Holloway, University of London &nbsp;·&nbsp; 2023 – 2026</div>
         <ul>
             <li>Elected by peers to lead the 1st Team; managed training schedules, game logistics, and coaching liaison.</li>
-            <li>Led the team to league promotion for the first time in 5 years and captained the squad to the club's first-ever LUSL Cup victory.</li>
+            <li>Led the team to league promotion (first in 5 years) and the club's first-ever LUSL Cup victory.</li>
         </ul>
     </div>
-
     <div class="card">
         <div class="card-title">Founder &amp; CEO</div>
         <div class="card-meta">Thesneakaz &nbsp;·&nbsp; Mar 2019 – Aug 2025</div>
         <ul>
-            <li>Generated £150,000+ in total revenue managing a weekly inventory of 60+ units; executed high-volume B2B sales via StockX and Alias.</li>
-            <li>Secured a vendor spot at SneakerCon (Olympia London), generating £3,000+ in single-day revenue across 200+ customer interactions.</li>
-            <li>Grew brand presence to 400+ Instagram followers through daily content strategies and service-led customer retention.</li>
+            <li>Generated £150,000+ in total revenue managing a weekly inventory of 60+ units; B2B sales via StockX and Alias.</li>
+            <li>Vendor at SneakerCon Olympia London — £3,000+ single-day revenue across 200+ customer interactions.</li>
+            <li>Grew brand to 400+ Instagram followers through content strategy and service-led retention.</li>
         </ul>
     </div>
-
     <div class="card">
         <div class="card-title">Retail Sales Supervisor</div>
         <div class="card-meta">Havaianas, Westfield White City &nbsp;·&nbsp; Mar 2025 – Apr 2025</div>
         <ul>
-            <li>Led a team of 6 in a high-traffic retail environment, overseeing full operational life-cycles including opening, closing, and software reconciliation.</li>
-            <li>Analysed daily sales KPIs using Excel; generated end-of-day reports to optimise revenue strategies while servicing ~200 customers daily.</li>
+            <li>Led a team of 6 — full operational life-cycle, Excel KPI reporting, ~200 customers daily.</li>
         </ul>
     </div>
-
     <div class="card">
         <div class="card-title">Door to Door Sales</div>
         <div class="card-meta">Link Marketing, Slough &nbsp;·&nbsp; Dec 2023 – Feb 2024</div>
         <ul>
-            <li>Executed 50+ daily B2C interactions; advanced from Level 1 to 3 in under 2 weeks — fastest in the cohort.</li>
-            <li>Ranked #1 in a training cohort of 50+.</li>
+            <li>50+ daily B2C interactions; Level 1 → 3 in under 2 weeks (fastest in cohort). Ranked #1 of 50+ trainees.</li>
         </ul>
     </div>
 </section>
 
-<!-- EDUCATION -->
+<!-- ══════════════════════ EDUCATION ══════════════════════ -->
 <section id="education">
     <h2>Education</h2>
-
     <div class="card">
         <div class="card-title">BSc Computer Science &nbsp;— Second Class Upper with Honours</div>
         <div class="card-meta">Royal Holloway, University of London &nbsp;·&nbsp; Sep 2023 – Jul 2026</div>
         <ul>
-            <li>Second Class Upper with Honours Achieved (60%+)</li>
-            <li>Relevant modules: Software Engineering, OOP, Symbolic AI, Algorithms &amp; Complexity, Databases, Network Security, Operating Systems, Software Design, IT Project Management, Digital Forensics, Cryptography.</li>
+            <li>Second Class Upper with Honours (60%+)</li>
+            <li>Modules: Software Engineering, OOP, Symbolic AI, Algorithms &amp; Complexity, Databases, Network Security, OS, IT Project Management, Digital Forensics, Cryptography.</li>
         </ul>
     </div>
-
     <div class="card">
         <div class="card-title">Foundation Year in Computer Science</div>
         <div class="card-meta">Kingston University &nbsp;·&nbsp; Sep 2022 – Aug 2023</div>
-        <ul>
-            <li>Achieved Distinction (75)</li>
-        </ul>
+        <ul><li>Distinction (75)</li></ul>
     </div>
-
     <div class="card">
         <div class="card-title">A Levels &amp; GCSEs</div>
         <div class="card-meta">Kingsley Academy &nbsp;·&nbsp; 2015 – 2022</div>
@@ -802,7 +700,7 @@
     </div>
 </section>
 
-<!-- CONTACT -->
+<!-- ══════════════════════ CONTACT ══════════════════════ -->
 <section id="contact">
     <h2>Contact</h2>
     <div class="card">
@@ -816,164 +714,314 @@
     </div>
 </section>
 
-<footer>
-    <p>&copy; 2026 Csanad Kope</p>
-</footer>
+<footer><p>&copy; 2026 Csanad Kope</p></footer>
+
+<!-- ══════════════════════ PROJECT MODAL ══════════════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+    <div class="modal" id="modal">
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+        <div id="modalContent"></div>
+    </div>
+</div>
 
 <script>
-    // ── TYPING EFFECT ──
-    const subtitles = [
-        'Software Engineer · Full-Stack Developer · Entrepreneur',
-        'Building things that didn\'t exist before.',
-        'TypeScript · Rust · Go · Python · C#',
-        'From £0 to £150K+ · From idea to production.',
-    ];
-    let subIdx = 0, charIdx = 0, deleting = false;
-    const subtitleEl = document.getElementById('subtitle');
+// ── PROJECT DATA ──
+const PROJECTS = {
+    shopos: {
+        title: 'ShopOS v4',
+        subtitle: 'Production POS & Inventory System — Built for Saynama',
+        badges: ['Production', 'Live'],
+        stack: 'TypeScript · Node.js · Prisma · PostgreSQL · Railway · Shopify API · OAuth 2.0 · Webhooks',
+        description: `ShopOS v4 is a production-grade Point of Sale and inventory management system I built from scratch for Saynama, a UK phone shop. The brief was to replace their fragmented paper-and-spreadsheet workflow with a proper multi-user system that synced seamlessly with their Shopify online store.`,
+        highlights: [
+            'Converted a single-file HTML prototype into a 32-file TypeScript/Node.js/Prisma application with zero type errors.',
+            'Engineered full two-way Shopify sync via OAuth 2.0 and webhooks — any sale in-store instantly updates online inventory, and vice versa.',
+            'Built role-based access control (RBAC) so staff have limited access while managers see the full dashboard.',
+            'Barcode and QR label generation for every product, printable directly from the POS interface.',
+            'KPI analytics dashboard with staff performance tracking, stock-level reports, and daily sales summaries.',
+            'Deployed on Railway with a PostgreSQL database managed through Prisma ORM — zero downtime since launch.',
+        ],
+        tags: ['Full-Stack', 'TypeScript', 'Node.js', 'Prisma', 'PostgreSQL', 'Railway', 'Shopify API', 'OAuth 2.0', 'Webhooks', 'RBAC'],
+        images: [], // Add image paths here e.g. 'screenshots/shopos-dashboard.png'
+    },
+    pokeman: {
+        title: 'PokéManager',
+        subtitle: 'Pokémon Card Inventory & eBay Sales Platform',
+        badges: ['Live SaaS'],
+        stack: 'TypeScript · Node.js · Supabase · eBay API · Web Push (VAPID)',
+        description: `PokéManager is a full-stack inventory and sales management tool I built to manage my Pokémon TCG reselling operation. It integrates directly with eBay to track orders, calculate profit after fees, and manage multi-quantity listings — eliminating manual spreadsheet tracking entirely.`,
+        highlights: [
+            'Real-time eBay order sync — new orders appear automatically without manual refresh.',
+            'Automated profit calculation per item, factoring in eBay fees, promoted listing costs, and purchase price.',
+            'eBay OAuth token auto-refresh — no manual re-authentication needed.',
+            'Web push notifications (VAPID) for new sales and low-stock alerts, even when the browser is closed.',
+            'CSV export for accounting and inventory snapshots.',
+            'Supabase PostgreSQL backend with per-item profit tracking and bundle sale handling across multi-quantity listings.',
+        ],
+        tags: ['TypeScript', 'Node.js', 'Supabase', 'PostgreSQL', 'eBay API', 'OAuth 2.0', 'Web Push', 'VAPID', 'CSV Export'],
+        images: [],
+    },
+    tradequest: {
+        title: 'TradeQuest',
+        subtitle: 'Cross-Platform Mobile Trading Game — In Active Development',
+        badges: ['In Development'],
+        stack: 'Tauri 2.0 · Rust · WebAssembly · PixiJS · Go Microservices',
+        description: `TradeQuest is an ambitious cross-platform trading game I'm building from scratch using a modern, high-performance stack. The core idea is a market simulation game where players trade commodities, manage portfolios, and react to in-game economic events.`,
+        highlights: [
+            'Tauri 2.0 shell enables true cross-platform distribution (Windows, macOS, Linux, and mobile) from a single codebase.',
+            'Game logic written in Rust, compiled to WebAssembly for near-native performance in the browser/Tauri layer.',
+            'PixiJS handles all 2D rendering — smooth 60fps animations for market graphs, trade animations, and UI transitions.',
+            'Go microservices backend manages game state, player accounts, and market simulation events.',
+            'Developed using a sprint-prompt workflow with a full-stack WSL 2 debugging pipeline.',
+        ],
+        tags: ['Tauri 2.0', 'Rust', 'WebAssembly', 'PixiJS', 'Go', 'Microservices', 'Cross-Platform', 'Game Dev'],
+        images: [],
+    },
+    holiday: {
+        title: 'HolidayExplorer',
+        subtitle: 'Graduate Technical Assessment — .NET 8 / C#',
+        badges: ['Assessment', '.NET 8'],
+        stack: '.NET 8 · C# · Nager Date API · xUnit',
+        description: `HolidayExplorer was a take-home technical assessment for a graduate role. The codebase had intentional bugs and incomplete features — my job was to diagnose, fix, and extend it under time pressure while navigating a canary trap embedded in the source code.`,
+        highlights: [
+            'Diagnosed and fixed existing bugs in the holiday lookup and filtering logic.',
+            'Implemented GetLongWeekendsAsync — identifying public holidays adjacent to weekends to return extended weekend opportunities.',
+            'Detected and preserved a zero-width space canary trap in the source file — a hidden character that would have been stripped by naive copy-paste, flagging plagiarism.',
+            'All 16 unit tests passed on first submission.',
+            'PR submitted and accepted by the hiring team.',
+        ],
+        tags: ['.NET 8', 'C#', 'xUnit', 'REST API', 'Unit Testing', 'Bug Fixing'],
+        images: [],
+    },
+    nync: {
+        title: 'Nync',
+        subtitle: 'SaaS Calendar & Meeting Management Platform',
+        badges: ['SaaS'],
+        stack: 'Python · Google Calendar API · Outlook API · Stripe · Discord · MS Teams',
+        description: `Nync started as a hackathon idea — what if scheduling a meeting didn't require 6 back-and-forth emails? I built it into a full SaaS platform that consolidates scheduling, billing, team analytics, and notifications into a single interface.`,
+        highlights: [
+            'Scans both Google Calendar and Outlook simultaneously to find available time slots — ~90% reduction in booking friction.',
+            'Stripe billing infrastructure handling 4 distinct subscription tiers with automated webhook-driven state changes.',
+            'Discord and MS Teams integrations — teams get notified of new bookings and meeting changes in their existing channels.',
+            '"Martyr Board" analytics: real-time dashboard tracking which team members are in the most meetings, helping managers spot overloaded staff.',
+            'Automated email and notification reminders for upcoming bookings.',
+        ],
+        tags: ['Python', 'SaaS', 'Stripe', 'Google Calendar API', 'Outlook API', 'Discord', 'MS Teams', 'Webhooks', 'Analytics'],
+        images: [],
+    },
+    goalify: {
+        title: 'Goalify',
+        subtitle: 'AI Goal Tracking Agent — Top 10, Bolt.new Hackathon London',
+        badges: ['Top 10 — Hackathon', '48hr Build'],
+        stack: 'TypeScript · AI Vision · LLM APIs · Bolt.new',
+        description: `Goalify was built in 48 hours at the Bolt.new AI Hackathon in London. Out of hundreds of submissions, it placed in the Top 10. The concept: users set goals, submit evidence (photos, text), and an AI agent verifies completion and provides coaching feedback — no human moderation needed.`,
+        highlights: [
+            'AI vision pipeline analyses user-submitted photos to verify goal completion (e.g. gym selfie for a workout goal).',
+            'LLM text analysis layer cross-references user descriptions against goal criteria.',
+            '100% automated verification loop — no manual review required.',
+            'Real-time coaching feedback returned in under 2 seconds, with specific suggestions for improvement.',
+            'Built entirely in TypeScript within a 48-hour deadline using Bolt.new rapid development tooling.',
+            'Top 10 finish at a competitive London AI hackathon.',
+        ],
+        tags: ['TypeScript', 'AI Vision', 'LLM', 'Bolt.new', 'Hackathon', 'Real-Time', 'Goal Tracking'],
+        images: [],
+    },
+    phraiseit: {
+        title: 'Phraiseit',
+        subtitle: 'AI Text Transformation Tool',
+        badges: [],
+        stack: 'HTML · JavaScript · LLM API',
+        description: `Phraiseit is a lightweight, fast tool for transforming text via LLMs — rephrasing, simplifying, formalising, or stylising any input in one click. Built with a focus on sub-second response time and a clean, minimal interface.`,
+        highlights: [
+            'LLM-powered text transformation with sub-second latency.',
+            'Multiple transformation modes: rephrase, simplify, formalise, make casual.',
+            'Responsive front-end — works cleanly on mobile and desktop.',
+            'Interfaces with external AI APIs for processing without a heavy backend.',
+        ],
+        tags: ['JavaScript', 'HTML', 'LLM API', 'NLP', 'AI Tools'],
+        images: [],
+    },
+};
 
-    function typeSubtitle() {
-        const current = subtitles[subIdx];
-        if (!deleting) {
-            subtitleEl.textContent = current.slice(0, ++charIdx);
-            if (charIdx === current.length) { deleting = true; setTimeout(typeSubtitle, 2400); return; }
-        } else {
-            subtitleEl.textContent = current.slice(0, --charIdx);
-            if (charIdx === 0) { deleting = false; subIdx = (subIdx + 1) % subtitles.length; }
-        }
-        setTimeout(typeSubtitle, deleting ? 28 : 52);
+// ── MODAL ──
+function openProject(key) {
+    const p = PROJECTS[key];
+    if (!p) return;
+
+    const gallery = p.images.length
+        ? `<div class="modal-gallery">${p.images.map(src => `<img src="${src}" alt="${p.title} screenshot" loading="lazy">`).join('')}</div>`
+        : `<div class="modal-gallery-placeholder">📸 Screenshots coming soon</div>`;
+
+    const badges = p.badges.map(b => `<span class="badge">${b}</span>`).join('');
+    const tags = p.tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+    document.getElementById('modalContent').innerHTML = `
+        <div class="modal-badge-row">${badges}</div>
+        <div class="modal-title">${p.title}</div>
+        <div class="modal-subtitle">${p.subtitle}</div>
+        <div class="modal-divider"></div>
+        <div class="modal-section-title">Stack</div>
+        <p style="font-size:0.72rem;color:rgba(255,180,210,0.6);margin-bottom:14px;letter-spacing:0.04em;">${p.stack}</p>
+        <div class="modal-section-title">Overview</div>
+        <div class="modal-body">
+            <p>${p.description}</p>
+            <div class="modal-divider"></div>
+            <div class="modal-section-title">Key Details</div>
+            <ul>${p.highlights.map(h => `<li>${h}</li>`).join('')}</ul>
+            <div class="modal-divider"></div>
+            <div class="modal-section-title">Screenshots</div>
+            ${gallery}
+            <div class="modal-tags">${tags}</div>
+        </div>
+    `;
+
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── TYPING EFFECT ──
+const subtitles = [
+    'Software Engineer · Full-Stack Developer · Entrepreneur',
+    "Building things that didn't exist before.",
+    'TypeScript · Rust · Go · Python · C#',
+    'From £0 to £150K+ · From idea to production.',
+];
+let subIdx = 0, charIdx = 0, deleting = false;
+const subtitleEl = document.getElementById('subtitle');
+
+function typeSubtitle() {
+    const current = subtitles[subIdx];
+    if (!deleting) {
+        subtitleEl.textContent = current.slice(0, ++charIdx);
+        if (charIdx === current.length) { deleting = true; setTimeout(typeSubtitle, 2400); return; }
+    } else {
+        subtitleEl.textContent = current.slice(0, --charIdx);
+        if (charIdx === 0) { deleting = false; subIdx = (subIdx + 1) % subtitles.length; }
+    }
+    setTimeout(typeSubtitle, deleting ? 28 : 52);
+}
+
+// ── NAVIGATION ──
+function navigateTo(sectionId) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('visible'));
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+
+    const target = document.getElementById(sectionId);
+    if (target) {
+        target.classList.add('visible');
+        const items = target.querySelectorAll('.card, #about ul li, .skill-block');
+        items.forEach((el, i) => {
+            el.style.animationDelay = `${i * 55}ms`;
+            el.classList.remove('stagger-visible');
+            void el.offsetWidth;
+            el.classList.add('stagger-visible');
+        });
     }
 
-    // ── NAVIGATION ──
-    function navigateTo(sectionId) {
-        document.querySelectorAll('section').forEach(s => s.classList.remove('visible'));
-        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    const activeLink = document.querySelector(`nav a[onclick*="'${sectionId}'"]`);
+    if (activeLink) activeLink.classList.add('active');
 
-        const target = document.getElementById(sectionId);
-        if (target) {
-            target.classList.add('visible');
-            // Stagger animate children
-            const items = target.querySelectorAll('.card, #about ul li, .skill-block');
-            items.forEach((el, i) => {
-                el.style.animationDelay = `${i * 60}ms`;
-                el.classList.remove('stagger-visible');
-                void el.offsetWidth; // force reflow
-                el.classList.add('stagger-visible');
-            });
-        }
+    const sel = document.getElementById('mobileSelect');
+    if (sel) sel.value = sectionId;
 
-        const activeLink = document.querySelector(`nav a[onclick*="'${sectionId}'"]`);
-        if (activeLink) activeLink.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+}
 
-        const sel = document.querySelector('.dropdown select');
-        if (sel) sel.value = sectionId;
+// ── CONSTELLATION ──
+function createConstellation(container, count) {
+    const nodes = [];
+    const maxNodes = window.innerWidth < 768 ? 15 : count;
 
-        window.scrollTo({ top: 0, behavior: 'instant' });
+    for (let i = 0; i < maxNodes; i++) {
+        const el = document.createElement('div');
+        el.className = 'node';
+        el.style.left = `${Math.random() * 100}vw`;
+        el.style.top  = `${Math.random() * 100}vh`;
+        container.appendChild(el);
+        nodes.push({ el, dx: (Math.random() * 2 - 1) * 0.55, dy: (Math.random() * 2 - 1) * 0.55 });
     }
 
-    // ── CONSTELLATION ──
-    function createConstellation(container, count) {
-        const nodes = [];
-        const maxNodes = window.innerWidth < 768 ? 18 : count;
-
-        for (let i = 0; i < maxNodes; i++) {
-            const el = document.createElement('div');
-            el.className = 'node';
-            el.style.left = `${Math.random() * 100}vw`;
-            el.style.top  = `${Math.random() * 100}vh`;
-            container.appendChild(el);
-            nodes.push({
-                el,
-                dx: (Math.random() * 2 - 1) * 0.6,
-                dy: (Math.random() * 2 - 1) * 0.6
-            });
-        }
-
-        const lines = [];
-
-        function tick() {
-            lines.forEach(l => l.remove());
-            lines.length = 0;
-
-            const W = window.innerWidth, H = window.innerHeight;
-            nodes.forEach(n => {
-                let x = n.el.offsetLeft + n.dx;
-                let y = n.el.offsetTop  + n.dy;
-                if (x < 0 || x > W) { n.dx *= -1; x = Math.max(0, Math.min(W, x)); }
-                if (y < 0 || y > H) { n.dy *= -1; y = Math.max(0, Math.min(H, y)); }
-                n.el.style.left = x + 'px';
-                n.el.style.top  = y + 'px';
-            });
-
-            for (let i = 0; i < nodes.length; i++) {
-                for (let j = i + 1; j < nodes.length; j++) {
-                    const a = nodes[i], b = nodes[j];
-                    const dx = b.el.offsetLeft - a.el.offsetLeft;
-                    const dy = b.el.offsetTop  - a.el.offsetTop;
-                    const dist = Math.hypot(dx, dy);
-                    if (dist < 160) {
-                        const line = document.createElement('div');
-                        line.className = 'line';
-                        const opacity = (1 - dist / 160) * 0.5;
-                        line.style.opacity = opacity;
-                        line.style.width  = dist + 'px';
-                        line.style.left   = a.el.offsetLeft + 'px';
-                        line.style.top    = a.el.offsetTop  + 'px';
-                        line.style.transform = `rotate(${Math.atan2(dy, dx) * 180 / Math.PI}deg)`;
-                        container.appendChild(line);
-                        lines.push(line);
-                    }
+    const lines = [];
+    function tick() {
+        lines.forEach(l => l.remove()); lines.length = 0;
+        const W = window.innerWidth, H = window.innerHeight;
+        nodes.forEach(n => {
+            let x = n.el.offsetLeft + n.dx, y = n.el.offsetTop + n.dy;
+            if (x < 0 || x > W) { n.dx *= -1; x = Math.max(0, Math.min(W, x)); }
+            if (y < 0 || y > H) { n.dy *= -1; y = Math.max(0, Math.min(H, y)); }
+            n.el.style.left = x + 'px'; n.el.style.top = y + 'px';
+        });
+        for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+                const a = nodes[i], b = nodes[j];
+                const dx = b.el.offsetLeft - a.el.offsetLeft;
+                const dy = b.el.offsetTop  - a.el.offsetTop;
+                const dist = Math.hypot(dx, dy);
+                if (dist < 160) {
+                    const line = document.createElement('div');
+                    line.className = 'line';
+                    line.style.opacity = (1 - dist / 160) * 0.5;
+                    line.style.width = dist + 'px';
+                    line.style.left  = a.el.offsetLeft + 'px';
+                    line.style.top   = a.el.offsetTop  + 'px';
+                    line.style.transform = `rotate(${Math.atan2(dy, dx) * 180 / Math.PI}deg)`;
+                    container.appendChild(line); lines.push(line);
                 }
             }
         }
-
-        setInterval(tick, 48);
     }
+    setInterval(tick, 50);
+}
 
-    // ── CARD MOUSE-TRACKING GLOW ──
+// ── CARD GLOW (desktop) ──
+if (window.matchMedia('(hover: hover)').matches) {
     document.addEventListener('mousemove', e => {
         document.querySelectorAll('.card').forEach(card => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            card.style.setProperty('--mx', x + 'px');
-            card.style.setProperty('--my', y + 'px');
+            const r = card.getBoundingClientRect();
+            card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+            card.style.setProperty('--my', (e.clientY - r.top)  + 'px');
         });
     });
+}
 
-    // ── CURSOR TRAIL ──
+// ── CURSOR TRAIL (desktop only) ──
+if (window.matchMedia('(hover: hover)').matches) {
     let lastCircle = 0;
-    function spawnCircle(x, y, big) {
+    const spawnCircle = (x, y, big) => {
         const now = Date.now();
-        if (!big && now - lastCircle < 40) return; // throttle trail
+        if (!big && now - lastCircle < 40) return;
         lastCircle = now;
         const c = document.createElement('div');
         c.className = 'circle';
-        c.style.left = x + 'px';
-        c.style.top  = y + 'px';
-        if (big) {
-            c.style.background = 'rgba(255,20,147,0.35)';
-            c.style.animation = 'ripple 0.6s ease-out forwards';
-        }
+        c.style.left = x + 'px'; c.style.top = y + 'px';
+        if (big) { c.style.background = 'rgba(255,20,147,0.3)'; c.style.animation = 'ripple 0.6s ease-out forwards'; }
         document.body.appendChild(c);
         setTimeout(() => c.remove(), big ? 600 : 350);
-    }
+    };
+    document.addEventListener('mousemove', e => spawnCircle(e.clientX, e.clientY, false));
+    document.addEventListener('click',     e => spawnCircle(e.clientX, e.clientY, true));
+}
 
-    document.addEventListener('mousemove',  e => spawnCircle(e.clientX, e.clientY, false));
-    document.addEventListener('click',      e => spawnCircle(e.clientX, e.clientY, true));
-    document.addEventListener('touchmove',  e => { e.preventDefault(); spawnCircle(e.touches[0].clientX, e.touches[0].clientY, false); }, { passive: false });
-    document.addEventListener('touchstart', e => spawnCircle(e.touches[0].clientX, e.touches[0].clientY, true));
-
-    // ── INIT ──
-    window.addEventListener('load', () => {
-        navigateTo('about');
-
-        const container = document.createElement('div');
-        container.className = 'constellation-container';
-        document.body.appendChild(container);
-        createConstellation(container, 45);
-
-        setTimeout(typeSubtitle, 900);
-    });
+// ── INIT ──
+window.addEventListener('load', () => {
+    navigateTo('about');
+    const container = document.createElement('div');
+    container.className = 'constellation-container';
+    document.body.appendChild(container);
+    createConstellation(container, 45);
+    setTimeout(typeSubtitle, 900);
+});
 </script>
 </body>
 </html>
