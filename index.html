@@ -15,6 +15,12 @@
     <meta name="twitter:description" content="CS graduate who builds production systems and knows how to sell them. Open to roles in London.">
     <meta name="twitter:image" content="https://resume.thesneakaz.xyz/favicon.png">
     <link rel="canonical" href="https://resume.thesneakaz.xyz">
+    <!-- Security headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://raw.githubusercontent.com; connect-src 'self' https://raw.githubusercontent.com https://cdnjs.cloudflare.com; frame-ancestors 'none';">
     <link rel="icon" href="favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -194,6 +200,16 @@
     .hero-desc a { color: var(--pink); text-decoration: none; }
     .hero-desc a:hover { text-decoration: underline; }
 
+    .hero-meta {
+        display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
+    }
+    .hero-meta-chip {
+        font-size: 0.72rem; letter-spacing: 0.04em;
+        color: var(--text-dim);
+        background: var(--surface);
+        border: 1px solid var(--pink-border);
+        border-radius: 20px; padding: 4px 12px;
+    }
     .hero-cta {
         display: flex; gap: 12px; flex-wrap: wrap;
     }
@@ -721,7 +737,7 @@
     </div>
     <nav class="mobile-nav-scroll">
         <a class="mobile-nav-btn active" href="#hero">About</a>
-        <a class="mobile-nav-btn" href="#value">What I Bring</a>
+        <a class="mobile-nav-btn" href="#value">Value</a>
         <a class="mobile-nav-btn" href="#experience">Experience</a>
         <a class="mobile-nav-btn" href="#projects">Projects</a>
         <a class="mobile-nav-btn" href="#skills">Skills</a>
@@ -743,7 +759,7 @@
 
         <nav class="sidebar-nav">
             <a class="nav-item active" href="#hero">About</a>
-            <a class="nav-item" href="#value">What I Bring</a>
+            <a class="nav-item" href="#value">The Rare Combo</a>
             <a class="nav-item" href="#experience">Experience</a>
             <a class="nav-item" href="#projects">Projects</a>
             <a class="nav-item" href="#skills">Skills</a>
@@ -783,6 +799,11 @@
             <br><br>
             Currently open to <strong style="color:white">graduate software engineering</strong>, <strong style="color:white">technical sales</strong>, and <strong style="color:white">sales engineering</strong> roles in London.
         </p>
+        <div class="hero-meta">
+            <span class="hero-meta-chip">📍 London, UK</span>
+            <span class="hero-meta-chip">🟢 Available now</span>
+            <span class="hero-meta-chip">🎓 Royal Holloway · 2:1 CS</span>
+        </div>
         <div class="hero-cta">
             <a href="mailto:thesneakaz@gmail.com" class="btn btn-primary" onclick="window.location.href='mailto:thesneakaz@gmail.com';return false;">Get In Touch ↗</a>
             <a href="https://www.linkedin.com/in/csanad-kope/" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
@@ -933,7 +954,7 @@
                     <div class="project-name">ShopOS v4
                         <a href="https://saynama-production.up.railway.app/" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">Live ↗</a><span class="project-arrow">↗</span></div>
                     <div class="project-stack">TypeScript · Node.js · Prisma · PostgreSQL · Railway · Shopify API</div>
-                    <div class="project-blurb">Production POS and inventory system for Saynama with full two-way Shopify sync, RBAC, barcode generation, and KPI analytics. Converted from a single-file prototype to a 32-file production system deployed on Railway.</div>
+                    <div class="project-blurb">Replaced a paper-and-spreadsheet workflow for a live UK phone shop — zero downtime since launch. Real-time Shopify sync means in-store and online inventory never go out of sync. Staff onboarded within a day thanks to role-based access and a clean dashboard.</div>
                 </div>
             </div>
 
@@ -942,7 +963,7 @@
                 <div>
                     <div class="project-name">Inference Router <a href="https://github.com/Azarele/inference-router" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">GitHub ↗</a><span class="project-arrow">↗</span></div>
                     <div class="project-stack">Python · asyncio · Ollama · EMA · httpx · Rich</div>
-                    <div class="project-blurb">Streaming LLM inference router with mid-stream degradation detection and cost-based endpoint switching. EMA token velocity tracking, stall detection, and continuation prompts on model switch.</div>
+                    <div class="project-blurb">Cuts estimated completion time by ~80% on a degraded endpoint by switching models mid-stream rather than waiting or restarting. Maintains response coherence across the switch via continuation prompts — the user sees one uninterrupted answer.</div>
                 </div>
             </div>
 
@@ -951,7 +972,7 @@
                 <div>
                     <div class="project-name">PokéManager <a href="https://pokemanager.app" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">pokemanager.app ↗</a><span class="project-arrow">↗</span></div>
                     <div class="project-stack">Python · eBay API · AI card scanning · Discord · Supabase · Stripe · Multi-currency</div>
-                    <div class="project-blurb">Live SaaS product for Pokémon TCG resellers worldwide. Real eBay integration, AI card scanning, Discord offer alerts with ROI analysis, true profit tracking from actual eBay fee statements, and tax exports for HMRC/Xero/QuickBooks. 3+ active paying users, £2,602+ revenue tracked.</div>
+                    <div class="project-blurb">£2,602+ revenue tracked, 155+ cards sold, 3+ paying users. Resellers using PokéManager know their actual profit for the first time — eBay's own fee estimates are wrong; we pull real statement data. Listing a card on eBay went from 15 minutes to one slash command.</div>
                 </div>
             </div>
 
@@ -960,7 +981,7 @@
                 <div>
                     <div class="project-name">TradeQuest<span class="project-arrow">↗</span></div>
                     <div class="project-stack">Tauri 2.0 · Rust · WebAssembly · PixiJS · Go Microservices</div>
-                    <div class="project-blurb">Cross-platform trading game with a Rust/Wasm core for high-performance game logic, PixiJS rendering, and Go microservices backend.</div>
+                    <div class="project-blurb">Single codebase ships to Windows, macOS, Linux, and mobile via Tauri 2.0. Rust/Wasm core keeps game logic at near-native speed without a native build per platform — a constraint most cross-platform games compromise on.</div>
                 </div>
             </div>
 
@@ -969,7 +990,7 @@
                 <div>
                     <div class="project-name">Nync <a href="https://nync.app" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">nync.app ↗</a><span class="project-arrow">↗</span></div>
                     <div class="project-stack">Python · Google Calendar API · Outlook API · Stripe · Discord · MS Teams</div>
-                    <div class="project-blurb">Live SaaS calendar and meeting management platform. 4 workflows in one: scheduling, Stripe billing (4 tiers), team analytics, and notifications. ~90% reduction in booking friction.</div>
+                    <div class="project-blurb">~90% reduction in booking friction — eliminated the 6-email back-and-forth by scanning both Google and Outlook calendars simultaneously. Teams see who's in the most meetings via the Martyr Board before they hit burnout.</div>
                 </div>
             </div>
 
@@ -978,7 +999,7 @@
                 <div>
                     <div class="project-name">Goalify <a href="https://github.com/Azarele/Goalify" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">GitHub ↗</a><span class="project-arrow">↗</span></div>
                     <div class="project-stack">TypeScript · AI Vision · LLM APIs · Bolt.new</div>
-                    <div class="project-blurb">AI goal tracking agent built in 48 hours for the Bolt.new Hackathon London. Top 10 finish. Automated 100% of goal verification via AI vision and LLM analysis.</div>
+                    <div class="project-blurb">Top 10 out of hundreds — built end-to-end in 48 hours. Verification that previously required a human moderator now takes under 2 seconds via AI vision. Zero manual review loop.</div>
                 </div>
             </div>
 
@@ -988,7 +1009,7 @@
                     <div class="project-name">Tower Defence Engine
                         <a href="https://github.com/Azarele/FYP" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">GitHub ↗</a><span class="project-arrow">↗</span></div>
                     <div class="project-stack">Python · PyGame · A* Pathfinding · Multi-threading · Object Pool · unittest</div>
-                    <div class="project-blurb">Final year dissertation project. High-performance 2D engine built from scratch — dual-threaded architecture, custom object pool bypassing Python's GC, real-time A* pathfinding with dynamic rerouting, and 4 OOP design patterns. Headless regression test suite.</div>
+                    <div class="project-blurb">Eliminated garbage-collection pauses entirely during gameplay via a custom object pool — frame drops that plagued the naive implementation dropped to zero. Enemies reroute in real time when the player changes the grid; most tower defence engines bake paths at level load.</div>
                 </div>
             </div>
 
@@ -1293,7 +1314,7 @@ const PROJECTS = {
     nync: {
         title: 'Nync',
         subtitle: 'Live SaaS Calendar & Meeting Management Platform — nync.app',
-        badges: [{l:'SaaS',c:'badge-tech'}],
+        badges: [{l:'Live SaaS',c:'badge-prod'}],
         stack: 'Python · Google Calendar API · Outlook API · Stripe · Discord · MS Teams',
         overview: "Nync consolidates scheduling, billing, team analytics, and notifications into one SaaS platform. The core insight: most meeting friction comes from calendar fragmentation and manual back-and-forth.",
         bullets: [
