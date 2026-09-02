@@ -29,7 +29,7 @@
 
     :root {
         --pink: #ff2d78;
-        --pink-soft: rgba(255,45,120,0.12);
+        --pink-soft: rgba(255,45,120,0.1);
         --pink-border: rgba(255,45,120,0.2);
         --pink-glow: rgba(255,45,120,0.35);
         --bg: #0d0010;
@@ -40,7 +40,61 @@
         --text-muted: rgba(255,200,225,0.45);
         --text-dim: rgba(255,200,225,0.65);
         --nav-w: 280px;
+        --sidebar-bg: rgba(13,0,16,0.75);
+        --sidebar-border: rgba(255,45,120,0.08);
+        --nav-bg: rgba(18,0,22,0.88);
+        --orb1: rgba(120,0,80,0.25);
+        --orb2: rgba(80,0,100,0.2);
+        --orb3: rgba(60,0,40,0.15);
+        --toggle-bg: rgba(255,255,255,0.06);
+        --toggle-border: rgba(255,45,120,0.25);
+        --toggle-color: rgba(255,200,225,0.7);
     }
+
+    /* ── LIGHT MODE ── */
+    html.light {
+        --pink: #d4005a;
+        --pink-soft: rgba(212,0,90,0.08);
+        --pink-border: rgba(212,0,90,0.2);
+        --pink-glow: rgba(212,0,90,0.25);
+        --bg: #faf7fb;
+        --bg2: #f3eef6;
+        --surface: rgba(0,0,0,0.04);
+        --surface-hover: rgba(0,0,0,0.07);
+        --text: rgba(20,5,25,0.9);
+        --text-muted: rgba(80,40,90,0.5);
+        --text-dim: rgba(60,20,70,0.7);
+        --sidebar-bg: rgba(255,250,255,0.85);
+        --sidebar-border: rgba(212,0,90,0.1);
+        --nav-bg: rgba(255,250,255,0.9);
+        --orb1: rgba(255,150,200,0.12);
+        --orb2: rgba(200,100,220,0.08);
+        --orb3: rgba(255,180,210,0.07);
+        --toggle-bg: rgba(0,0,0,0.05);
+        --toggle-border: rgba(212,0,90,0.2);
+        --toggle-color: rgba(60,20,70,0.7);
+    }
+
+    /* ── THEME TOGGLE BUTTON ── */
+    .theme-toggle {
+        display: flex; align-items: center; gap: 7px;
+        padding: 6px 12px; border-radius: 20px;
+        background: var(--toggle-bg);
+        border: 1px solid var(--toggle-border);
+        color: var(--toggle-color);
+        font-family: 'Space Mono', monospace;
+        font-size: 0.6rem; letter-spacing: 0.08em;
+        cursor: pointer; transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+    .theme-toggle:hover {
+        background: var(--pink-soft);
+        border-color: var(--pink);
+        color: var(--pink);
+    }
+    .theme-toggle-icon { font-size: 0.8rem; }
+    .sidebar-toggle-wrap { margin-bottom: 16px; }
+    .mobile-toggle-wrap { display: flex; align-items: center; }
 
     html { scroll-behavior: smooth; }
 
@@ -50,6 +104,7 @@
         color: var(--text);
         min-height: 100vh;
         overflow-x: hidden;
+        transition: background 0.35s ease, color 0.35s ease;
     }
 
     /* ── BG GRADIENT ORBS ── */
@@ -57,9 +112,10 @@
         content: '';
         position: fixed; inset: 0; z-index: 0; pointer-events: none;
         background:
-            radial-gradient(ellipse 60% 50% at 10% 20%, rgba(120,0,80,0.25) 0%, transparent 70%),
-            radial-gradient(ellipse 50% 60% at 90% 80%, rgba(80,0,100,0.2) 0%, transparent 70%),
-            radial-gradient(ellipse 40% 40% at 50% 50%, rgba(60,0,40,0.15) 0%, transparent 60%);
+            radial-gradient(ellipse 60% 50% at 10% 20%, var(--orb1) 0%, transparent 70%),
+            radial-gradient(ellipse 50% 60% at 90% 80%, var(--orb2) 0%, transparent 70%),
+            radial-gradient(ellipse 40% 40% at 50% 50%, var(--orb3) 0%, transparent 60%);
+        transition: background 0.4s ease;
     }
 
     /* ══════════════════════════════════
@@ -73,8 +129,8 @@
         padding: 56px 36px;
         display: flex; flex-direction: column; justify-content: space-between;
         z-index: 50;
-        border-right: 1px solid rgba(255,45,120,0.08);
-        background: rgba(13,0,16,0.7);
+        border-right: 1px solid var(--sidebar-border);
+        background: var(--sidebar-bg);
         backdrop-filter: blur(20px);
     }
 
@@ -537,7 +593,7 @@
     ═══════════════════════════════════ */
     .mobile-header {
         display: none;
-        background: rgba(13,0,16,0.92);
+        background: var(--nav-bg);
         backdrop-filter: blur(20px);
         position: sticky; top: 0; z-index: 50;
         border-bottom: 1px solid rgba(255,45,120,0.1);
@@ -857,6 +913,28 @@
         .right-panel { display: none; }
     }
 
+    /* Light mode specific overrides */
+    html.light .sidebar { box-shadow: 2px 0 20px rgba(0,0,0,0.06); }
+    html.light .mobile-header { box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-bottom: 1px solid rgba(212,0,90,0.1); }
+    html.light .pdf-modal { background: #faf7fb; border-color: rgba(212,0,90,0.2); }
+    html.light .pdf-viewer-area { background: #f0eaf3; }
+    html.light .modal-box { background: #faf7fb; border-color: rgba(212,0,90,0.2); }
+    html.light .rp-progress-track { background: rgba(212,0,90,0.1); }
+    html.light .stats-strip { background: var(--bg2); border-color: var(--pink-border); }
+    html.light .stat-cell { background: var(--bg2); }
+    html.light .avail-chip { background: rgba(74,222,128,0.06); }
+    html.light .hero-meta-chip { background: rgba(0,0,0,0.05); }
+    html.light .sidebar-li-card { background: rgba(0,0,0,0.04); }
+    html.light section h2 { color: rgba(20,5,25,0.9); }
+    html.light .sidebar-name { color: #130018; }
+    html.light .hero-name { color: #130018; }
+    html.light .edu-degree, html.light .exp-title, html.light .project-name,
+    html.light .card-title, html.light .usp-title, html.light .skill-block h3 { color: #130018; }
+    html.light .mobile-nav-btn { background: rgba(0,0,0,0.04); border-color: rgba(212,0,90,0.15); color: rgba(60,20,70,0.7); }
+    html.light .mobile-nav-btn.active, html.light .mobile-nav-btn:hover { background: rgba(212,0,90,0.08); border-color: var(--pink); color: var(--pink); }
+    html.light .mobile-select { background: rgba(255,250,255,0.95); color: #130018; border-color: rgba(212,0,90,0.2); }
+    html.light footer { background: rgba(240,235,245,0.95); border-top: 1px solid rgba(212,0,90,0.1); }
+
     @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
     }
@@ -874,7 +952,12 @@
             <div class="mobile-role">Software Engineer · Sales Engineer</div>
             <div class="avail-chip avail-chip-sm"><span class="avail-dot"></span>Open to work</div>
         </div>
-        <a href="mailto:thesneakaz@gmail.com" class="btn btn-primary" style="font-size:0.62rem;padding:8px 14px;" onclick="window.location.href='mailto:thesneakaz@gmail.com';return false;">Hire Me</a>
+        <div class="mobile-toggle-wrap" style="display:flex;gap:8px;align-items:center;">
+            <button class="theme-toggle" onclick="toggleTheme()" id="mobileToggle" style="padding:5px 10px;">
+                <span class="theme-toggle-icon" id="mobileToggleIcon">🌙</span>
+            </button>
+            <a href="mailto:thesneakaz@gmail.com" class="btn btn-primary" style="font-size:0.62rem;padding:8px 14px;" onclick="window.location.href='mailto:thesneakaz@gmail.com';return false;">Hire Me</a>
+        </div>
     </div>
     <nav class="mobile-nav-scroll">
         <a class="mobile-nav-btn active" href="#hero">About</a>
@@ -916,6 +999,12 @@
             <div class="stat-item"><span class="stat-number">#1 of 50+</span><span class="stat-label">Sales Ranking</span></div>
             <div class="stat-item"><span class="stat-number">Top 10</span><span class="stat-label">Bolt.new Hackathon</span></div>
             <div class="stat-item"><span class="stat-number">2:1</span><span class="stat-label">BSc CS · Royal Holloway</span></div>
+        </div>
+        <div class="sidebar-toggle-wrap">
+            <button class="theme-toggle" onclick="toggleTheme()" id="sidebarToggle">
+                <span class="theme-toggle-icon">🌙</span>
+                <span id="sidebarToggleLabel">Dark</span>
+            </button>
         </div>
         <div class="sidebar-links">
             <a href="https://github.com/azarele" target="_blank">GitHub ↗</a>
@@ -1598,6 +1687,45 @@ function handleOverlayClick(e) {
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── THEME TOGGLE ──
+function applyTheme(mode) {
+    const isLight = mode === 'light';
+    document.documentElement.classList.toggle('light', isLight);
+
+    const icon  = isLight ? '☀️' : '🌙';
+    const label = isLight ? 'Light' : 'Dark';
+
+    const sIcon  = document.getElementById('sidebarToggle');
+    const mIcon  = document.getElementById('mobileToggle');
+    const sLabel = document.getElementById('sidebarToggleLabel');
+    const mIconEl= document.getElementById('mobileToggleIcon');
+
+    if (sIcon)  sIcon.querySelector('.theme-toggle-icon').textContent  = icon;
+    if (mIconEl) mIconEl.textContent = icon;
+    if (sLabel)  sLabel.textContent  = label;
+
+    localStorage.setItem('theme', mode);
+}
+
+function toggleTheme() {
+    const current = document.documentElement.classList.contains('light') ? 'light' : 'dark';
+    applyTheme(current === 'light' ? 'dark' : 'light');
+}
+
+// Apply saved theme or system preference on load
+(function() {
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+        applyTheme(saved);
+    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+        applyTheme('light');
+    }
+    // Watch for system changes
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+        if (!localStorage.getItem('theme')) applyTheme(e.matches ? 'light' : 'dark');
+    });
+})();
 
 // ── RIGHT PANEL ──
 (function() {
