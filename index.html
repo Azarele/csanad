@@ -1368,7 +1368,7 @@
             </div>
 
             <div class="project-item reveal" onclick="openModal('fyp')">
-                <div class="project-year">2025–26 <span class="role-badge badge-tech" style="display:block;margin-top:6px;text-align:center;">Final Year</span></div>
+                <div class="project-year">2025–26 <span class="role-badge badge-tech" style="display:block;margin-top:6px;text-align:center;">77%</span></div>
                 <div>
                     <div class="project-name">Tower Defence Engine
                         <a href="https://github.com/Azarele/FYP" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">GitHub ↗</a><span class="project-arrow">↗</span></div>
@@ -1483,7 +1483,7 @@
                     <div class="edu-school">Royal Holloway, University of London</div>
                     <div class="edu-detail">Software Engineering · OOP · Symbolic AI · Algorithms &amp; Complexity · Databases · Network Security · OS · Digital Forensics · Cryptography · IT Project Management</div>
                     <div style="margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-                        <span style="font-size:0.72rem;color:var(--pink);">Dissertation: 2D Tower Defence Engine — Architecture &amp; Concurrency Investigation</span>
+                        <span style="font-size:0.72rem;color:var(--pink);">Dissertation: 2D Tower Defence Engine — Architecture &amp; Concurrency Investigation &nbsp;·&nbsp; <strong style="color:var(--pink);">77%</strong></span>
                         <button class="btn btn-ghost" style="font-size:0.58rem;padding:4px 10px;letter-spacing:0.06em;" onclick="openPDF('fyp')">View Writeup ↗</button>
                         <a href="https://github.com/Azarele/FYP" target="_blank" style="font-size:0.62rem;color:var(--text-muted);text-decoration:none;letter-spacing:0.06em;" onmouseover="this.style.color='var(--pink)'" onmouseout="this.style.color='var(--text-muted)'">GitHub ↗</a>
                     </div>
@@ -1747,8 +1747,8 @@ const PROJECTS = {
 
     fyp: {
         title: '2D Tower Defence Engine',
-        subtitle: 'Final Year Dissertation — Royal Holloway, University of London',
-        badges: [{l:'Final Year Project',c:'badge-leader'},{l:'Python',c:'badge-tech'}],
+        subtitle: 'Final Year Dissertation — Royal Holloway, University of London · 77%',
+        badges: [{l:'Final Year Project',c:'badge-leader'},{l:'77% — First Class',c:'badge-prod'},{l:'Python',c:'badge-tech'}],
         stack: 'Python 3.12 · PyGame 2.5.2 · A* Pathfinding · Concurrent Threading · Object Pool Pattern · unittest',
         overview: "My final year dissertation project at Royal Holloway, supervised by Dr. David Tena Cucala. Rather than using a game engine, I built one from first principles — the focus was a technical investigation into concurrent architecture, manual memory management, and algorithmic pathfinding in Python.",
         bullets: [
@@ -1758,6 +1758,7 @@ const PROJECTS = {
             "4 OOP design patterns strictly applied: State (menu/gameplay/end transitions), Factory Method (tower/enemy instantiation), Observer (event-driven UI, eliminates polling), Game Loop (decouples game time from hardware speed).",
             "Headless regression test suite via unittest — spoofs SDL_VIDEODRIVER to a dummy device so logic is verified without a graphical display. CI-ready.",
             "Supervised by Dr. David Tena Cucala, Department of Computer Science, Royal Holloway.",
+            "Achieved 77% — First Class grade.",
         ],
         tags: ['Python','PyGame','A* Pathfinding','Multi-threading','Object Pool','Observer Pattern','Factory Method','State Pattern','Game Loop','unittest'],
         images: [],
