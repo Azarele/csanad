@@ -558,6 +558,7 @@
         <a class="mobile-nav-btn" href="#projects">Projects</a>
         <a class="mobile-nav-btn" href="#skills">Skills</a>
         <a class="mobile-nav-btn" href="#education">Education</a>
+        <a class="mobile-nav-btn" href="#certifications">Certs</a>
         <a class="mobile-nav-btn" href="#contact">Contact</a>
     </nav>
 </header>
@@ -578,6 +579,7 @@
             <a class="nav-item" href="#projects">Projects</a>
             <a class="nav-item" href="#skills">Skills</a>
             <a class="nav-item" href="#education">Education</a>
+            <a class="nav-item" href="#certifications">Certifications</a>
             <a class="nav-item" href="#contact">Contact</a>
         </nav>
     </div>
@@ -586,7 +588,7 @@
         <div class="sidebar-stat-strip">
             <div class="stat-item"><span class="stat-number">£150K+</span><span class="stat-label">Revenue Generated</span></div>
             <div class="stat-item"><span class="stat-number">#1 of 50+</span><span class="stat-label">Sales Ranking</span></div>
-            <div class="stat-item"><span class="stat-number">Top 10</span><span class="stat-label">AI Hackathon</span></div>
+            <div class="stat-item"><span class="stat-number">Top 10</span><span class="stat-label">Bolt.new Hackathon</span></div>
         </div>
         <div class="sidebar-links">
             <a href="https://github.com/azarele" target="_blank">GitHub ↗</a>
@@ -658,7 +660,7 @@
         <div class="exp-list">
 
             <div class="exp-item reveal">
-                <div class="exp-date">Sep 2025 –<br>Present</div>
+                <div class="exp-date">Oct 2025 –<br>Jan 2026</div>
                 <div>
                     <div class="exp-title">CS Tutor (Head Teacher) <span class="role-badge badge-leader">Leadership</span></div>
                     <div class="exp-company">Code Camp UK · London</div>
@@ -683,7 +685,7 @@
             </div>
 
             <div class="exp-item reveal">
-                <div class="exp-date">Mar 2019 –<br>Aug 2025</div>
+                <div class="exp-date">Aug 2019 –<br>Jan 2025</div>
                 <div>
                     <div class="exp-title">Founder &amp; CEO <span class="role-badge badge-sales">Sales</span> <span class="role-badge badge-tech">Tech</span></div>
                     <div class="exp-company">Thesneakaz · Twickenham, London</div>
@@ -704,6 +706,30 @@
                     <ul class="exp-desc">
                         <li>Executed 50+ daily B2C interactions — advanced Level 1 → 3 in under 2 weeks, fastest progression in a 50+ cohort.</li>
                         <li>Ranked <strong style="color:white">#1 of 50+ trainees</strong> — mastered objection handling, pitch framing, and close techniques under live conditions.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="exp-item reveal">
+                <div class="exp-date">Jul 2024 –<br>Mar 2025</div>
+                <div>
+                    <div class="exp-title">Bar Waiter <span class="role-badge badge-sales">Sales</span></div>
+                    <div class="exp-company">144 On The Hill · Richmond, London</div>
+                    <ul class="exp-desc">
+                        <li>Table service in a busy restaurant environment — built rapport with regulars and upsold effectively under pressure.</li>
+                        <li>Developed sharp interpersonal skills and the ability to read customer needs quickly in a fast-paced hospitality setting.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="exp-item reveal">
+                <div class="exp-date">Jun 2024 –<br>Aug 2024</div>
+                <div>
+                    <div class="exp-title">Salesperson <span class="role-badge badge-sales">Sales</span></div>
+                    <div class="exp-company">Homebase · Twickenham, London</div>
+                    <ul class="exp-desc">
+                        <li>Drove product sales on the shop floor — matched customers to the right products through active listening and product knowledge.</li>
+                        <li>Consistently maintained strong customer satisfaction across a high-footfall retail environment.</li>
                     </ul>
                 </div>
             </div>
@@ -738,12 +764,21 @@
                 </div>
             </div>
 
-            <div class="project-item reveal" onclick="openModal('pokeman')">
-                <div class="project-year">2024–25 <span class="role-badge badge-prod" style="display:block;margin-top:6px;text-align:center;">Live</span></div>
+            <div class="project-item reveal" onclick="openModal('inference')">
+                <div class="project-year">2025 <span class="role-badge badge-tech" style="display:block;margin-top:6px;text-align:center;">Open Source</span></div>
                 <div>
-                    <div class="project-name">PokéManager<span class="project-arrow">↗</span></div>
-                    <div class="project-stack">TypeScript · Node.js · Supabase · eBay API · Web Push (VAPID)</div>
-                    <div class="project-blurb">Full-stack card inventory and eBay sales platform with real-time order sync, automated profit/fee calculation, push notifications, and CSV export.</div>
+                    <div class="project-name">Inference Router <a href="https://github.com/Azarele/inference-router" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">GitHub ↗</a><span class="project-arrow">↗</span></div>
+                    <div class="project-stack">Python · asyncio · Ollama · EMA · httpx · Rich</div>
+                    <div class="project-blurb">Streaming LLM inference router with mid-stream degradation detection and cost-based endpoint switching. EMA token velocity tracking, stall detection, and continuation prompts on model switch.</div>
+                </div>
+            </div>
+
+            <div class="project-item reveal" onclick="openModal('pokeman')">
+                <div class="project-year">2024–25 <span class="role-badge badge-prod" style="display:block;margin-top:6px;text-align:center;">Live SaaS</span></div>
+                <div>
+                    <div class="project-name">PokéManager <a href="https://pokemanager.app" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">pokemanager.app ↗</a><span class="project-arrow">↗</span></div>
+                    <div class="project-stack">Python · eBay API · AI card scanning · Discord · Supabase · Stripe · Multi-currency</div>
+                    <div class="project-blurb">Live SaaS product for Pokémon TCG resellers worldwide. Real eBay integration, AI card scanning, Discord offer alerts with ROI analysis, true profit tracking from actual eBay fee statements, and tax exports for HMRC/Xero/QuickBooks. 3+ active paying users, £2,602+ revenue tracked.</div>
                 </div>
             </div>
 
@@ -757,18 +792,18 @@
             </div>
 
             <div class="project-item reveal" onclick="openModal('nync')">
-                <div class="project-year">2024</div>
+                <div class="project-year">2024 <span class="role-badge badge-prod" style="display:block;margin-top:6px;text-align:center;">Live</span></div>
                 <div>
-                    <div class="project-name">Nync<span class="project-arrow">↗</span></div>
-                    <div class="project-stack">Python · Google Calendar API · Outlook API · Stripe · Discord</div>
-                    <div class="project-blurb">SaaS calendar and meeting platform. 4 workflows in one: scheduling, Stripe billing (4 tiers), team analytics, and notifications. ~90% reduction in booking friction.</div>
+                    <div class="project-name">Nync <a href="https://nync.app" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">nync.app ↗</a><span class="project-arrow">↗</span></div>
+                    <div class="project-stack">Python · Google Calendar API · Outlook API · Stripe · Discord · MS Teams</div>
+                    <div class="project-blurb">Live SaaS calendar and meeting management platform. 4 workflows in one: scheduling, Stripe billing (4 tiers), team analytics, and notifications. ~90% reduction in booking friction.</div>
                 </div>
             </div>
 
             <div class="project-item reveal" onclick="openModal('goalify')">
                 <div class="project-year">2024 <span class="role-badge badge-prod" style="display:block;margin-top:6px;text-align:center;">Top 10</span></div>
                 <div>
-                    <div class="project-name">Goalify<span class="project-arrow">↗</span></div>
+                    <div class="project-name">Goalify <a href="https://github.com/azarele" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">GitHub ↗</a><span class="project-arrow">↗</span></div>
                     <div class="project-stack">TypeScript · AI Vision · LLM APIs · Bolt.new</div>
                     <div class="project-blurb">AI goal tracking agent built in 48 hours for the Bolt.new Hackathon London. Top 10 finish. Automated 100% of goal verification via AI vision and LLM analysis.</div>
                 </div>
@@ -845,6 +880,21 @@
                 </div>
             </div>
             <div class="skill-group reveal">
+                <div class="skill-group-title">AI &amp; Systems</div>
+                <div class="skill-chips">
+                    <span class="chip chip-highlight">LLM Integration</span>
+                    <span class="chip chip-highlight">Ollama / Local Inference</span>
+                    <span class="chip">asyncio / async Python</span>
+                    <span class="chip">EMA / Signal Processing</span>
+                    <span class="chip">Streaming APIs</span>
+                    <span class="chip">Gemini API</span>
+                    <span class="chip">AI Agents</span>
+                    <span class="chip">Playwright</span>
+                    <span class="chip">Web Scraping</span>
+                </div>
+            </div>
+
+            <div class="skill-group reveal">
                 <div class="skill-group-title">Commercial &amp; Sales</div>
                 <div class="skill-chips">
                     <span class="chip chip-highlight">B2B &amp; B2C Sales</span>
@@ -888,6 +938,22 @@
                     <div class="edu-degree">A Levels &amp; GCSEs</div>
                     <div class="edu-school">Kingsley Academy</div>
                     <div class="edu-detail">A Levels: Maths, Computer Science, Geography · GCSEs: Grades 6–9</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section class="section" id="certifications">
+        <div class="section-label">// Certifications</div>
+        <h2 class="section-title">Licences &amp; Certs</h2>
+        <div class="edu-list">
+            <div class="edu-item reveal">
+                <div class="edu-date">Jul 2019</div>
+                <div>
+                    <div class="edu-degree">Basketball England Level 2 Coaching Certificate</div>
+                    <div class="edu-school">Basketball England</div>
+                    <div class="edu-detail">Qualified coach — applied directly as Men's Basketball 1st Team Captain at Royal Holloway.</div>
                 </div>
             </div>
         </div>
@@ -957,19 +1023,21 @@ const PROJECTS = {
     },
     pokeman: {
         title: 'PokéManager',
-        subtitle: 'Pokémon Card Inventory & eBay Sales Platform',
-        badges: [{l:'Live',c:'badge-prod'}],
-        stack: 'TypeScript · Node.js · Supabase · eBay API · Web Push (VAPID)',
-        overview: "PokéManager is a full-stack inventory and eBay sales management system I built to eliminate manual spreadsheet tracking of my TCG reselling operation.",
+        subtitle: 'Live SaaS for Pokémon TCG Resellers — pokemanager.app',
+        badges: [{l:'Live SaaS',c:'badge-prod'},{l:'Paying Users',c:'badge-prod'}],
+        stack: 'Python · eBay API · AI Card Scanning · Discord · Supabase · Stripe · Multi-currency · HMRC/Xero/QuickBooks exports',
+        overview: "PokéManager is a live SaaS product I built and shipped for Pokémon TCG resellers worldwide. It solves the core problem: resellers don't know their actual profit because eBay's fee estimates are wrong and spreadsheets don't sync. PokéManager pulls real fee data from eBay statements, tracks true margin per card, and automates the entire listing and sales workflow.",
         bullets: [
-            "Real-time eBay order sync — new orders appear automatically without manual refresh.",
-            "Automated profit calculation per item factoring in eBay fees, promoted listing costs, and purchase price.",
-            "eBay OAuth token auto-refresh — zero manual re-authentication needed.",
-            "Web push notifications (VAPID) for new sales and low-stock alerts, even when the browser is closed.",
-            "CSV export for accounting and bulk inventory snapshots.",
-            "Supabase PostgreSQL backend with per-item profit tracking and bundle sale handling across multi-quantity listings.",
+            "Real eBay integration — works across eBay UK, US, DE, AU and more. Auto-detects sales every 30 minutes, surfaces offer alerts with full ROI analysis and Accept/Counter/Decline recommendations via Discord.",
+            "AI card scanning: point a phone camera at a card, AI identifies it, fetches the live PriceCharting price, and adds it to inventory automatically.",
+            "True profit tracking from actual eBay fee statements — not estimates. Every sale shows real net profit after all fees.",
+            "30-day price history sparklines, rising/falling trend detection, and price forecasts per card.",
+            "Tax & accounting exports for HMRC, Xero, and QuickBooks — simplified reporting for tax season.",
+            "Multi-user staff accounts with role-based permissions: Viewers, Staff, and Managers, each with their own access level and activity log.",
+            "Stripe billing across 3 tiers: Trainer (free), Gym Leader (£7.99/mo), Champion (£14.99/mo) with AI descriptions, scan-to-add, and API access.",
+            "3+ active paying users, £2,602+ revenue tracked on the platform, 155+ cards sold, 61+ in active stock.",
         ],
-        tags: ['TypeScript','Node.js','Supabase','PostgreSQL','eBay API','OAuth 2.0','Web Push','VAPID','CSV Export'],
+        tags: ['Python','eBay API','Stripe','Supabase','Discord','AI Scanning','Multi-currency','SaaS','HMRC Export','Role-Based Access'],
         images: [],
     },
     tradequest: {
@@ -990,7 +1058,7 @@ const PROJECTS = {
     },
     nync: {
         title: 'Nync',
-        subtitle: 'SaaS Calendar & Meeting Management Platform',
+        subtitle: 'Live SaaS Calendar & Meeting Management Platform — nync.app',
         badges: [{l:'SaaS',c:'badge-tech'}],
         stack: 'Python · Google Calendar API · Outlook API · Stripe · Discord · MS Teams',
         overview: "Nync consolidates scheduling, billing, team analytics, and notifications into one SaaS platform. The core insight: most meeting friction comes from calendar fragmentation and manual back-and-forth.",
@@ -1020,6 +1088,25 @@ const PROJECTS = {
         tags: ['TypeScript','AI Vision','LLM','Bolt.new','Hackathon','Real-Time'],
         images: [],
     },
+    inference: {
+        title: 'Inference Router',
+        subtitle: 'Streaming LLM Router with Mid-Stream Degradation Detection',
+        badges: [{l:'Open Source',c:'badge-tech'},{l:'Python',c:'badge-tech'}],
+        stack: 'Python 3.11 · asyncio · Ollama · httpx · Rich · EMA velocity tracking',
+        overview: "A streaming LLM inference router that routes requests across multiple local Ollama endpoints, detects degradation mid-stream, and switches endpoints when switching is cheaper than waiting. Built after encountering GPU throttling issues during long inference runs.",
+        bullets: [
+            "Maintains a live performance profile per endpoint: EMA token velocity (α=0.4), completion rate, and consecutive failure count — all derived from real observed streaming data.",
+            "Detects degradation mid-stream via per-token velocity checks and stall detection — fires a cost-benefit calculation when velocity drops.",
+            "Stay cost vs switch cost: estimated time to finish on degraded endpoint vs restart penalty + estimated time on best alternative. Only switches when the maths clearly favours it — avoids thrashing.",
+            "Continuation prompt on switch: when switching mid-stream, builds a prompt including the partial response so the new endpoint continues naturally without repeating.",
+            "Deterministic demo: degradation injected via artificial delays (simulating GPU throttling) — makes the switch guaranteed to fire for demo purposes.",
+            "Architecture: endpoint.py (EndpointState dataclass), router.py (streaming loop with switch logic), demo.py (seeded degradation demo).",
+            "Future roadmap: persistent SQLite state across sessions, query-type routing, backpressure queuing, real GPU metrics via nvidia-smi.",
+        ],
+        tags: ['Python','asyncio','Ollama','httpx','EMA','LLM','Inference','Streaming','Open Source'],
+        images: [],
+    },
+
     holiday: {
         title: 'HolidayExplorer',
         subtitle: 'Graduate Technical Assessment — .NET 8 / C#',
@@ -1080,7 +1167,7 @@ function handleOverlayClick(e) {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 // ── SCROLL SPY ──
-const sections = ['hero','value','experience','projects','skills','education','contact'];
+const sections = ['hero','value','experience','projects','skills','education','certifications','contact'];
 
 function updateActiveNav() {
     let current = 'hero';
