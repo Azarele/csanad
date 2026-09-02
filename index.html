@@ -3,7 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Csanad Kope | Software Engineer & Sales Technologist</title>
+    <title>Csanad Kope | Software Engineer &amp; Sales Technologist</title>
+    <meta name="description" content="Csanad Kope — CS graduate from Royal Holloway. Full-stack engineer who ships production systems and closes deals. Open to software engineering, sales engineering, and technical sales roles in London.">
+    <meta property="og:title" content="Csanad Kope | Software Engineer &amp; Sales Technologist">
+    <meta property="og:description" content="CS graduate who builds production systems and knows how to sell them. PokéManager, ShopOS, Inference Router. Open to roles in London.">
+    <meta property="og:url" content="https://resume.thesneakaz.xyz">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://resume.thesneakaz.xyz/favicon.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Csanad Kope | Software Engineer &amp; Sales Technologist">
+    <meta name="twitter:description" content="CS graduate who builds production systems and knows how to sell them. Open to roles in London.">
+    <meta name="twitter:image" content="https://resume.thesneakaz.xyz/favicon.png">
+    <link rel="canonical" href="https://resume.thesneakaz.xyz">
     <link rel="icon" href="favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -381,6 +392,13 @@
     .contact-link-label { font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 2px; }
 
     /* ── FOOTER ── */
+    .footer-cta {
+        display: flex; align-items: center; justify-content: space-between;
+        flex-wrap: wrap; gap: 12px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255,45,120,0.08);
+        font-size: 0.72rem; color: var(--text-muted);
+    }
     .site-footer {
         max-width: 680px; padding: 48px 0 0; margin-left: var(--nav-w);
         padding-left: 64px; padding-right: 64px; position: relative; z-index: 10;
@@ -444,6 +462,9 @@
     }
     .modal-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; }
 
+    @media (max-width: 480px) {
+        .modal-stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    }
     .modal-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 6px; }
     .modal-gallery img {
         width: 100%; border-radius: 8px;
@@ -510,6 +531,7 @@
         .project-item { grid-template-columns: 72px 1fr; gap: 0 14px; padding: 16px 12px; }
         .edu-item { grid-template-columns: 90px 1fr; gap: 0 14px; padding: 16px 12px; }
         .contact-grid { grid-template-columns: 1fr; }
+        .footer-cta { flex-direction: column; align-items: flex-start; gap: 10px; }
         .site-footer { margin-left: 0; padding: 32px 20px 0; }
         .modal-box { padding: 24px 20px 28px; }
         .modal-title { font-size: 1.1rem; }
@@ -521,6 +543,28 @@
         .stat-cell { padding: 14px 18px; }
         main { padding: 0 16px 60px; }
         .section { padding-top: 48px; }
+    }
+
+    /* ── AVAILABLE CHIP ── */
+    .avail-chip {
+        display: inline-flex; align-items: center; gap: 7px;
+        font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase;
+        color: #4ade80; background: rgba(74,222,128,0.08);
+        border: 1px solid rgba(74,222,128,0.25);
+        border-radius: 20px; padding: 4px 10px;
+        margin-bottom: 28px;
+    }
+    .avail-chip-sm { margin-bottom: 0; margin-top: 4px; font-size: 0.58rem; padding: 3px 8px; }
+    .avail-dot {
+        width: 6px; height: 6px; border-radius: 50%;
+        background: #4ade80;
+        box-shadow: 0 0 6px #4ade80;
+        animation: pulse-green 2s ease infinite;
+        flex-shrink: 0;
+    }
+    @keyframes pulse-green {
+        0%, 100% { opacity: 1; box-shadow: 0 0 6px #4ade80; }
+        50%       { opacity: 0.6; box-shadow: 0 0 12px #4ade80; }
     }
 
     /* ── SCROLL REVEAL ── */
@@ -548,6 +592,7 @@
         <div>
             <div class="mobile-name">Csanad <span>Kope</span></div>
             <div class="mobile-role">Software Engineer · Sales Technologist</div>
+            <div class="avail-chip avail-chip-sm"><span class="avail-dot"></span>Open to work</div>
         </div>
         <a href="mailto:thesneakaz@gmail.com" class="btn btn-primary" style="font-size:0.62rem;padding:8px 14px;">Hire Me</a>
     </div>
@@ -570,6 +615,7 @@
     <div class="sidebar-top">
         <div class="sidebar-name">Csanad <span>Kope</span></div>
         <div class="sidebar-role">Software Engineer<br>Sales Technologist</div>
+        <div class="avail-chip"><span class="avail-dot"></span>Open to opportunities</div>
         <p class="sidebar-tagline">I build <strong>complex systems</strong> and I know how to <strong>sell them</strong>. CS graduate from Royal Holloway.</p>
 
         <nav class="sidebar-nav">
@@ -758,9 +804,10 @@
             <div class="project-item reveal" onclick="openModal('shopos')">
                 <div class="project-year">2024–25 <span class="role-badge badge-prod" style="display:block;margin-top:6px;text-align:center;">Live</span></div>
                 <div>
-                    <div class="project-name">ShopOS v4<span class="project-arrow">↗</span></div>
+                    <div class="project-name">ShopOS v4
+                        <a href="https://saynama-production.up.railway.app/" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">Live ↗</a><span class="project-arrow">↗</span></div>
                     <div class="project-stack">TypeScript · Node.js · Prisma · PostgreSQL · Railway · Shopify API</div>
-                    <div class="project-blurb">Production POS and inventory system with full two-way Shopify sync, RBAC, barcode generation, and KPI analytics. Converted from a single-file prototype to a 32-file production system.</div>
+                    <div class="project-blurb">Production POS and inventory system for Saynama with full two-way Shopify sync, RBAC, barcode generation, and KPI analytics. Converted from a single-file prototype to a 32-file production system deployed on Railway.</div>
                 </div>
             </div>
 
@@ -806,6 +853,16 @@
                     <div class="project-name">Goalify <a href="https://github.com/azarele" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">GitHub ↗</a><span class="project-arrow">↗</span></div>
                     <div class="project-stack">TypeScript · AI Vision · LLM APIs · Bolt.new</div>
                     <div class="project-blurb">AI goal tracking agent built in 48 hours for the Bolt.new Hackathon London. Top 10 finish. Automated 100% of goal verification via AI vision and LLM analysis.</div>
+                </div>
+            </div>
+
+            <div class="project-item reveal" onclick="openModal('fyp')">
+                <div class="project-year">2025–26 <span class="role-badge badge-tech" style="display:block;margin-top:6px;text-align:center;">Final Year</span></div>
+                <div>
+                    <div class="project-name">Tower Defence Engine
+                        <a href="https://github.com/Azarele/FYP" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">GitHub ↗</a><span class="project-arrow">↗</span></div>
+                    <div class="project-stack">Python · PyGame · A* Pathfinding · Multi-threading · Object Pool · unittest</div>
+                    <div class="project-blurb">Final year dissertation project. High-performance 2D engine built from scratch — dual-threaded architecture, custom object pool bypassing Python's GC, real-time A* pathfinding with dynamic rerouting, and 4 OOP design patterns. Headless regression test suite.</div>
                 </div>
             </div>
 
@@ -971,6 +1028,10 @@
                 <span class="contact-link-icon">✉</span>
                 <div><span class="contact-link-label">Email</span>thesneakaz@gmail.com</div>
             </a>
+            <a class="contact-link" href="tel:+447480799967">
+                <span class="contact-link-icon">☎</span>
+                <div><span class="contact-link-label">Phone</span>+44 7480 799967</div>
+            </a>
             <a class="contact-link" href="https://www.linkedin.com/in/csanad-kope/" target="_blank">
                 <span class="contact-link-icon">in</span>
                 <div><span class="contact-link-label">LinkedIn</span>csanad-kope</div>
@@ -979,17 +1040,17 @@
                 <span class="contact-link-icon">⌥</span>
                 <div><span class="contact-link-label">GitHub</span>github.com/azarele</div>
             </a>
-            <a class="contact-link" href="https://www.resume.thesneakaz.xyz" target="_blank">
-                <span class="contact-link-icon">◈</span>
-                <div><span class="contact-link-label">Website</span>resume.thesneakaz.xyz</div>
-            </a>
         </div>
     </section>
 
 </main>
 
 <footer class="site-footer">
-    <p>Designed &amp; built by Csanad Kope · Twickenham, London · 2026</p>
+    <div class="footer-cta">
+        <span>Open to work · London · Available now</span>
+        <a href="mailto:thesneakaz@gmail.com" class="btn btn-primary" style="font-size:0.68rem;padding:9px 18px;">Send me an email ↗</a>
+    </div>
+    <p style="margin-top:20px;font-size:0.65rem;">Designed &amp; built by Csanad Kope · Twickenham, London · 2026</p>
 </footer>
 
 <!-- ══════════════════════════
@@ -1007,7 +1068,7 @@
 const PROJECTS = {
     shopos: {
         title: 'ShopOS v4',
-        subtitle: 'Production POS & Inventory System — Built for Saynama',
+        subtitle: 'Production POS & Inventory System — Live at saynama-production.up.railway.app',
         badges: [{l:'Production',c:'badge-prod'},{l:'Live',c:'badge-prod'}],
         stack: 'TypeScript · Node.js · Prisma · PostgreSQL · Railway · Shopify API · OAuth 2.0 · Webhooks',
         overview: "ShopOS v4 is a full production Point of Sale and inventory system I built for Saynama, a UK phone shop. The brief: replace a fragmented paper/spreadsheet workflow with a proper multi-user system that syncs live with their Shopify store.",
@@ -1039,6 +1100,24 @@ const PROJECTS = {
         ],
         tags: ['Python','eBay API','Stripe','Supabase','Discord','AI Scanning','Multi-currency','SaaS','HMRC Export','Role-Based Access'],
         images: [],
+        statsHTML: `<div class="modal-stats-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:4px;">
+            <div style="background:rgba(255,45,120,0.08);border:1px solid rgba(255,45,120,0.2);border-radius:8px;padding:14px;text-align:center;">
+                <div style="font-family:'Space Mono',monospace;font-size:1.2rem;font-weight:700;color:#ff2d78;line-height:1;">£2,602+</div>
+                <div style="font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,200,225,0.45);margin-top:4px;">Revenue Tracked</div>
+            </div>
+            <div style="background:rgba(255,45,120,0.08);border:1px solid rgba(255,45,120,0.2);border-radius:8px;padding:14px;text-align:center;">
+                <div style="font-family:'Space Mono',monospace;font-size:1.2rem;font-weight:700;color:#ff2d78;line-height:1;">155+</div>
+                <div style="font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,200,225,0.45);margin-top:4px;">Cards Sold</div>
+            </div>
+            <div style="background:rgba(255,45,120,0.08);border:1px solid rgba(255,45,120,0.2);border-radius:8px;padding:14px;text-align:center;">
+                <div style="font-family:'Space Mono',monospace;font-size:1.2rem;font-weight:700;color:#ff2d78;line-height:1;">61+</div>
+                <div style="font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,200,225,0.45);margin-top:4px;">In Stock</div>
+            </div>
+            <div style="background:rgba(255,45,120,0.08);border:1px solid rgba(255,45,120,0.2);border-radius:8px;padding:14px;text-align:center;">
+                <div style="font-family:'Space Mono',monospace;font-size:1.2rem;font-weight:700;color:#ff2d78;line-height:1;">3+</div>
+                <div style="font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,200,225,0.45);margin-top:4px;">Active Users</div>
+            </div>
+        </div>`,
     },
     tradequest: {
         title: 'TradeQuest',
@@ -1107,6 +1186,24 @@ const PROJECTS = {
         images: [],
     },
 
+    fyp: {
+        title: '2D Tower Defence Engine',
+        subtitle: 'Final Year Dissertation — Royal Holloway, University of London',
+        badges: [{l:'Final Year Project',c:'badge-leader'},{l:'Python',c:'badge-tech'}],
+        stack: 'Python 3.12 · PyGame 2.5.2 · A* Pathfinding · Concurrent Threading · Object Pool Pattern · unittest',
+        overview: "My final year dissertation project at Royal Holloway, supervised by Dr. David Tena Cucala. Rather than using a game engine, I built one from first principles — the focus was a technical investigation into concurrent architecture, manual memory management, and algorithmic pathfinding in Python.",
+        bullets: [
+            "Dual-threaded architecture: Logic Thread handles simulation maths; Main UI Thread handles rendering. Decoupled to maintain 60fps UI responsiveness despite Python's GIL.",
+            "Custom Object Pool: pre-allocates and recycles enemy entities at startup — entirely bypasses Python's cyclic garbage collector during active gameplay, eliminating stop-the-world latency spikes.",
+            "A* pathfinding with Manhattan distance heuristic and heapq priority queue for O(1) node retrieval. Supports real-time 'Mazing' — enemies dynamically reroute when the player alters the grid topology.",
+            "4 OOP design patterns strictly applied: State (menu/gameplay/end transitions), Factory Method (tower/enemy instantiation), Observer (event-driven UI, eliminates polling), Game Loop (decouples game time from hardware speed).",
+            "Headless regression test suite via unittest — spoofs SDL_VIDEODRIVER to a dummy device so logic is verified without a graphical display. CI-ready.",
+            "Supervised by Dr. David Tena Cucala, Department of Computer Science, Royal Holloway.",
+        ],
+        tags: ['Python','PyGame','A* Pathfinding','Multi-threading','Object Pool','Observer Pattern','Factory Method','State Pattern','Game Loop','unittest'],
+        images: [],
+    },
+
     holiday: {
         title: 'HolidayExplorer',
         subtitle: 'Graduate Technical Assessment — .NET 8 / C#',
@@ -1130,9 +1227,14 @@ function openModal(key) {
     const badges = p.badges.map(b => `<span class="role-badge ${b.c}" style="font-size:0.6rem;padding:3px 8px;">${b.l}</span>`).join('');
     const bullets = p.bullets.map(b => `<li>${b}</li>`).join('');
     const tags = p.tags.map(t => `<span class="chip" style="font-size:0.66rem;">${t}</span>`).join('');
-    const gallery = p.images.length
-        ? `<div class="modal-gallery">${p.images.map(s=>`<img src="${s}" alt="${p.title}" loading="lazy">`).join('')}</div>`
-        : `<div class="modal-gallery-empty">📸 Screenshots coming soon — add image paths to PROJECTS.${key}.images[]</div>`;
+    let gallery;
+    if (p.images && p.images.length) {
+        gallery = `<div class="modal-gallery">${p.images.map(s=>`<img src="${s}" alt="${p.title}" loading="lazy">`).join('')}</div>`;
+    } else if (p.statsHTML) {
+        gallery = p.statsHTML;
+    } else {
+        gallery = `<div class="modal-gallery-empty">📸 Screenshots coming soon</div>`;
+    }
 
     document.getElementById('modalContent').innerHTML = `
         <div class="modal-badge-row">${badges}</div>
@@ -1171,10 +1273,17 @@ const sections = ['hero','value','experience','projects','skills','education','c
 
 function updateActiveNav() {
     let current = 'hero';
-    sections.forEach(id => {
-        const el = document.getElementById(id);
-        if (el && window.scrollY >= el.offsetTop - 120) current = id;
-    });
+    const scrollBottom = window.scrollY + window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight;
+    // If near bottom of page, force contact active
+    if (scrollBottom >= docHeight - 60) {
+        current = 'contact';
+    } else {
+        sections.forEach(id => {
+            const el = document.getElementById(id);
+            if (el && window.scrollY >= el.offsetTop - 120) current = id;
+        });
+    }
 
     // Desktop sidebar
     document.querySelectorAll('.nav-item').forEach(a => {
