@@ -15,6 +15,7 @@
     <meta name="twitter:description" content="CS graduate who builds production systems and knows how to sell them. Open to roles in London.">
     <meta name="twitter:image" content="https://resume.thesneakaz.xyz/favicon.png">
     <link rel="canonical" href="https://resume.thesneakaz.xyz">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
     <!-- Security headers -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
@@ -555,6 +556,8 @@
         .edu-item { grid-template-columns: 80px 1fr; gap: 0 12px; padding: 14px 10px; }
         .contact-grid { grid-template-columns: 1fr; }
         .footer-cta { flex-direction: column; align-items: flex-start; gap: 10px; }
+        .hero-meta { gap: 6px; margin-bottom: 16px; }
+        .hero-meta-chip { font-size: 0.67rem; }
         .site-footer { margin-left: 0; padding: 32px 20px 0; }
         .modal-box { padding: 24px 20px 28px; }
         .modal-title { font-size: 1.1rem; }
@@ -716,6 +719,111 @@
         .pdf-nav-btn { padding: 6px 12px; font-size: 0.6rem; }
     }
 
+    /* ══════════════════════════════════
+       RIGHT PANEL (wide screens)
+    ══════════════════════════════════ */
+    .right-panel {
+        position: fixed;
+        top: 50%;
+        right: 32px;
+        transform: translateY(-50%);
+        z-index: 15;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+    .right-panel.visible { opacity: 1; }
+
+    /* Progress bar — vertical line with fill */
+    .rp-progress-track {
+        width: 2px;
+        height: 180px;
+        background: rgba(255,45,120,0.12);
+        border-radius: 2px;
+        position: relative;
+        overflow: hidden;
+    }
+    .rp-progress-fill {
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        background: linear-gradient(180deg, var(--pink), rgba(255,45,120,0.4));
+        border-radius: 2px;
+        transition: height 0.1s ease;
+        height: 0%;
+    }
+
+    /* Section dots */
+    .rp-dots {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 14px 0;
+    }
+    .rp-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: rgba(255,45,120,0.25);
+        border: 1px solid rgba(255,45,120,0.3);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: relative;
+    }
+    .rp-dot:hover, .rp-dot.active {
+        background: var(--pink);
+        border-color: var(--pink);
+        box-shadow: 0 0 8px rgba(255,45,120,0.6);
+        transform: scale(1.4);
+    }
+    .rp-dot:hover .rp-dot-label {
+        opacity: 1; transform: translateX(-8px);
+    }
+    .rp-dot-label {
+        position: absolute;
+        right: 14px; top: 50%;
+        transform: translateY(-50%) translateX(0);
+        font-family: 'Space Mono', monospace;
+        font-size: 0.55rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        white-space: nowrap;
+        opacity: 0;
+        transition: all 0.2s ease;
+        pointer-events: none;
+        background: rgba(13,0,16,0.85);
+        padding: 3px 7px;
+        border-radius: 4px;
+        border: 1px solid rgba(255,45,120,0.15);
+    }
+
+    /* Back to top */
+    .rp-top-btn {
+        width: 28px; height: 28px;
+        border-radius: 50%;
+        background: rgba(255,45,120,0.08);
+        border: 1px solid rgba(255,45,120,0.25);
+        color: var(--pink);
+        cursor: pointer;
+        font-size: 0.7rem;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.2s ease;
+        margin-top: 6px;
+    }
+    .rp-top-btn:hover {
+        background: rgba(255,45,120,0.2);
+        border-color: var(--pink);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255,45,120,0.3);
+    }
+
+    /* Only show on wide enough screens */
+    @media (max-width: 1200px) {
+        .right-panel { display: none; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
     }
@@ -871,7 +979,7 @@
                     <ul class="exp-desc">
                         <li>Led a team of 6 in a high-traffic retail environment — full ops lifecycle from open to close.</li>
                         <li>Analysed daily sales KPIs in Excel; built end-of-day reports to optimise revenue strategies across ~200 daily customers.</li>
-                        <li>Consistently exceeded daily revenue targets through team coaching and floor management.</li>
+                        <li>Consistently exceeded daily revenue targets — team ranked top across the Westfield site during peak period by coaching staff on product upsell and floor positioning.</li>
                     </ul>
                 </div>
             </div>
@@ -882,7 +990,7 @@
                     <div class="exp-title">Bar Waiter <span class="role-badge badge-sales">Sales</span></div>
                     <div class="exp-company">144 On The Hill · Richmond, London</div>
                     <ul class="exp-desc">
-                        <li>Table service in a busy restaurant environment — built rapport with regulars and upsold effectively under pressure.</li>
+                        <li>Delivered table service across a 60+ cover restaurant — consistently upsold drinks and specials, recognised by management for highest add-on rate in the team.</li>
                         <li>Developed sharp interpersonal skills and the ability to read customer needs quickly in a fast-paced hospitality setting.</li>
                     </ul>
                 </div>
@@ -894,7 +1002,7 @@
                     <div class="exp-title">Salesperson <span class="role-badge badge-sales">Sales</span></div>
                     <div class="exp-company">Homebase · Twickenham, London</div>
                     <ul class="exp-desc">
-                        <li>Drove product sales on the shop floor — matched customers to the right products through active listening and product knowledge.</li>
+                        <li>Drove product sales across a high-footfall DIY retail floor — converted cold-aisle browsers into buyers through active listening, consistently meeting weekly individual sales targets.</li>
                         <li>Consistently maintained strong customer satisfaction across a high-footfall retail environment.</li>
                     </ul>
                 </div>
@@ -1239,6 +1347,24 @@
     </div>
 </div>
 
+<!-- RIGHT PANEL -->
+<div class="right-panel" id="rightPanel">
+    <div class="rp-progress-track">
+        <div class="rp-progress-fill" id="rpFill"></div>
+    </div>
+    <div class="rp-dots" id="rpDots">
+        <div class="rp-dot active" onclick="scrollToSection('hero')" data-section="hero"><span class="rp-dot-label">About</span></div>
+        <div class="rp-dot" onclick="scrollToSection('value')" data-section="value"><span class="rp-dot-label">Value</span></div>
+        <div class="rp-dot" onclick="scrollToSection('experience')" data-section="experience"><span class="rp-dot-label">Experience</span></div>
+        <div class="rp-dot" onclick="scrollToSection('projects')" data-section="projects"><span class="rp-dot-label">Projects</span></div>
+        <div class="rp-dot" onclick="scrollToSection('skills')" data-section="skills"><span class="rp-dot-label">Skills</span></div>
+        <div class="rp-dot" onclick="scrollToSection('education')" data-section="education"><span class="rp-dot-label">Education</span></div>
+        <div class="rp-dot" onclick="scrollToSection('certifications')" data-section="certifications"><span class="rp-dot-label">Certs</span></div>
+        <div class="rp-dot" onclick="scrollToSection('contact')" data-section="contact"><span class="rp-dot-label">Contact</span></div>
+    </div>
+    <button class="rp-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+</div>
+
 <script>
 // ── PROJECT DATA ──
 const PROJECTS = {
@@ -1429,6 +1555,55 @@ function handleOverlayClick(e) {
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── RIGHT PANEL ──
+(function() {
+    const panel  = document.getElementById('rightPanel');
+    const fill   = document.getElementById('rpFill');
+    const dots   = document.querySelectorAll('.rp-dot');
+
+    let ticking = false;
+
+    function updatePanel() {
+        const scrollY  = window.scrollY;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = maxScroll > 0 ? (scrollY / maxScroll) * 100 : 0;
+
+        // Progress bar
+        fill.style.height = Math.min(pct, 100) + '%';
+
+        // Show panel after scrolling 80px
+        if (scrollY > 80) panel.classList.add('visible');
+        else panel.classList.remove('visible');
+
+        // Active dot
+        const sectionIds = ['hero','value','experience','projects','skills','education','certifications','contact'];
+        let current = 'hero';
+        const bottom = scrollY + window.innerHeight;
+        const docH   = document.documentElement.scrollHeight;
+        if (bottom >= docH - 60) {
+            current = 'contact';
+        } else {
+            sectionIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && scrollY >= el.offsetTop - 140) current = id;
+            });
+        }
+        dots.forEach(d => d.classList.toggle('active', d.dataset.section === current));
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) { requestAnimationFrame(updatePanel); ticking = true; }
+    }, { passive: true });
+
+    updatePanel();
+})();
+
+function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
 // ── SCROLL SPY ──
 const sections = ['hero','value','experience','projects','skills','education','certifications','contact'];
