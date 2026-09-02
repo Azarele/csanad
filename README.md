@@ -1,4 +1,4 @@
-# Csanad Kope
+# Csanad Kope — Portfolio
 
 **Software Engineer · Sales Engineer · CS Graduate, Royal Holloway (2:1)**
 
@@ -6,19 +6,29 @@
 
 ---
 
-CS graduate who ships production systems and knows how to sell them.
+CS graduate who ships production systems and knows how to sell them. Two live SaaS products with paying users, £150K+ in commercial revenue, and a track record of #1 rankings in high-pressure sales environments.
 
-- 🚀 **PokéManager** — live SaaS for TCG resellers. £2,602+ tracked, 3+ paying users, real eBay integration + AI card scanning → [pokemanager.app](https://pokemanager.app)
-- 🏪 **ShopOS v4** — production POS replacing paper workflows for a live UK phone shop. Full Shopify two-way sync, RBAC, zero downtime → [live](https://saynama-production.up.railway.app/)
-- 🤖 **Inference Router** — streaming LLM router with cost-based mid-stream endpoint switching → [github.com/Azarele/inference-router](https://github.com/Azarele/inference-router)
-- 🗓️ **Nync** — live SaaS calendar platform, ~90% booking friction reduction → [nync.app](https://nync.app)
-- 🏆 **Goalify** — Top 10 at Bolt.new AI Hackathon London (48hr build) → [github.com/Azarele/Goalify](https://github.com/Azarele/Goalify)
-- 🎮 **Tower Defence Engine** — FYP dissertation. Dual-threaded, custom GC bypass, A* pathfinding → [github.com/Azarele/FYP](https://github.com/Azarele/FYP)
+## Live Projects
 
-**Commercial track record:** £150,000+ revenue from scratch · Ranked #1 of 50+ in sales · SneakerCon vendor
+| Project | Description | Stack |
+|---------|-------------|-------|
+| [PokéManager](https://pokemanager.app) | SaaS for TCG resellers — £2,602+ tracked, 3+ paying users, real eBay integration + AI card scanning | Python · eBay API · Stripe · Supabase |
+| [ShopOS v4](https://saynama-production.up.railway.app/) | Production POS replacing paper workflows for a live UK phone shop. Full Shopify two-way sync, RBAC, zero downtime | TypeScript · Node.js · Prisma · Railway |
+| [Nync](https://nync.app) | Live SaaS calendar platform — ~90% reduction in booking friction | Python · Streamlit · Supabase · Stripe |
 
-**Stack:** TypeScript · Python · Node.js · Rust · Go · PostgreSQL · Supabase · Railway · Shopify API · eBay API · Stripe · LLM/AI
+## Other Public Repos
 
-📧 thesneakaz@gmail.com · [LinkedIn](https://www.linkedin.com/in/csanad-kope/) · [GitHub](https://github.com/azarele)
+| Repo | What it is |
+|------|-----------|
+| [inference-router](https://github.com/Azarele/inference-router) | Streaming LLM router with cost-based mid-stream endpoint switching |
+| [Goalify](https://github.com/Azarele/Goalify) | Top 10 — Bolt.new AI Hackathon London (48hr build) |
+| [FYP](https://github.com/Azarele/FYP) | Dissertation: dual-threaded 2D engine, custom GC bypass, A* pathfinding |
+| [phaiseit](https://github.com/Azarele/phaiseit) | AI text transformation tool |
 
-> Open to software engineering, sales engineering, and technical sales roles in London.
+## Stack
+
+`TypeScript` `Python` `Node.js` `Rust` `Go` `PostgreSQL` `Supabase` `Railway` `Shopify API` `eBay API` `Stripe` `LLM/AI`
+
+---
+
+📧 thesneakaz@gmail.com · [LinkedIn](https://www.linkedin.com/in/csanad-kope/) · **Open to SWE, sales engineering, and technical sales roles in London**
