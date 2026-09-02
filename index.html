@@ -580,6 +580,122 @@
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
 
+    /* ═══════════════════════════════════
+       PDF VIEWER MODAL
+    ═══════════════════════════════════ */
+    .pdf-overlay {
+        position: fixed; inset: 0; z-index: 300;
+        background: rgba(5,0,8,0.95);
+        backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        display: flex; align-items: center; justify-content: center;
+        padding: 16px;
+        opacity: 0; pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    .pdf-overlay.open { opacity: 1; pointer-events: all; }
+
+    .pdf-modal {
+        background: #0f0014;
+        border: 1px solid rgba(255,45,120,0.25);
+        border-radius: 14px;
+        width: 100%; max-width: 860px;
+        height: 90vh;
+        display: flex; flex-direction: column;
+        overflow: hidden;
+        box-shadow: 0 0 80px rgba(255,45,120,0.15);
+        transform: scale(0.97) translateY(12px);
+        transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .pdf-overlay.open .pdf-modal { transform: scale(1) translateY(0); }
+
+    .pdf-header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 14px 20px;
+        border-bottom: 1px solid rgba(255,45,120,0.12);
+        background: rgba(255,255,255,0.02);
+        flex-shrink: 0; gap: 12px; flex-wrap: wrap;
+    }
+    .pdf-header-left { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .pdf-header-right { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+    .pdf-title {
+        font-family: 'Space Mono', monospace; font-size: 0.8rem;
+        font-weight: 700; color: white; white-space: nowrap;
+        overflow: hidden; text-overflow: ellipsis;
+    }
+    .pdf-meta { font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.06em; }
+
+    .pdf-action-btn {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase;
+        padding: 6px 12px; border-radius: 5px; cursor: pointer;
+        background: rgba(255,45,120,0.08);
+        border: 1px solid rgba(255,45,120,0.25);
+        color: var(--text-dim); text-decoration: none;
+        transition: all 0.2s; white-space: nowrap;
+    }
+    .pdf-action-btn:hover { background: rgba(255,45,120,0.2); border-color: var(--pink); color: white; }
+
+    .pdf-viewer-area {
+        flex: 1; overflow: auto; display: flex;
+        align-items: flex-start; justify-content: center;
+        padding: 20px; position: relative;
+        background: #080010;
+        scrollbar-width: thin; scrollbar-color: rgba(255,45,120,0.2) transparent;
+    }
+    .pdf-viewer-area::-webkit-scrollbar { width: 4px; }
+    .pdf-viewer-area::-webkit-scrollbar-thumb { background: rgba(255,45,120,0.2); border-radius: 2px; }
+
+    #pdfCanvas {
+        border-radius: 6px;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+        max-width: 100%; height: auto; display: block;
+    }
+
+    .pdf-loading {
+        position: absolute; inset: 0;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+    }
+    .pdf-spinner {
+        width: 32px; height: 32px; border-radius: 50%;
+        border: 2px solid rgba(255,45,120,0.2);
+        border-top-color: var(--pink);
+        animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .pdf-footer {
+        display: flex; align-items: center; justify-content: center; gap: 20px;
+        padding: 12px 20px;
+        border-top: 1px solid rgba(255,45,120,0.12);
+        background: rgba(255,255,255,0.02);
+        flex-shrink: 0;
+    }
+    .pdf-nav-btn {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase;
+        padding: 7px 16px; border-radius: 5px; cursor: pointer;
+        background: rgba(255,45,120,0.08);
+        border: 1px solid rgba(255,45,120,0.25);
+        color: var(--text-dim);
+        transition: all 0.2s;
+    }
+    .pdf-nav-btn:hover:not(:disabled) { background: rgba(255,45,120,0.2); border-color: var(--pink); color: white; }
+    .pdf-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .pdf-page-info {
+        font-family: 'Space Mono', monospace; font-size: 0.72rem;
+        color: var(--text-muted); min-width: 80px; text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .pdf-modal { height: 88vh; border-radius: 10px; }
+        .pdf-header { padding: 10px 14px; }
+        .pdf-title { font-size: 0.72rem; }
+        .pdf-viewer-area { padding: 12px; }
+        .pdf-footer { gap: 12px; padding: 10px 14px; }
+        .pdf-nav-btn { padding: 6px 12px; font-size: 0.6rem; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
     }
@@ -666,7 +782,7 @@
             <a href="mailto:thesneakaz@gmail.com" class="btn btn-primary" onclick="window.location.href='mailto:thesneakaz@gmail.com';return false;">Get In Touch ↗</a>
             <a href="https://www.linkedin.com/in/csanad-kope/" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
             <a href="https://github.com/azarele" target="_blank" class="btn btn-ghost">GitHub ↗</a>
-            <a href="https://raw.githubusercontent.com/Azarele/csanad/main/CV.pdf" target="_blank" class="btn btn-ghost" download="Csanad_Kope_CV.pdf">Download CV ↓</a>
+            <button class="btn btn-ghost" onclick="openPDF('cv')">View CV ↗</button>
         </div>
         <div class="stats-strip reveal">
             <div class="stat-cell"><span class="n">£150K+</span><span class="l">Revenue</span></div>
@@ -975,7 +1091,12 @@
                     <div class="edu-degree">BSc Computer Science — 2:1</div>
                     <div class="edu-school">Royal Holloway, University of London</div>
                     <div class="edu-detail">Software Engineering · OOP · Symbolic AI · Algorithms &amp; Complexity · Databases · Network Security · OS · Digital Forensics · Cryptography · IT Project Management</div>
-                    <div class="edu-detail" style="margin-top:8px;color:var(--pink);font-size:0.72rem;">Dissertation: <a href="https://github.com/Azarele/FYP" target="_blank" style="color:var(--pink);text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">2D Tower Defence Engine — Architecture &amp; Concurrency Investigation ↗</a> · Captain, Men's Basketball 1st Team</div>
+                    <div style="margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                        <span style="font-size:0.72rem;color:var(--pink);">Dissertation: 2D Tower Defence Engine — Architecture &amp; Concurrency Investigation</span>
+                        <button class="btn btn-ghost" style="font-size:0.58rem;padding:4px 10px;letter-spacing:0.06em;" onclick="openPDF('fyp')">View Writeup ↗</button>
+                        <a href="https://github.com/Azarele/FYP" target="_blank" style="font-size:0.62rem;color:var(--text-muted);text-decoration:none;letter-spacing:0.06em;" onmouseover="this.style.color='var(--pink)'" onmouseout="this.style.color='var(--text-muted)'">GitHub ↗</a>
+                    </div>
+                    <div style="margin-top:4px;font-size:0.72rem;color:var(--text-muted);">Captain, Men's Basketball 1st Team · League promotion · LUSL Cup winners</div>
                 </div>
             </div>
             <div class="edu-item reveal">
@@ -1054,6 +1175,36 @@
 <!-- ══════════════════════════
      PROJECT MODAL
 ══════════════════════════ -->
+<!-- PDF VIEWER MODAL -->
+<div class="pdf-overlay" id="pdfOverlay" onclick="handlePdfOverlayClick(event)">
+    <div class="pdf-modal" id="pdfModal">
+        <div class="pdf-header">
+            <div class="pdf-header-left">
+                <div class="pdf-title" id="pdfTitle"></div>
+                <div class="pdf-meta" id="pdfMeta"></div>
+            </div>
+            <div class="pdf-header-right">
+                <a id="pdfDownloadBtn" href="#" download class="pdf-action-btn">Download ↓</a>
+                <button class="pdf-action-btn" onclick="closePDF()">✕ Close</button>
+            </div>
+        </div>
+        <div class="pdf-viewer-area" id="pdfViewerArea">
+            <canvas id="pdfCanvas"></canvas>
+            <div class="pdf-loading" id="pdfLoading">
+                <div class="pdf-spinner"></div>
+                <div style="margin-top:12px;font-size:0.75rem;color:var(--text-muted);">Loading PDF...</div>
+            </div>
+        </div>
+        <div class="pdf-footer" id="pdfFooter" style="display:none;">
+            <button class="pdf-nav-btn" id="pdfPrev" onclick="changePage(-1)">← Prev</button>
+            <div class="pdf-page-info">
+                <span id="pdfPageNum">1</span> / <span id="pdfPageTotal">1</span>
+            </div>
+            <button class="pdf-nav-btn" id="pdfNext" onclick="changePage(1)">Next →</button>
+        </div>
+    </div>
+</div>
+
 <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
     <div class="modal-box" id="modalBox">
         <button class="modal-close" onclick="closeModal()">✕</button>
@@ -1289,6 +1440,129 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── PDF VIEWER ──
+const PDF_SOURCES = {
+    cv: {
+        url: 'https://raw.githubusercontent.com/Azarele/csanad/main/CV.pdf',
+        title: 'Csanad Kope — CV',
+        download: 'Csanad_Kope_CV.pdf',
+        paged: false,
+    },
+    fyp: {
+        url: 'https://raw.githubusercontent.com/Azarele/csanad/main/FYP.pdf',
+        title: '2D Tower Defence Engine — Dissertation',
+        download: 'Csanad_Kope_FYP_Dissertation.pdf',
+        paged: true,
+    },
+};
+
+let pdfDoc = null, pdfPage = 1, pdfTotal = 1, pdfRendering = false, pdfSource = null;
+
+function loadPDFJS(cb) {
+    if (window.pdfjsLib) { cb(); return; }
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+    s.onload = () => {
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        cb();
+    };
+    document.head.appendChild(s);
+}
+
+function openPDF(key) {
+    pdfSource = PDF_SOURCES[key];
+    if (!pdfSource) return;
+
+    document.getElementById('pdfTitle').textContent = pdfSource.title;
+    document.getElementById('pdfMeta').textContent = 'Loading…';
+    document.getElementById('pdfDownloadBtn').href = pdfSource.url;
+    document.getElementById('pdfDownloadBtn').download = pdfSource.download;
+    document.getElementById('pdfLoading').style.display = 'flex';
+    document.getElementById('pdfCanvas').style.display = 'none';
+    document.getElementById('pdfFooter').style.display = 'none';
+
+    document.getElementById('pdfOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    pdfPage = 1;
+    pdfDoc = null;
+
+    loadPDFJS(() => {
+        pdfjsLib.getDocument(pdfSource.url).promise.then(doc => {
+            pdfDoc = doc;
+            pdfTotal = doc.numPages;
+            document.getElementById('pdfPageTotal').textContent = pdfTotal;
+            document.getElementById('pdfMeta').textContent = pdfTotal + ' page' + (pdfTotal > 1 ? 's' : '');
+            renderPage(pdfPage);
+            if (pdfSource.paged && pdfTotal > 1) {
+                document.getElementById('pdfFooter').style.display = 'flex';
+            }
+        }).catch(err => {
+            document.getElementById('pdfLoading').style.display = 'none';
+            document.getElementById('pdfCanvas').style.display = 'block';
+            document.getElementById('pdfMeta').textContent = 'Could not load PDF — check the file is uploaded to GitHub.';
+            console.error('PDF load error:', err);
+        });
+    });
+}
+
+function renderPage(num) {
+    if (!pdfDoc || pdfRendering) return;
+    pdfRendering = true;
+    document.getElementById('pdfLoading').style.display = 'flex';
+    document.getElementById('pdfCanvas').style.display = 'none';
+    document.getElementById('pdfPrev') && (document.getElementById('pdfPrev').disabled = num <= 1);
+    document.getElementById('pdfNext') && (document.getElementById('pdfNext').disabled = num >= pdfTotal);
+    document.getElementById('pdfPageNum').textContent = num;
+
+    pdfDoc.getPage(num).then(page => {
+        const viewerArea = document.getElementById('pdfViewerArea');
+        const availW = viewerArea.clientWidth - 40;
+        const viewport = page.getViewport({ scale: 1 });
+        const scale = Math.min(availW / viewport.width, 2.0);
+        const scaledVP = page.getViewport({ scale });
+
+        const canvas = document.getElementById('pdfCanvas');
+        canvas.width = scaledVP.width;
+        canvas.height = scaledVP.height;
+
+        page.render({ canvasContext: canvas.getContext('2d'), viewport: scaledVP }).promise.then(() => {
+            pdfRendering = false;
+            document.getElementById('pdfLoading').style.display = 'none';
+            canvas.style.display = 'block';
+            viewerArea.scrollTop = 0;
+        });
+    });
+}
+
+function changePage(delta) {
+    const next = pdfPage + delta;
+    if (next < 1 || next > pdfTotal || pdfRendering) return;
+    pdfPage = next;
+    renderPage(pdfPage);
+}
+
+function closePDF() {
+    document.getElementById('pdfOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+    pdfDoc = null;
+    pdfRendering = false;
+}
+
+function handlePdfOverlayClick(e) {
+    if (e.target === document.getElementById('pdfOverlay')) closePDF();
+}
+
+// Keyboard nav for PDF
+document.addEventListener('keydown', e => {
+    const overlay = document.getElementById('pdfOverlay');
+    if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Escape') closePDF();
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changePage(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   changePage(-1);
+});
 </script>
 </body>
 </html>
