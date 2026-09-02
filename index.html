@@ -256,6 +256,8 @@
     }
     .hero-desc a { color: var(--pink); text-decoration: none; }
     .hero-desc a:hover { text-decoration: underline; }
+    .hl { color: white; font-weight: 600; }
+    html.light .hl { color: #130018; }
 
     .hero-meta {
         display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
@@ -913,27 +915,147 @@
         .right-panel { display: none; }
     }
 
+    /* ── FIXED THEME TOGGLE ── */
+    .theme-toggle-fixed {
+        position: fixed;
+        top: 16px; right: 20px;
+        z-index: 200;
+        width: 40px; height: 40px;
+        border-radius: 50%;
+        background: var(--surface);
+        border: 1px solid var(--pink-border);
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        backdrop-filter: blur(12px);
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .theme-toggle-fixed:hover {
+        background: var(--pink-soft);
+        border-color: var(--pink);
+        transform: scale(1.1) rotate(15deg);
+        box-shadow: 0 0 16px var(--pink-glow);
+    }
+    @media (max-width: 860px) {
+        .theme-toggle-fixed { top: 10px; right: 12px; width: 36px; height: 36px; font-size: 0.9rem; }
+    }
+
     /* Light mode specific overrides */
-    html.light .sidebar { box-shadow: 2px 0 20px rgba(0,0,0,0.06); }
-    html.light .mobile-header { box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-bottom: 1px solid rgba(212,0,90,0.1); }
-    html.light .pdf-modal { background: #faf7fb; border-color: rgba(212,0,90,0.2); }
-    html.light .pdf-viewer-area { background: #f0eaf3; }
-    html.light .modal-box { background: #faf7fb; border-color: rgba(212,0,90,0.2); }
+    html.light body { background: #f8f4fc; }
+    html.light body::before {
+        background:
+            radial-gradient(ellipse 70% 60% at 0% 0%, rgba(255,180,220,0.35) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 50% at 100% 100%, rgba(180,120,255,0.2) 0%, transparent 60%),
+            radial-gradient(ellipse 50% 40% at 50% 50%, rgba(255,200,230,0.15) 0%, transparent 60%);
+    }
+    html.light .sidebar {
+        box-shadow: 2px 0 20px rgba(0,0,0,0.06);
+        background: rgba(255,252,255,0.88);
+    }
+    html.light .mobile-header {
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        border-bottom: 1px solid rgba(212,0,90,0.1);
+        background: rgba(255,252,255,0.92);
+    }
+    /* Fix strong tags in hero (were invisible on light) */
+    html.light .hero-desc strong { color: #130018; }
+    html.light .hero-desc { color: rgba(40,10,50,0.75); }
+    /* All heading colours */
+    html.light section h2,
+    html.light .sidebar-name,
+    html.light .hero-name,
+    html.light .edu-degree,
+    html.light .exp-title,
+    html.light .project-name,
+    html.light .card-title,
+    html.light .usp-title,
+    html.light .modal-title,
+    html.light .pdf-title { color: #130018; }
+    /* Body text */
+    html.light .exp-desc li,
+    html.light .edu-detail,
+    html.light .project-blurb,
+    html.light .project-stack,
+    html.light .exp-company,
+    html.light .exp-date,
+    html.light .project-year,
+    html.light .edu-date,
+    html.light .card-meta,
+    html.light .usp-text,
+    html.light .modal-overview,
+    html.light .modal-bullets li { color: rgba(50,15,60,0.72); }
+    /* Sidebar text */
+    html.light .sidebar-role { color: rgba(80,30,90,0.65); }
+    html.light .sidebar-tagline { color: rgba(60,20,70,0.7); }
+    html.light .sidebar-tagline strong { color: #130018; }
+    html.light .nav-item { color: rgba(80,30,90,0.55); }
+    html.light .nav-item.active,
+    html.light .nav-item:hover { color: #130018; }
+    html.light .sidebar-links a { color: rgba(80,30,90,0.5); }
+    html.light .stat-label { color: rgba(80,30,90,0.5); }
+    /* Cards */
+    html.light .card,
+    html.light .usp-card,
+    html.light .skill-block,
+    html.light #about ul li { background: rgba(255,255,255,0.65); border-color: rgba(212,0,90,0.15); }
+    html.light .card:hover,
+    html.light .usp-card:hover,
+    html.light .skill-block:hover,
+    html.light #about ul li:hover { background: rgba(255,255,255,0.9); border-color: rgba(212,0,90,0.35); }
+    html.light .card ul li { color: rgba(50,15,60,0.72); border-left-color: rgba(212,0,90,0.3); }
+    /* Chips and tags */
+    html.light .chip { background: rgba(255,255,255,0.7); border-color: rgba(212,0,90,0.2); color: rgba(50,15,60,0.75); }
+    html.light .chip:hover,
+    html.light .chip-highlight { background: rgba(212,0,90,0.08); border-color: rgba(212,0,90,0.3); color: #130018; }
+    html.light .tag { background: rgba(212,0,90,0.07); border-color: rgba(212,0,90,0.2); color: rgba(50,15,60,0.75); }
+    html.light .hero-meta-chip { background: rgba(255,255,255,0.6); border-color: rgba(212,0,90,0.15); color: rgba(50,15,60,0.72); }
+    /* Stats strip */
+    html.light .stats-strip { background: rgba(255,255,255,0.5); border-color: rgba(212,0,90,0.15); }
+    html.light .stat-cell { background: rgba(255,255,255,0.6); }
+    html.light .stat-cell:hover { background: rgba(212,0,90,0.05); }
+    html.light .stat-cell .l { color: rgba(80,30,90,0.5); }
+    /* Mobile nav */
+    html.light .mobile-nav-btn { background: rgba(255,255,255,0.5); border-color: rgba(212,0,90,0.15); color: rgba(60,20,70,0.7); }
+    html.light .mobile-nav-btn.active,
+    html.light .mobile-nav-btn:hover { background: rgba(212,0,90,0.08); border-color: var(--pink); color: var(--pink); }
+    html.light .mobile-name { color: #130018; }
+    /* Right panel dots */
     html.light .rp-progress-track { background: rgba(212,0,90,0.1); }
-    html.light .stats-strip { background: var(--bg2); border-color: var(--pink-border); }
-    html.light .stat-cell { background: var(--bg2); }
-    html.light .avail-chip { background: rgba(74,222,128,0.06); }
-    html.light .hero-meta-chip { background: rgba(0,0,0,0.05); }
-    html.light .sidebar-li-card { background: rgba(0,0,0,0.04); }
-    html.light section h2 { color: rgba(20,5,25,0.9); }
-    html.light .sidebar-name { color: #130018; }
-    html.light .hero-name { color: #130018; }
-    html.light .edu-degree, html.light .exp-title, html.light .project-name,
-    html.light .card-title, html.light .usp-title, html.light .skill-block h3 { color: #130018; }
-    html.light .mobile-nav-btn { background: rgba(0,0,0,0.04); border-color: rgba(212,0,90,0.15); color: rgba(60,20,70,0.7); }
-    html.light .mobile-nav-btn.active, html.light .mobile-nav-btn:hover { background: rgba(212,0,90,0.08); border-color: var(--pink); color: var(--pink); }
-    html.light .mobile-select { background: rgba(255,250,255,0.95); color: #130018; border-color: rgba(212,0,90,0.2); }
-    html.light footer { background: rgba(240,235,245,0.95); border-top: 1px solid rgba(212,0,90,0.1); }
+    html.light .rp-dot { background: rgba(212,0,90,0.15); border-color: rgba(212,0,90,0.2); }
+    /* Modals */
+    html.light .pdf-modal { background: #faf7fb; border-color: rgba(212,0,90,0.2); color: #130018; }
+    html.light .pdf-viewer-area { background: #ede7f3; }
+    html.light .pdf-header,
+    html.light .pdf-footer { background: rgba(255,255,255,0.7); border-color: rgba(212,0,90,0.1); }
+    html.light .pdf-title { color: #130018; }
+    html.light .pdf-meta { color: rgba(80,30,90,0.55); }
+    html.light .modal-box { background: rgba(255,252,255,0.97); border-color: rgba(212,0,90,0.2); }
+    html.light .nav-item.active { color: #130018; }
+    html.light .hero-greeting { color: var(--pink); }
+    html.light .section-label { color: var(--pink); }
+    html.light .badge { color: white; } /* badges stay white-on-pink */
+    html.light .exp-title strong { color: #130018; }
+    html.light .modal-subtitle,
+    html.light .modal-stack-text,
+    html.light .modal-section-label { color: rgba(80,30,90,0.55); }
+    html.light .modal-hr { background: rgba(212,0,90,0.12); }
+    /* Sidebar LinkedIn card */
+    html.light .sidebar-li-card { background: rgba(255,255,255,0.5); border-color: rgba(212,0,90,0.15); }
+    html.light .sidebar-li-name { color: #130018; }
+    html.light .sidebar-li-sub { color: rgba(80,30,90,0.5); }
+    /* Contact links */
+    html.light .contact-link { background: rgba(255,255,255,0.6); border-color: rgba(212,0,90,0.15); color: rgba(50,15,60,0.75); }
+    html.light .contact-link:hover { background: rgba(255,255,255,0.9); border-color: var(--pink); color: #130018; }
+    /* Footer */
+    html.light .site-footer { background: rgba(240,230,248,0.8); border-top-color: rgba(212,0,90,0.1); color: rgba(80,30,90,0.55); }
+    html.light .footer-cta span { color: rgba(80,30,90,0.55); }
+    html.light .footer-cta p { color: rgba(80,30,90,0.4); }
+    /* Avail chip */
+    html.light .avail-chip { background: rgba(74,222,128,0.08); border-color: rgba(74,222,128,0.2); }
+    /* Ghost buttons */
+    html.light .btn-ghost { color: rgba(50,15,60,0.75); border-color: rgba(212,0,90,0.2); }
+    html.light .btn-ghost:hover { color: var(--pink); border-color: var(--pink); background: rgba(212,0,90,0.06); }
 
     @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
@@ -945,6 +1067,11 @@
 <!-- ══════════════════════════
      MOBILE HEADER
 ══════════════════════════ -->
+<!-- THEME TOGGLE — fixed top right -->
+<button class="theme-toggle-fixed" onclick="toggleTheme()" id="themeToggle" aria-label="Toggle theme">
+    <span id="themeIcon">🌙</span>
+</button>
+
 <header class="mobile-header" id="mobileHeader">
     <div class="mobile-header-top">
         <div>
@@ -952,12 +1079,7 @@
             <div class="mobile-role">Software Engineer · Sales Engineer</div>
             <div class="avail-chip avail-chip-sm"><span class="avail-dot"></span>Open to work</div>
         </div>
-        <div class="mobile-toggle-wrap" style="display:flex;gap:8px;align-items:center;">
-            <button class="theme-toggle" onclick="toggleTheme()" id="mobileToggle" style="padding:5px 10px;">
-                <span class="theme-toggle-icon" id="mobileToggleIcon">🌙</span>
-            </button>
-            <a href="mailto:thesneakaz@gmail.com" class="btn btn-primary" style="font-size:0.62rem;padding:8px 14px;" onclick="window.location.href='mailto:thesneakaz@gmail.com';return false;">Hire Me</a>
-        </div>
+        <a href="mailto:thesneakaz@gmail.com" class="btn btn-primary" style="font-size:0.62rem;padding:8px 14px;" onclick="window.location.href='mailto:thesneakaz@gmail.com';return false;">Hire Me</a>
     </div>
     <nav class="mobile-nav-scroll">
         <a class="mobile-nav-btn active" href="#hero">About</a>
@@ -1000,12 +1122,6 @@
             <div class="stat-item"><span class="stat-number">Top 10</span><span class="stat-label">Bolt.new Hackathon</span></div>
             <div class="stat-item"><span class="stat-number">2:1</span><span class="stat-label">BSc CS · Royal Holloway</span></div>
         </div>
-        <div class="sidebar-toggle-wrap">
-            <button class="theme-toggle" onclick="toggleTheme()" id="sidebarToggle">
-                <span class="theme-toggle-icon">🌙</span>
-                <span id="sidebarToggleLabel">Dark</span>
-            </button>
-        </div>
         <div class="sidebar-links">
             <a href="https://github.com/azarele" target="_blank">GitHub ↗</a>
             <a href="https://www.linkedin.com/in/csanad-kope/" target="_blank">LinkedIn ↗</a>
@@ -1034,9 +1150,9 @@
         <h1 class="hero-name">Csanad Kope</h1>
         <div class="hero-sub">Software Engineer &amp; <em>Sales Engineer</em></div>
         <p class="hero-desc">
-            I'm a CS graduate from <a href="https://www.royalholloway.ac.uk/" target="_blank">Royal Holloway, University of London</a> who builds production-ready systems — and knows how to sell them. From scaling a sneaker business to <strong style="color:white">£150K+ revenue</strong>, to shipping live SaaS products, a streaming LLM inference router with <strong style="color:white">cost-based mid-stream switching</strong>, and production POS systems — I operate where commercial instinct meets engineering depth.
+            I'm a CS graduate from <a href="https://www.royalholloway.ac.uk/" target="_blank">Royal Holloway, University of London</a> who builds production-ready systems — and knows how to sell them. From scaling a sneaker business to <strong class="hl">£150K+ revenue</strong>, to shipping live SaaS products, a streaming LLM inference router with <strong class="hl">cost-based mid-stream switching</strong>, and production POS systems — I operate where commercial instinct meets engineering depth.
             <br><br>
-            Currently open to <strong style="color:white">graduate software engineering</strong>, <strong style="color:white">technical sales</strong>, and <strong style="color:white">sales engineering</strong> roles in London.
+            Currently open to <strong class="hl">graduate software engineering</strong>, <strong class="hl">technical sales</strong>, and <strong class="hl">sales engineering</strong> roles in London.
         </p>
         <div class="hero-meta">
             <span class="hero-meta-chip">📍 London, UK</span>
@@ -1146,7 +1262,7 @@
                     <div class="exp-company">Link Marketing · Slough</div>
                     <ul class="exp-desc">
                         <li>Executed 50+ daily B2C interactions — advanced Level 1 → 3 in under 2 weeks, fastest progression in a 50+ cohort.</li>
-                        <li>Ranked <strong style="color:white">#1 of 50+ trainees</strong> — mastered objection handling, pitch framing, and close techniques under live conditions.</li>
+                        <li>Ranked <strong class="hl">#1 of 50+ trainees</strong> — mastered objection handling, pitch framing, and close techniques under live conditions.</li>
                     </ul>
                 </div>
             </div>
@@ -1404,7 +1520,7 @@
         <div class="section-label">// Let's talk</div>
         <h2 class="section-title">Get in touch</h2>
         <p style="font-size:0.88rem;line-height:1.75;color:var(--text-dim);margin-bottom:28px;max-width:480px;">
-            Open to <strong style="color:white">software engineering</strong>, <strong style="color:white">technical sales</strong>, and <strong style="color:white">sales engineering</strong> roles in London. I respond fast.
+            Open to <strong class="hl">software engineering</strong>, <strong class="hl">technical sales</strong>, and <strong class="hl">sales engineering</strong> roles in London. I respond fast.
         </p>
         <div class="contact-grid reveal">
             <a class="contact-link" href="mailto:thesneakaz@gmail.com" onclick="window.location.href='mailto:thesneakaz@gmail.com';return false;">
@@ -1692,19 +1808,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 function applyTheme(mode) {
     const isLight = mode === 'light';
     document.documentElement.classList.toggle('light', isLight);
-
-    const icon  = isLight ? '☀️' : '🌙';
-    const label = isLight ? 'Light' : 'Dark';
-
-    const sIcon  = document.getElementById('sidebarToggle');
-    const mIcon  = document.getElementById('mobileToggle');
-    const sLabel = document.getElementById('sidebarToggleLabel');
-    const mIconEl= document.getElementById('mobileToggleIcon');
-
-    if (sIcon)  sIcon.querySelector('.theme-toggle-icon').textContent  = icon;
-    if (mIconEl) mIconEl.textContent = icon;
-    if (sLabel)  sLabel.textContent  = label;
-
+    const icon = isLight ? '☀️' : '🌙';
+    const el = document.getElementById('themeIcon');
+    if (el) el.textContent = icon;
     localStorage.setItem('theme', mode);
 }
 
