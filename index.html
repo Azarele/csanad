@@ -24,7 +24,6 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://platform.linkedin.com https://badges.linkedin.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://platform.linkedin.com https://badges.linkedin.com; font-src https://fonts.gstatic.com https://badges.linkedin.com; img-src 'self' data: https://raw.githubusercontent.com https://media.licdn.com https://badges.linkedin.com https://static.licdn.com; connect-src 'self' https://raw.githubusercontent.com https://cdnjs.cloudflare.com https://www.linkedin.com https://badges.linkedin.com; frame-src https://www.linkedin.com https://badges.linkedin.com; frame-ancestors 'none';">
     <link rel="icon" href="favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
     <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -414,14 +413,39 @@
     .contact-link-label { font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 2px; }
 
     /* ── FOOTER ── */
-    .sidebar-li-badge {
+    .sidebar-li-card {
+        display: block;
         margin-top: 20px;
-        opacity: 0.85;
-        transition: opacity 0.2s;
-        filter: saturate(0.7) brightness(0.85);
+        padding: 10px 12px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,45,120,0.18);
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background 0.2s, border-color 0.2s;
     }
-    .sidebar-li-badge:hover { opacity: 1; filter: none; }
-    .sidebar-li-badge .LI-profile-badge { border-radius: 8px; overflow: hidden; max-width: 200px; }
+    .sidebar-li-card:hover {
+        background: rgba(255,255,255,0.08);
+        border-color: rgba(255,45,120,0.5);
+    }
+    .sidebar-li-card-inner {
+        display: flex; align-items: center; gap: 10px;
+    }
+    .sidebar-li-logo {
+        width: 28px; height: 28px; border-radius: 5px;
+        background: #0A66C2;
+        color: white; font-weight: 700; font-size: 0.85rem;
+        font-family: sans-serif;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+    }
+    .sidebar-li-name {
+        font-size: 0.72rem; font-weight: 600; color: white;
+        letter-spacing: 0.02em;
+    }
+    .sidebar-li-sub {
+        font-size: 0.58rem; color: var(--text-muted);
+        letter-spacing: 0.06em; margin-top: 2px;
+    }
     .footer-cta {
         display: flex; align-items: center; justify-content: space-between;
         flex-wrap: wrap; gap: 12px;
@@ -898,11 +922,15 @@
             <a href="https://www.linkedin.com/in/csanad-kope/" target="_blank">LinkedIn ↗</a>
             <a href="mailto:thesneakaz@gmail.com">Email ↗</a>
         </div>
-        <div class="sidebar-li-badge">
-            <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="small" data-theme="dark" data-type="VERTICAL" data-vanity="csanad-kope" data-version="v1">
-                <a class="badge-base__link LI-simple-link" href="https://uk.linkedin.com/in/csanad-kope?trk=profile-badge">Csanad Kope</a>
+        <a href="https://www.linkedin.com/in/csanad-kope/" target="_blank" class="sidebar-li-card">
+            <div class="sidebar-li-card-inner">
+                <div class="sidebar-li-logo">in</div>
+                <div>
+                    <div class="sidebar-li-name">Csanad Kope</div>
+                    <div class="sidebar-li-sub">View LinkedIn profile ↗</div>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 </aside>
 
