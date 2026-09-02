@@ -202,6 +202,9 @@
         letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;
         text-decoration: none; transition: all 0.2s ease; cursor: pointer;
         font-family: 'Space Mono', monospace;
+        position: relative; z-index: 10;
+        -webkit-tap-highlight-color: rgba(255,45,120,0.2);
+        touch-action: manipulation;
     }
     .btn-primary {
         background: var(--pink); color: white;
@@ -594,7 +597,7 @@
             <div class="mobile-role">Software Engineer · Sales Technologist</div>
             <div class="avail-chip avail-chip-sm"><span class="avail-dot"></span>Open to work</div>
         </div>
-        <a href="mailto:thesneakaz@gmail.com" class="btn btn-primary" style="font-size:0.62rem;padding:8px 14px;">Hire Me</a>
+        <a href="mailto:thesneakaz@gmail.com" class="btn btn-primary" style="font-size:0.62rem;padding:8px 14px;" onclick="window.location.href='mailto:thesneakaz@gmail.com';return false;">Hire Me</a>
     </div>
     <nav class="mobile-nav-scroll">
         <a class="mobile-nav-btn active" href="#hero">About</a>
@@ -660,7 +663,7 @@
             Currently open to <strong style="color:white">graduate software engineering</strong>, <strong style="color:white">technical sales</strong>, and <strong style="color:white">sales engineering</strong> roles in London.
         </p>
         <div class="hero-cta">
-            <a href="mailto:thesneakaz@gmail.com" class="btn btn-primary">Get In Touch ↗</a>
+            <a href="mailto:thesneakaz@gmail.com" class="btn btn-primary" onclick="window.location.href='mailto:thesneakaz@gmail.com';return false;">Get In Touch ↗</a>
             <a href="https://www.linkedin.com/in/csanad-kope/" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
             <a href="https://github.com/azarele" target="_blank" class="btn btn-ghost">GitHub ↗</a>
         </div>
@@ -866,15 +869,6 @@
                 </div>
             </div>
 
-            <div class="project-item reveal" onclick="openModal('holiday')">
-                <div class="project-year">2025</div>
-                <div>
-                    <div class="project-name">HolidayExplorer<span class="project-arrow">↗</span></div>
-                    <div class="project-stack">.NET 8 · C# · Nager Date API · xUnit</div>
-                    <div class="project-blurb">Graduate technical assessment — bug fixes, feature implementation, canary-trap detection. All 16 tests passed, PR accepted.</div>
-                </div>
-            </div>
-
         </div>
     </section>
 
@@ -1024,7 +1018,7 @@
             Open to <strong style="color:white">software engineering</strong>, <strong style="color:white">technical sales</strong>, and <strong style="color:white">sales engineering</strong> roles in London. I respond fast.
         </p>
         <div class="contact-grid reveal">
-            <a class="contact-link" href="mailto:thesneakaz@gmail.com">
+            <a class="contact-link" href="mailto:thesneakaz@gmail.com" onclick="window.location.href='mailto:thesneakaz@gmail.com';return false;">
                 <span class="contact-link-icon">✉</span>
                 <div><span class="contact-link-label">Email</span>thesneakaz@gmail.com</div>
             </a>
@@ -1047,10 +1041,12 @@
 
 <footer class="site-footer">
     <div class="footer-cta">
-        <span>Open to work · London · Available now</span>
-        <a href="mailto:thesneakaz@gmail.com" class="btn btn-primary" style="font-size:0.68rem;padding:9px 18px;">Send me an email ↗</a>
+        <div>
+            <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:4px;">Open to work · London · Available now</div>
+            <div style="font-size:0.65rem;color:rgba(255,200,225,0.3);letter-spacing:0.06em;">Designed &amp; built by Csanad Kope · 2026</div>
+        </div>
+        <a href="mailto:thesneakaz@gmail.com" class="btn btn-primary" style="font-size:0.68rem;padding:9px 18px;" onclick="window.location.href='mailto:thesneakaz@gmail.com';return false;">Send me an email ↗</a>
     </div>
-    <p style="margin-top:20px;font-size:0.65rem;">Designed &amp; built by Csanad Kope · Twickenham, London · 2026</p>
 </footer>
 
 <!-- ══════════════════════════
@@ -1204,21 +1200,7 @@ const PROJECTS = {
         images: [],
     },
 
-    holiday: {
-        title: 'HolidayExplorer',
-        subtitle: 'Graduate Technical Assessment — .NET 8 / C#',
-        badges: [{l:'.NET 8',c:'badge-tech'},{l:'Assessment',c:'badge-tech'}],
-        stack: '.NET 8 · C# · Nager Date API · xUnit',
-        overview: "Take-home technical assessment for a graduate role. The codebase had intentional bugs and incomplete features — the challenge included a canary trap embedded in the source to detect plagiarism.",
-        bullets: [
-            "Diagnosed and fixed existing bugs in the holiday lookup and filtering logic.",
-            "Implemented GetLongWeekendsAsync — identifying public holidays adjacent to weekends.",
-            "Detected and preserved a zero-width space canary trap (a hidden character stripped by naive copy-paste).",
-            "All 16 unit tests passed on first submission. PR submitted and accepted.",
-        ],
-        tags: ['.NET 8','C#','xUnit','REST API','Unit Testing','Bug Fixing'],
-        images: [],
-    },
+
 };
 
 function openModal(key) {
