@@ -24,6 +24,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://raw.githubusercontent.com; connect-src 'self' https://raw.githubusercontent.com https://cdnjs.cloudflare.com; frame-ancestors 'none';">
     <link rel="icon" href="favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
     <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -413,6 +414,9 @@
     .contact-link-label { font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 2px; }
 
     /* ── FOOTER ── */
+    .li-badge-wrap { display: flex; }
+    .li-badge-wrap .LI-profile-badge { border-radius: 8px; overflow: hidden; }
+    @media (max-width: 480px) { .li-badge-wrap { transform: scale(0.9); transform-origin: left center; } }
     .footer-cta {
         display: flex; align-items: center; justify-content: space-between;
         flex-wrap: wrap; gap: 12px;
@@ -1292,6 +1296,12 @@
                 <span class="contact-link-icon">⌥</span>
                 <div><span class="contact-link-label">GitHub</span>github.com/azarele</div>
             </a>
+        </div>
+
+        <div class="li-badge-wrap reveal" style="margin-top:28px;">
+            <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="HORIZONTAL" data-vanity="csanad-kope" data-version="v1">
+                <a class="badge-base__link LI-simple-link" href="https://uk.linkedin.com/in/csanad-kope?trk=profile-badge">Csanad Kope</a>
+            </div>
         </div>
     </section>
 
