@@ -530,9 +530,12 @@
         .hero-name { font-size: 2rem; }
         .stats-strip { grid-template-columns: repeat(3, 1fr); }
         .usp-grid { grid-template-columns: 1fr; }
-        .exp-item { grid-template-columns: 90px 1fr; gap: 0 14px; padding: 16px 12px; }
-        .project-item { grid-template-columns: 72px 1fr; gap: 0 14px; padding: 16px 12px; }
-        .edu-item { grid-template-columns: 90px 1fr; gap: 0 14px; padding: 16px 12px; }
+        .exp-item { grid-template-columns: 80px 1fr; gap: 0 12px; padding: 14px 10px; }
+        .exp-date { font-size: 0.58rem; letter-spacing: 0.02em; }
+        .exp-company { font-size: 0.72rem; }
+        .exp-desc li { font-size: 0.74rem; }
+        .project-item { grid-template-columns: 72px 1fr; gap: 0 12px; padding: 14px 10px; }
+        .edu-item { grid-template-columns: 80px 1fr; gap: 0 12px; padding: 14px 10px; }
         .contact-grid { grid-template-columns: 1fr; }
         .footer-cta { flex-direction: column; align-items: flex-start; gap: 10px; }
         .site-footer { margin-left: 0; padding: 32px 20px 0; }
@@ -774,7 +777,7 @@
         <h1 class="hero-name">Csanad Kope</h1>
         <div class="hero-sub">Software Engineer &amp; <em>Sales Engineer</em></div>
         <p class="hero-desc">
-            I'm a CS graduate from <a href="https://www.royalholloway.ac.uk/" target="_blank">Royal Holloway, University of London</a> who builds production-ready systems — and knows how to sell them. From scaling a sneaker business to <strong style="color:white">£150K+ revenue</strong>, to architecting multi-user POS platforms and AI agents, I operate where commercial instinct meets engineering depth.
+            I'm a CS graduate from <a href="https://www.royalholloway.ac.uk/" target="_blank">Royal Holloway, University of London</a> who builds production-ready systems — and knows how to sell them. From scaling a sneaker business to <strong style="color:white">£150K+ revenue</strong>, to shipping live SaaS products, a streaming LLM inference router with <strong style="color:white">cost-based mid-stream switching</strong>, and production POS systems — I operate where commercial instinct meets engineering depth.
             <br><br>
             Currently open to <strong style="color:white">graduate software engineering</strong>, <strong style="color:white">technical sales</strong>, and <strong style="color:white">sales engineering</strong> roles in London.
         </p>
@@ -825,7 +828,7 @@
         <h2 class="section-title">Experience</h2>
         <div class="exp-list">
 
-            <div class="exp-item reveal">
+<div class="exp-item reveal">
                 <div class="exp-date">Oct 2025 –<br>Jan 2026</div>
                 <div>
                     <div class="exp-title">CS Tutor (Head Teacher) <span class="role-badge badge-leader">Leadership</span></div>
@@ -837,7 +840,7 @@
                 </div>
             </div>
 
-            <div class="exp-item reveal">
+<div class="exp-item reveal">
                 <div class="exp-date">Mar 2025 –<br>Apr 2025</div>
                 <div>
                     <div class="exp-title">Retail Sales Supervisor <span class="role-badge badge-sales">Sales</span></div>
@@ -850,7 +853,43 @@
                 </div>
             </div>
 
-            <div class="exp-item reveal">
+<div class="exp-item reveal">
+                <div class="exp-date">Jul 2024 –<br>Mar 2025</div>
+                <div>
+                    <div class="exp-title">Bar Waiter <span class="role-badge badge-sales">Sales</span></div>
+                    <div class="exp-company">144 On The Hill · Richmond, London</div>
+                    <ul class="exp-desc">
+                        <li>Table service in a busy restaurant environment — built rapport with regulars and upsold effectively under pressure.</li>
+                        <li>Developed sharp interpersonal skills and the ability to read customer needs quickly in a fast-paced hospitality setting.</li>
+                    </ul>
+                </div>
+            </div>
+
+<div class="exp-item reveal">
+                <div class="exp-date">Jun 2024 –<br>Aug 2024</div>
+                <div>
+                    <div class="exp-title">Salesperson <span class="role-badge badge-sales">Sales</span></div>
+                    <div class="exp-company">Homebase · Twickenham, London</div>
+                    <ul class="exp-desc">
+                        <li>Drove product sales on the shop floor — matched customers to the right products through active listening and product knowledge.</li>
+                        <li>Consistently maintained strong customer satisfaction across a high-footfall retail environment.</li>
+                    </ul>
+                </div>
+            </div>
+
+<div class="exp-item reveal">
+                <div class="exp-date">Dec 2023 –<br>Feb 2024</div>
+                <div>
+                    <div class="exp-title">Door-to-Door Sales <span class="role-badge badge-sales">Sales</span></div>
+                    <div class="exp-company">Link Marketing · Slough</div>
+                    <ul class="exp-desc">
+                        <li>Executed 50+ daily B2C interactions — advanced Level 1 → 3 in under 2 weeks, fastest progression in a 50+ cohort.</li>
+                        <li>Ranked <strong style="color:white">#1 of 50+ trainees</strong> — mastered objection handling, pitch framing, and close techniques under live conditions.</li>
+                    </ul>
+                </div>
+            </div>
+
+<div class="exp-item reveal">
                 <div class="exp-date">Aug 2019 –<br>Jan 2025</div>
                 <div>
                     <div class="exp-title">Founder &amp; CEO <span class="role-badge badge-sales">Sales</span> <span class="role-badge badge-tech">Tech</span></div>
@@ -864,43 +903,7 @@
                 </div>
             </div>
 
-            <div class="exp-item reveal">
-                <div class="exp-date">Dec 2023 –<br>Feb 2024</div>
-                <div>
-                    <div class="exp-title">Door-to-Door Sales <span class="role-badge badge-sales">Sales</span></div>
-                    <div class="exp-company">Link Marketing · Slough</div>
-                    <ul class="exp-desc">
-                        <li>Executed 50+ daily B2C interactions — advanced Level 1 → 3 in under 2 weeks, fastest progression in a 50+ cohort.</li>
-                        <li>Ranked <strong style="color:white">#1 of 50+ trainees</strong> — mastered objection handling, pitch framing, and close techniques under live conditions.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="exp-item reveal">
-                <div class="exp-date">Jul 2024 –<br>Mar 2025</div>
-                <div>
-                    <div class="exp-title">Bar Waiter <span class="role-badge badge-sales">Sales</span></div>
-                    <div class="exp-company">144 On The Hill · Richmond, London</div>
-                    <ul class="exp-desc">
-                        <li>Table service in a busy restaurant environment — built rapport with regulars and upsold effectively under pressure.</li>
-                        <li>Developed sharp interpersonal skills and the ability to read customer needs quickly in a fast-paced hospitality setting.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="exp-item reveal">
-                <div class="exp-date">Jun 2024 –<br>Aug 2024</div>
-                <div>
-                    <div class="exp-title">Salesperson <span class="role-badge badge-sales">Sales</span></div>
-                    <div class="exp-company">Homebase · Twickenham, London</div>
-                    <ul class="exp-desc">
-                        <li>Drove product sales on the shop floor — matched customers to the right products through active listening and product knowledge.</li>
-                        <li>Consistently maintained strong customer satisfaction across a high-footfall retail environment.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="exp-item reveal">
+<div class="exp-item reveal">
                 <div class="exp-date">2023 –<br>2026</div>
                 <div>
                     <div class="exp-title">Men's Basketball 1st Team Captain <span class="role-badge badge-leader">Leadership</span></div>
@@ -912,6 +915,7 @@
                 </div>
             </div>
 
+        
         </div>
     </section>
 
@@ -970,7 +974,7 @@
             <div class="project-item reveal" onclick="openModal('goalify')">
                 <div class="project-year">2024 <span class="role-badge badge-prod" style="display:block;margin-top:6px;text-align:center;">Top 10</span></div>
                 <div>
-                    <div class="project-name">Goalify <a href="https://github.com/azarele" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">GitHub ↗</a><span class="project-arrow">↗</span></div>
+                    <div class="project-name">Goalify <a href="https://github.com/Azarele/Goalify" target="_blank" onclick="event.stopPropagation()" style="font-size:0.65rem;color:var(--pink);opacity:0.7;font-weight:400;margin-left:4px;">GitHub ↗</a><span class="project-arrow">↗</span></div>
                     <div class="project-stack">TypeScript · AI Vision · LLM APIs · Bolt.new</div>
                     <div class="project-blurb">AI goal tracking agent built in 48 hours for the Bolt.new Hackathon London. Top 10 finish. Automated 100% of goal verification via AI vision and LLM analysis.</div>
                 </div>
