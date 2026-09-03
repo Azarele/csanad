@@ -1648,158 +1648,74 @@
 
 <script>
 // ── ANIMATED FAVICON ──
-// Uses OffscreenCanvas inside a Worker for smooth background-tab animation.
-// Falls back to rAF on main thread if OffscreenCanvas unavailable.
 (function() {
-    let link = document.getElementById('favicon-link');
-    if (!link) {
-        link = document.createElement('link');
-        link.rel = 'icon'; link.type = 'image/png'; link.id = 'favicon-link';
-        document.head.appendChild(link);
+    const canvas = document.createElement('canvas');
+    canvas.width = 32; canvas.height = 32;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Remove existing favicon links and create a fresh one
+    document.querySelectorAll("link[rel*='icon']").forEach(l => l.remove());
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.type = 'image/png';
+    document.head.appendChild(link);
+
+    const CYCLE = 4000; // ms for full dark→light→dark
+    const start = performance.now();
+
+    function ease(v) {
+        return v < 0.5 ? 2*v*v : -1+(4-2*v)*v;
     }
 
-    function lerp(a, b, v) { return a + (b - a) * v; }
-    function ease(v) { return v < 0.5 ? 2*v*v : -1+(4-2*v)*v; }
+    function lerpC(a, b, t) {
+        return Math.round(a + (b - a) * t);
+    }
 
-    const CYCLE = 5000; // ms for one full dark→light→dark cycle
+    function draw(ts) {
+        const elapsed = (ts - start) % CYCLE;
+        const raw = elapsed / CYCLE;
+        // Triangle wave 0→1→0
+        const linear = raw < 0.5 ? raw * 2 : 2 - raw * 2;
+        const t = ease(linear);
 
-    // ── Try OffscreenCanvas in Worker (smoothest — no main thread cost) ──
-    const workerCode = `
-        const SIZE = 64;
-        let oc, ctx;
-        const dark  = [0x12, 0x00, 0x16];
-        const light = [0xff, 0xff, 0xff];
-        const pink  = [0xff, 0x2d, 0x78];
-        const CYCLE = 5000;
+        // Dark: bg=#120016 txt=white  Light: bg=white txt=#120016
+        const bgR = lerpC(0x12, 0xff, t), bgG = lerpC(0x00, 0xff, t), bgB = lerpC(0x16, 0xff, t);
+        const txR = lerpC(0xff, 0x12, t), txG = lerpC(0xff, 0x00, t), txB = lerpC(0xff, 0x16, t);
 
-        function lerp(a,b,v){ return a+(b-a)*v; }
-        function ease(v){ return v<0.5?2*v*v:-1+(4-2*v)*v; }
+        const S = 32;
+        ctx.clearRect(0, 0, S, S);
 
-        function lerpRgb(a,b,t){
-            return 'rgb('+Math.round(lerp(a[0],b[0],t))+','+Math.round(lerp(a[1],b[1],t))+','+Math.round(lerp(a[2],b[2],t))+')';
-        }
+        // Background circle
+        ctx.beginPath();
+        ctx.arc(S/2, S/2, S/2 - 0.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgb(${bgR},${bgG},${bgB})`;
+        ctx.fill();
 
-        function draw(t) {
-            const e = ease(t);
-            ctx.clearRect(0,0,SIZE,SIZE);
+        // Pink border
+        ctx.beginPath();
+        ctx.arc(S/2, S/2, S/2 - 1, 0, Math.PI * 2);
+        ctx.strokeStyle = '#ff2d78';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
 
-            // Background
-            ctx.beginPath();
-            ctx.arc(32,32,31,0,Math.PI*2);
-            ctx.fillStyle = lerpRgb(dark,light,e);
-            ctx.fill();
+        // C
+        ctx.font = 'bold 13px monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = `rgb(${txR},${txG},${txB})`;
+        ctx.fillText('C', 10, 17);
 
-            // Border
-            ctx.beginPath();
-            ctx.arc(32,32,30,0,Math.PI*2);
-            ctx.strokeStyle='rgb(255,45,120)';
-            ctx.lineWidth=2.5; ctx.stroke();
+        // K in pink
+        ctx.fillStyle = '#ff2d78';
+        ctx.fillText('K', 22, 17);
 
-            // Divider
-            ctx.beginPath();
-            ctx.moveTo(32,12); ctx.lineTo(32,52);
-            ctx.strokeStyle='rgba(255,45,120,0.3)';
-            ctx.lineWidth=1; ctx.stroke();
-
-            // C
-            ctx.font='bold 28px monospace';
-            ctx.textAlign='center'; ctx.textBaseline='middle';
-            ctx.fillStyle=lerpRgb(light,dark,e);
-            ctx.fillText('C',20,34);
-
-            // K
-            ctx.fillStyle='rgb(255,45,120)';
-            ctx.fillText('K',44,34);
-
-            oc.convertToBlob({type:'image/png'}).then(blob=>{
-                postMessage(URL.createObjectURL(blob));
-            });
-        }
-
-        self.onmessage = function(e) {
-            oc = e.data;
-            ctx = oc.getContext('2d');
-            let prev = null;
-            function tick(ts) {
-                if (prev === null) prev = ts;
-                const elapsed = (ts - prev) % CYCLE;
-                // Triangle wave: 0→1→0 over CYCLE ms
-                const raw = elapsed / CYCLE;
-                const t = raw < 0.5 ? raw*2 : 2-raw*2;
-                draw(t);
-                prev = prev; // keep prev fixed, use ts directly
-            }
-            // Use setInterval at 24fps — enough for a slow favicon fade
-            let start = null;
-            setInterval(()=>{
-                const now = Date.now();
-                if(!start) start = now;
-                const elapsed = (now - start) % CYCLE;
-                const raw = elapsed / CYCLE;
-                const t = raw < 0.5 ? raw*2 : 2-raw*2;
-                draw(t);
-            }, 1000/24);
-        };
-    `;
-
-    try {
-        if (typeof OffscreenCanvas === 'undefined') throw new Error('no OffscreenCanvas');
-        const oc = new OffscreenCanvas(64, 64);
-        const blob = new Blob([workerCode], {type:'application/javascript'});
-        const worker = new Worker(URL.createObjectURL(blob));
-        let prevUrl = null;
-        worker.onmessage = e => {
-            if (prevUrl) URL.revokeObjectURL(prevUrl);
-            prevUrl = e.data;
-            link.href = e.data;
-        };
-        worker.postMessage(oc, [oc]);
-    } catch(err) {
-        // ── Fallback: rAF on main thread ──
-        const canvas = document.createElement('canvas');
-        canvas.width = 64; canvas.height = 64;
-        const ctx = canvas.getContext('2d');
-        const dark  = [0x12,0x00,0x16];
-        const light = [0xff,0xff,0xff];
-        const pink  = [0xff,0x2d,0x78];
-        const start = performance.now();
-        let frame = 0;
-
-        function lerpRgb(a,b,t){
-            return 'rgb('+Math.round(lerp(a[0],b[0],t))+','+Math.round(lerp(a[1],b[1],t))+','+Math.round(lerp(a[2],b[2],t))+')';
-        }
-
-        function draw(t) {
-            const e = ease(t);
-            ctx.clearRect(0,0,64,64);
-            ctx.beginPath(); ctx.arc(32,32,31,0,Math.PI*2);
-            ctx.fillStyle = lerpRgb(dark,light,e); ctx.fill();
-            ctx.beginPath(); ctx.arc(32,32,30,0,Math.PI*2);
-            ctx.strokeStyle='rgb(255,45,120)'; ctx.lineWidth=2.5; ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(32,12); ctx.lineTo(32,52);
-            ctx.strokeStyle='rgba(255,45,120,0.3)'; ctx.lineWidth=1; ctx.stroke();
-            ctx.font='bold 28px monospace';
-            ctx.textAlign='center'; ctx.textBaseline='middle';
-            ctx.fillStyle=lerpRgb(light,dark,e); ctx.fillText('C',20,34);
-            ctx.fillStyle='rgb(255,45,120)'; ctx.fillText('K',44,34);
-        }
-
-        function tick(ts) {
-            if (frame++ % 2 === 0) { // update favicon every 2nd rAF (~30fps) to reduce cost
-                const elapsed = (ts - start) % CYCLE;
-                const raw = elapsed / CYCLE;
-                const t = raw < 0.5 ? raw*2 : 2-raw*2;
-                draw(t);
-                link.href = canvas.toDataURL('image/png');
-            }
-            requestAnimationFrame(tick);
-        }
-        draw(0);
         link.href = canvas.toDataURL('image/png');
-        requestAnimationFrame(tick);
+        requestAnimationFrame(draw);
     }
-})();
 
+    requestAnimationFrame(draw);
+})();
 // ── PROJECT DATA ──
 const PROJECTS = {
     shopos: {
