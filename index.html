@@ -9,11 +9,11 @@
     <meta property="og:description" content="CS graduate who builds production systems and knows how to sell them. PokéManager, ShopOS, Inference Router. Open to roles in London.">
     <meta property="og:url" content="https://resume.thesneakaz.xyz">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://resume.thesneakaz.xyz/ck_favicon_animated.svg">
+    <meta property="og:image" content="https://resume.thesneakaz.xyz/ck_favicon.svg">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Csanad Kope | Software Engineer &amp; Sales Engineer">
     <meta name="twitter:description" content="CS graduate who builds production systems and knows how to sell them. Open to roles in London.">
-    <meta name="twitter:image" content="https://resume.thesneakaz.xyz/ck_favicon_animated.svg">
+    <meta name="twitter:image" content="https://resume.thesneakaz.xyz/ck_favicon.svg">
     <link rel="canonical" href="https://resume.thesneakaz.xyz">
     <link rel="sitemap" type="application/xml" href="/sitemap.xml">
     <!-- Security headers -->
@@ -22,8 +22,7 @@
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://platform.linkedin.com https://badges.linkedin.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://platform.linkedin.com https://badges.linkedin.com; font-src https://fonts.gstatic.com https://badges.linkedin.com; img-src 'self' data: https://raw.githubusercontent.com https://media.licdn.com https://badges.linkedin.com https://static.licdn.com; connect-src 'self' https://raw.githubusercontent.com https://cdnjs.cloudflare.com https://www.linkedin.com https://badges.linkedin.com; frame-src https://www.linkedin.com https://badges.linkedin.com; frame-ancestors 'none';">
-    <link rel="icon" href="ck_favicon_animated.svg" type="image/svg+xml">
-    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="icon" href="ck_favicon.svg" type="image/svg+xml" id="favicon-link">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1654,9 +1653,16 @@
     const canvas = document.createElement('canvas');
     canvas.width = 64; canvas.height = 64;
     const ctx = canvas.getContext('2d');
-    const link = document.querySelector("link[rel='icon'][type='image/svg+xml']")
-               || document.querySelector("link[rel='icon']");
-    if (!link || !ctx) return;
+    // Get or create the favicon link element
+    let link = document.getElementById('favicon-link');
+    if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        link.type = 'image/png';
+        link.id = 'favicon-link';
+        document.head.appendChild(link);
+    }
+    if (!ctx) return;
 
     function lerp(a, b, v) { return Math.round(a + (b - a) * v); }
     function ease(v) { return v < 0.5 ? 2*v*v : -1+(4-2*v)*v; }
