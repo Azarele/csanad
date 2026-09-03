@@ -1647,92 +1647,157 @@
 </div>
 
 <script>
-// ── ANIMATED FAVICON (Web Worker — runs in background tabs too) ──
+// ── ANIMATED FAVICON ──
+// Uses OffscreenCanvas inside a Worker for smooth background-tab animation.
+// Falls back to rAF on main thread if OffscreenCanvas unavailable.
 (function() {
-    const canvas = document.createElement('canvas');
-    canvas.width = 64; canvas.height = 64;
-    const ctx = canvas.getContext('2d');
-    // Get or create the favicon link element
     let link = document.getElementById('favicon-link');
     if (!link) {
         link = document.createElement('link');
-        link.rel = 'icon';
-        link.type = 'image/png';
-        link.id = 'favicon-link';
+        link.rel = 'icon'; link.type = 'image/png'; link.id = 'favicon-link';
         document.head.appendChild(link);
     }
-    if (!ctx) return;
 
-    function lerp(a, b, v) { return Math.round(a + (b - a) * v); }
+    function lerp(a, b, v) { return a + (b - a) * v; }
     function ease(v) { return v < 0.5 ? 2*v*v : -1+(4-2*v)*v; }
 
-    const dark  = [0x12, 0x00, 0x16];
-    const light = [0xff, 0xff, 0xff];
-    const pink  = [0xff, 0x2d, 0x78];
+    const CYCLE = 5000; // ms for one full dark→light→dark cycle
 
-    function drawFavicon(progress) {
-        const e = ease(progress);
-        const bg  = dark.map((d,i) => lerp(d, light[i], e));
-        const txt = light.map((d,i) => lerp(d, dark[i], e));
-
-        ctx.clearRect(0, 0, 64, 64);
-
-        ctx.beginPath();
-        ctx.arc(32, 32, 31, 0, Math.PI*2);
-        ctx.fillStyle = `rgb(${bg[0]},${bg[1]},${bg[2]})`;
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.arc(32, 32, 30, 0, Math.PI*2);
-        ctx.strokeStyle = `rgb(${pink[0]},${pink[1]},${pink[2]})`;
-        ctx.lineWidth = 2.5;
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(32, 12); ctx.lineTo(32, 52);
-        ctx.strokeStyle = 'rgba(255,45,120,0.3)';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        ctx.font = 'bold 28px monospace';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillStyle = `rgb(${txt[0]},${txt[1]},${txt[2]})`;
-        ctx.fillText('C', 20, 34);
-        ctx.fillStyle = `rgb(${pink[0]},${pink[1]},${pink[2]})`;
-        ctx.fillText('K', 44, 34);
-
-        link.href = canvas.toDataURL('image/png');
-    }
-
-    // ── Web Worker ticker — not throttled in background tabs ──
+    // ── Try OffscreenCanvas in Worker (smoothest — no main thread cost) ──
     const workerCode = `
-        let t = 0, dir = 1;
-        const SPEED = 0.005;
-        setInterval(() => {
-            t += SPEED * dir;
-            if (t >= 1) { t = 1; dir = -1; }
-            if (t <= 0) { t = 0; dir =  1; }
-            postMessage(t);
-        }, 1000 / 60);
+        const SIZE = 64;
+        let oc, ctx;
+        const dark  = [0x12, 0x00, 0x16];
+        const light = [0xff, 0xff, 0xff];
+        const pink  = [0xff, 0x2d, 0x78];
+        const CYCLE = 5000;
+
+        function lerp(a,b,v){ return a+(b-a)*v; }
+        function ease(v){ return v<0.5?2*v*v:-1+(4-2*v)*v; }
+
+        function lerpRgb(a,b,t){
+            return 'rgb('+Math.round(lerp(a[0],b[0],t))+','+Math.round(lerp(a[1],b[1],t))+','+Math.round(lerp(a[2],b[2],t))+')';
+        }
+
+        function draw(t) {
+            const e = ease(t);
+            ctx.clearRect(0,0,SIZE,SIZE);
+
+            // Background
+            ctx.beginPath();
+            ctx.arc(32,32,31,0,Math.PI*2);
+            ctx.fillStyle = lerpRgb(dark,light,e);
+            ctx.fill();
+
+            // Border
+            ctx.beginPath();
+            ctx.arc(32,32,30,0,Math.PI*2);
+            ctx.strokeStyle='rgb(255,45,120)';
+            ctx.lineWidth=2.5; ctx.stroke();
+
+            // Divider
+            ctx.beginPath();
+            ctx.moveTo(32,12); ctx.lineTo(32,52);
+            ctx.strokeStyle='rgba(255,45,120,0.3)';
+            ctx.lineWidth=1; ctx.stroke();
+
+            // C
+            ctx.font='bold 28px monospace';
+            ctx.textAlign='center'; ctx.textBaseline='middle';
+            ctx.fillStyle=lerpRgb(light,dark,e);
+            ctx.fillText('C',20,34);
+
+            // K
+            ctx.fillStyle='rgb(255,45,120)';
+            ctx.fillText('K',44,34);
+
+            oc.convertToBlob({type:'image/png'}).then(blob=>{
+                postMessage(URL.createObjectURL(blob));
+            });
+        }
+
+        self.onmessage = function(e) {
+            oc = e.data;
+            ctx = oc.getContext('2d');
+            let prev = null;
+            function tick(ts) {
+                if (prev === null) prev = ts;
+                const elapsed = (ts - prev) % CYCLE;
+                // Triangle wave: 0→1→0 over CYCLE ms
+                const raw = elapsed / CYCLE;
+                const t = raw < 0.5 ? raw*2 : 2-raw*2;
+                draw(t);
+                prev = prev; // keep prev fixed, use ts directly
+            }
+            // Use setInterval at 24fps — enough for a slow favicon fade
+            let start = null;
+            setInterval(()=>{
+                const now = Date.now();
+                if(!start) start = now;
+                const elapsed = (now - start) % CYCLE;
+                const raw = elapsed / CYCLE;
+                const t = raw < 0.5 ? raw*2 : 2-raw*2;
+                draw(t);
+            }, 1000/24);
+        };
     `;
 
     try {
-        const blob = new Blob([workerCode], { type: 'application/javascript' });
+        if (typeof OffscreenCanvas === 'undefined') throw new Error('no OffscreenCanvas');
+        const oc = new OffscreenCanvas(64, 64);
+        const blob = new Blob([workerCode], {type:'application/javascript'});
         const worker = new Worker(URL.createObjectURL(blob));
-        worker.onmessage = e => drawFavicon(e.data);
+        let prevUrl = null;
+        worker.onmessage = e => {
+            if (prevUrl) URL.revokeObjectURL(prevUrl);
+            prevUrl = e.data;
+            link.href = e.data;
+        };
+        worker.postMessage(oc, [oc]);
     } catch(err) {
-        // Fallback if Worker not supported
-        let t = 0, dir = 1;
-        setInterval(() => {
-            t += 0.005 * dir;
-            if (t >= 1) { t = 1; dir = -1; }
-            if (t <= 0) { t = 0; dir =  1; }
-            drawFavicon(t);
-        }, 1000 / 60);
-    }
+        // ── Fallback: rAF on main thread ──
+        const canvas = document.createElement('canvas');
+        canvas.width = 64; canvas.height = 64;
+        const ctx = canvas.getContext('2d');
+        const dark  = [0x12,0x00,0x16];
+        const light = [0xff,0xff,0xff];
+        const pink  = [0xff,0x2d,0x78];
+        const start = performance.now();
+        let frame = 0;
 
-    drawFavicon(0);
+        function lerpRgb(a,b,t){
+            return 'rgb('+Math.round(lerp(a[0],b[0],t))+','+Math.round(lerp(a[1],b[1],t))+','+Math.round(lerp(a[2],b[2],t))+')';
+        }
+
+        function draw(t) {
+            const e = ease(t);
+            ctx.clearRect(0,0,64,64);
+            ctx.beginPath(); ctx.arc(32,32,31,0,Math.PI*2);
+            ctx.fillStyle = lerpRgb(dark,light,e); ctx.fill();
+            ctx.beginPath(); ctx.arc(32,32,30,0,Math.PI*2);
+            ctx.strokeStyle='rgb(255,45,120)'; ctx.lineWidth=2.5; ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(32,12); ctx.lineTo(32,52);
+            ctx.strokeStyle='rgba(255,45,120,0.3)'; ctx.lineWidth=1; ctx.stroke();
+            ctx.font='bold 28px monospace';
+            ctx.textAlign='center'; ctx.textBaseline='middle';
+            ctx.fillStyle=lerpRgb(light,dark,e); ctx.fillText('C',20,34);
+            ctx.fillStyle='rgb(255,45,120)'; ctx.fillText('K',44,34);
+        }
+
+        function tick(ts) {
+            if (frame++ % 2 === 0) { // update favicon every 2nd rAF (~30fps) to reduce cost
+                const elapsed = (ts - start) % CYCLE;
+                const raw = elapsed / CYCLE;
+                const t = raw < 0.5 ? raw*2 : 2-raw*2;
+                draw(t);
+                link.href = canvas.toDataURL('image/png');
+            }
+            requestAnimationFrame(tick);
+        }
+        draw(0);
+        link.href = canvas.toDataURL('image/png');
+        requestAnimationFrame(tick);
+    }
 })();
 
 // ── PROJECT DATA ──
