@@ -1654,67 +1654,59 @@
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Remove existing favicon links and create a fresh one
     document.querySelectorAll("link[rel*='icon']").forEach(l => l.remove());
     const link = document.createElement('link');
-    link.rel = 'icon';
-    link.type = 'image/png';
+    link.rel = 'icon'; link.type = 'image/png';
     document.head.appendChild(link);
 
-    const CYCLE = 4000; // ms for full dark→light→dark
-    const start = performance.now();
+    const CYCLE = 12000; // 12s cycle — very slow, smooth fade
+    const INTERVAL = 80;  // update every 80ms (~12fps) — imperceptibly slow enough that fps doesnt matter
 
-    function ease(v) {
-        return v < 0.5 ? 2*v*v : -1+(4-2*v)*v;
-    }
+    function ease(v) { return v < 0.5 ? 2*v*v : -1+(4-2*v)*v; }
+    function lerpC(a, b, t) { return Math.round(a + (b - a) * t); }
 
-    function lerpC(a, b, t) {
-        return Math.round(a + (b - a) * t);
-    }
-
-    function draw(ts) {
-        const elapsed = (ts - start) % CYCLE;
+    function getT(now) {
+        const elapsed = now % CYCLE;
         const raw = elapsed / CYCLE;
-        // Triangle wave 0→1→0
         const linear = raw < 0.5 ? raw * 2 : 2 - raw * 2;
-        const t = ease(linear);
+        return ease(linear);
+    }
 
-        // Dark: bg=#120016 txt=white  Light: bg=white txt=#120016
+    function draw(t) {
         const bgR = lerpC(0x12, 0xff, t), bgG = lerpC(0x00, 0xff, t), bgB = lerpC(0x16, 0xff, t);
         const txR = lerpC(0xff, 0x12, t), txG = lerpC(0xff, 0x00, t), txB = lerpC(0xff, 0x16, t);
-
         const S = 32;
         ctx.clearRect(0, 0, S, S);
-
-        // Background circle
-        ctx.beginPath();
-        ctx.arc(S/2, S/2, S/2 - 0.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgb(${bgR},${bgG},${bgB})`;
-        ctx.fill();
-
-        // Pink border
-        ctx.beginPath();
-        ctx.arc(S/2, S/2, S/2 - 1, 0, Math.PI * 2);
-        ctx.strokeStyle = '#ff2d78';
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-
-        // C
+        ctx.beginPath(); ctx.arc(S/2, S/2, S/2-0.5, 0, Math.PI*2);
+        ctx.fillStyle = `rgb(${bgR},${bgG},${bgB})`; ctx.fill();
+        ctx.beginPath(); ctx.arc(S/2, S/2, S/2-1, 0, Math.PI*2);
+        ctx.strokeStyle = '#ff2d78'; ctx.lineWidth = 1.5; ctx.stroke();
         ctx.font = 'bold 13px monospace';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillStyle = `rgb(${txR},${txG},${txB})`;
-        ctx.fillText('C', 10, 17);
-
-        // K in pink
-        ctx.fillStyle = '#ff2d78';
-        ctx.fillText('K', 22, 17);
-
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillStyle = `rgb(${txR},${txG},${txB})`; ctx.fillText('C', 10, 17);
+        ctx.fillStyle = '#ff2d78'; ctx.fillText('K', 22, 17);
         link.href = canvas.toDataURL('image/png');
-        requestAnimationFrame(draw);
     }
 
-    requestAnimationFrame(draw);
+    // Draw immediately
+    draw(getT(Date.now()));
+
+    // ── Main interval (works in active tab) ──
+    setInterval(() => draw(getT(Date.now())), INTERVAL);
+
+    // ── Web Worker keeps it alive in background tabs ──
+    const workerCode = `
+        const INTERVAL = 80;
+        setInterval(() => postMessage(Date.now()), INTERVAL);
+    `;
+    try {
+        const blob = new Blob([workerCode], { type: 'application/javascript' });
+        const worker = new Worker(URL.createObjectURL(blob));
+        // When worker fires, update favicon using its timestamp
+        worker.onmessage = e => draw(getT(e.data));
+    } catch(e) {
+        // setInterval fallback already running above
+    }
 })();
 // ── PROJECT DATA ──
 const PROJECTS = {
