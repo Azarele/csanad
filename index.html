@@ -1659,8 +1659,8 @@
     link.rel = 'icon'; link.type = 'image/png';
     document.head.appendChild(link);
 
-    const CYCLE = 12000; // 12s cycle — very slow, smooth fade
-    const INTERVAL = 80;  // update every 80ms (~12fps) — imperceptibly slow enough that fps doesnt matter
+    const CYCLE = 30000; // 30s cycle — ultra slow fade
+    const INTERVAL = 200; // update every 200ms (5fps) — at this speed individual steps invisible
 
     function ease(v) { return v < 0.5 ? 2*v*v : -1+(4-2*v)*v; }
     function lerpC(a, b, t) { return Math.round(a + (b - a) * t); }
@@ -1696,7 +1696,7 @@
 
     // ── Web Worker keeps it alive in background tabs ──
     const workerCode = `
-        const INTERVAL = 80;
+        const INTERVAL = 200;
         setInterval(() => postMessage(Date.now()), INTERVAL);
     `;
     try {
