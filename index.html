@@ -9,11 +9,11 @@
     <meta property="og:description" content="CS graduate who builds production systems and knows how to sell them. PokéManager, ShopOS, Inference Router. Open to roles in London.">
     <meta property="og:url" content="https://resume.thesneakaz.xyz">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://resume.thesneakaz.xyz/favicon.png">
+    <meta property="og:image" content="https://resume.thesneakaz.xyz/ck_favicon_animated.svg">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Csanad Kope | Software Engineer &amp; Sales Engineer">
     <meta name="twitter:description" content="CS graduate who builds production systems and knows how to sell them. Open to roles in London.">
-    <meta name="twitter:image" content="https://resume.thesneakaz.xyz/favicon.png">
+    <meta name="twitter:image" content="https://resume.thesneakaz.xyz/ck_favicon_animated.svg">
     <link rel="canonical" href="https://resume.thesneakaz.xyz">
     <link rel="sitemap" type="application/xml" href="/sitemap.xml">
     <!-- Security headers -->
@@ -22,6 +22,7 @@
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://platform.linkedin.com https://badges.linkedin.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://platform.linkedin.com https://badges.linkedin.com; font-src https://fonts.gstatic.com https://badges.linkedin.com; img-src 'self' data: https://raw.githubusercontent.com https://media.licdn.com https://badges.linkedin.com https://static.licdn.com; connect-src 'self' https://raw.githubusercontent.com https://cdnjs.cloudflare.com https://www.linkedin.com https://badges.linkedin.com; frame-src https://www.linkedin.com https://badges.linkedin.com; frame-ancestors 'none';">
+    <link rel="icon" href="ck_favicon_animated.svg" type="image/svg+xml">
     <link rel="icon" href="favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -145,6 +146,28 @@
         color: white; margin-bottom: 6px;
     }
     .sidebar-name span { color: var(--pink); }
+
+    .sidebar-logo-wrap { margin-bottom: 6px; }
+    .sidebar-logo {
+        height: 44px; width: auto;
+        max-width: 200px;
+        display: block;
+        filter: brightness(1);
+        transition: filter 0.2s ease, opacity 0.2s ease;
+    }
+    .sidebar-logo:hover { opacity: 0.85; }
+
+    /* Invert logo in light mode if it's designed for dark */
+    html.light .sidebar-logo { filter: invert(1) hue-rotate(180deg) brightness(0.85); }
+
+    .mobile-logo-wrap { margin-bottom: 2px; }
+    .mobile-logo {
+        height: 28px; width: auto;
+        max-width: 140px;
+        display: block;
+        transition: opacity 0.2s;
+    }
+    html.light .mobile-logo { filter: invert(1) hue-rotate(180deg) brightness(0.85); }
 
     .sidebar-role {
         font-size: 0.72rem; letter-spacing: 0.1em;
@@ -1084,7 +1107,10 @@
 <header class="mobile-header" id="mobileHeader">
     <div class="mobile-header-top">
         <div>
-            <div class="mobile-name">Csanad <span>Kope</span></div>
+            <div class="mobile-logo-wrap">
+                <img src="ck_logo.svg" alt="Csanad Kope" class="mobile-logo" onerror="this.style.display='none';document.getElementById('mobile-name-fallback').style.display='block'">
+                <div class="mobile-name" id="mobile-name-fallback" style="display:none;">Csanad <span>Kope</span></div>
+            </div>
             <div class="mobile-role">Software Engineer · Sales Engineer</div>
             <div class="avail-chip avail-chip-sm"><span class="avail-dot"></span>Open to work</div>
         </div>
@@ -1107,7 +1133,10 @@
 ══════════════════════════ -->
 <aside class="sidebar">
     <div class="sidebar-top">
-        <div class="sidebar-name">Csanad <span>Kope</span></div>
+        <div class="sidebar-logo-wrap">
+            <img src="ck_logo.svg" alt="Csanad Kope" class="sidebar-logo" onerror="this.style.display='none';document.getElementById('sidebar-name-fallback').style.display='block'">
+            <div class="sidebar-name" id="sidebar-name-fallback" style="display:none;">Csanad <span>Kope</span></div>
+        </div>
         <div class="sidebar-role">Software Engineer<br>Sales Engineer</div>
         <div class="avail-chip"><span class="avail-dot"></span>Open to opportunities</div>
         <p class="sidebar-tagline">CS grad. Full-stack engineer. <strong>£150K+</strong> in sales. I speak both languages fluently.</p>
